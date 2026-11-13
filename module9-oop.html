@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS409 Module 9 - GUI Development, Event Handling, and Database Connectivity</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    font-size: 15px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    border-bottom: 4px solid #1f4e79;
+    padding-bottom: 12px;
+    color: #1f4e79;
+  }
+  h2 {
+    font-size: 20px;
+    color: #ffffff;
+    background: #1f4e79;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+  h3 {
+    font-size: 17px;
+    color: #1f4e79;
+    border-left: 5px solid #1f4e79;
+    padding-left: 10px;
+    margin-top: 28px;
+  }
+  h4 {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 20px;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    color: #b00020;
+  }
+  pre {
+    background: #f5f7fa;
+    border: 1px solid #d0d7de;
+    border-left: 4px solid #1f4e79;
+    padding: 14px 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #24292e;
+  }
+  pre code {
+    background: none;
+    color: #24292e;
+    padding: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1f4e79;
+    color: #ffffff;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  td {
+    border: 1px solid #cfd8dc;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f8fb;
+  }
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid #f0ad4e;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .def {
+    background: #e8f1f8;
+    border-left: 4px solid #1f4e79;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .output {
+    background: #eef6ee;
+    border-left: 4px solid #2e7d32;
+    padding: 8px 14px;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    margin: 8px 0;
+    border-radius: 3px;
+  }
+  .diagram {
+    background: #f9f9f9;
+    border: 1px dashed #888888;
+    padding: 14px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 26px;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #d0d7de;
+    margin: 36px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>CS409 – Object Oriented Programming<br>Module 9: GUI Development, Event Handling, and Database Connectivity</h1>
+
+<h2>Part A: Theory Topics</h2>
+
+<h3>1. Introduction to Graphical User Interfaces (GUI)</h3>
+
+<div class="def">
+<strong>Definition:</strong> A Graphical User Interface (GUI) is a visual interface that allows users to interact with a program through graphical elements such as windows, buttons, menus, icons, and text fields, instead of typing commands on a text console.
+</div>
+
+<h4>Advantages of GUI</h4>
+<ul>
+  <li>Intuitive and easy to learn for non-technical users.</li>
+  <li>Visual feedback improves user experience.</li>
+  <li>Supports multitasking through multiple windows.</li>
+  <li>Reduces the need to memorize commands.</li>
+  <li>Enables richer interaction through mouse, keyboard, and touch.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>An ATM machine presents a touch screen with buttons for "Withdraw," "Deposit," and "Balance." The user does not type commands; they tap visual options, which is the essence of a GUI.</p>
+
+<hr>
+
+<h3>2. GUI Development in C++</h3>
+
+<div class="def">
+<strong>Definition:</strong> GUI development in C++ involves using a GUI framework or library to create windows, widgets, and event-driven behavior. Unlike console applications, GUI programs wait for user actions and respond to them.
+</div>
+
+<h4>Popular C++ GUI Frameworks</h4>
+<table>
+  <tr><th>Framework</th><th>Description</th></tr>
+  <tr><td>Qt</td><td>Cross-platform, mature, supports widgets and QML</td></tr>
+  <tr><td>wxWidgets</td><td>Native look and feel on each platform</td></tr>
+  <tr><td>GTKmm</td><td>C++ wrapper for GTK</td></tr>
+  <tr><td>Dear ImGui</td><td>Immediate-mode GUI, popular for tools and games</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>Building a desktop calculator app where the user clicks numbered buttons and sees the result appear instantly in a display area.</p>
+
+<hr>
+
+<h3>3. Introduction to the Qt Framework</h3>
+
+<div class="def">
+<strong>Definition:</strong> Qt is a comprehensive cross-platform C++ framework for developing GUI applications, networking tools, and database-driven software. It provides a rich set of widgets, an event system, and the signal-slot mechanism.
+</div>
+
+<h4>Key Features of Qt</h4>
+<ul>
+  <li>Cross-platform: runs on Windows, Linux, macOS, and embedded systems.</li>
+  <li>Object-oriented design built on QObject.</li>
+  <li>Signal-slot mechanism for communication between objects.</li>
+  <li>Qt SQL module for database connectivity.</li>
+  <li>Qt Creator IDE for rapid development.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>Qt powers applications such as Autodesk Maya, Telegram Desktop, and the KDE desktop environment. It is chosen when an application must run identically on multiple operating systems.</p>
+
+<hr>
+
+<h3>4. GUI Components and Widgets</h3>
+
+<div class="def">
+<strong>Definition:</strong> Widgets are the basic building blocks of a Qt GUI. Each widget is a visual element that the user can see or interact with. Common widgets include buttons, labels, text fields, checkboxes, and combo boxes.
+</div>
+
+<h4>Common Qt Widgets</h4>
+<table>
+  <tr><th>Widget</th><th>Purpose</th></tr>
+  <tr><td>QPushButton</td><td>Clickable button</td></tr>
+  <tr><td>QLabel</td><td>Display text or an image</td></tr>
+  <tr><td>QLineEdit</td><td>Single-line text input</td></tr>
+  <tr><td>QTextEdit</td><td>Multi-line text input</td></tr>
+  <tr><td>QCheckBox</td><td>On/off option</td></tr>
+  <tr><td>QComboBox</td><td>Drop-down list</td></tr>
+  <tr><td>QListWidget</td><td>List of selectable items</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A login form uses a QLabel for "Username," a QLineEdit for typing the name, and a QPushButton for "Login." Each is a widget working together.</p>
+
+<hr>
+
+<h3>5. Layout Management</h3>
+
+<div class="def">
+<strong>Definition:</strong> Layout management is the automatic arrangement of widgets inside a window. Layouts ensure that widgets resize and reposition correctly when the window is resized, without requiring manual pixel coordinates.
+</div>
+
+<h4>Types of Layouts in Qt</h4>
+<table>
+  <tr><th>Layout</th><th>Arrangement</th></tr>
+  <tr><td>QHBoxLayout</td><td>Widgets arranged horizontally from left to right [citation:22]</td></tr>
+  <tr><td>QVBoxLayout</td><td>Widgets arranged vertically from top to bottom [citation:22]</td></tr>
+  <tr><td>QGridLayout</td><td>Widgets arranged in a two-dimensional grid [citation:22]</td></tr>
+  <tr><td>QFormLayout</td><td>Two-column layout: label and field pairs [citation:22]</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A settings dialog uses QFormLayout so that each option label aligns neatly with its input field, and the whole form resizes gracefully when the window is enlarged.</p>
+
+<h4>Layout Diagram</h4>
+<div class="diagram">  QVBoxLayout (vertical)          QHBoxLayout (horizontal)
+  +---------------------+          +-----------------------------+
+  |     Widget 1        |          | Widget1 | Widget2 | Widget3 |
+  +---------------------+          +-----------------------------+
+  |     Widget 2        |
+  +---------------------+
+  |     Widget 3        |
+  +---------------------+</div>
+
+<hr>
+
+<h3>6. Event-Driven Programming</h3>
+
+<div class="def">
+<strong>Definition:</strong> Event-driven programming is a programming paradigm in which the flow of the program is determined by events such as mouse clicks, key presses, or timer expirations. Instead of running top-to-bottom, the program waits for events and responds through event handlers.
+</div>
+
+<h4>Event Loop Concept</h4>
+<div class="diagram">  +------------------+
+  |   Event Loop     |
+  |  (runs forever)  |
+  +--------+---------+
+           |
+     event occurs?
+       /       \
+     yes        no
+      |          |
+      v          v
+  dispatch    wait
+  to handler</div>
+
+<h4>Real-Life Example</h4>
+<p>A television remote control waits for a button press (event), then responds by changing the channel (handler). The TV does nothing until the user acts.</p>
+
+<hr>
+
+<h3>7. Event Handling Mechanism</h3>
+
+<div class="def">
+<strong>Definition:</strong> Event handling is the process by which a GUI program detects events, dispatches them to the appropriate handler, and performs the corresponding action. In Qt, events are represented as objects derived from QEvent.
+</div>
+
+<h4>Types of Events</h4>
+<table>
+  <tr><th>Event Type</th><th>Description</th></tr>
+  <tr><td>Mouse events</td><td>Click, double-click, move, press, release</td></tr>
+  <tr><td>Keyboard events</td><td>Key press, key release</td></tr>
+  <tr><td>Window events</td><td>Resize, move, close</td></tr>
+  <tr><td>Timer events</td><td>Periodic timeouts</td></tr>
+</table>
+
+<h4>Handler Functions in Qt</h4>
+<pre><code>void mousePressEvent(QMouseEvent *event);
+void keyPressEvent(QKeyEvent *event);
+void resizeEvent(QResizeEvent *event);</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>When a user clicks a "Save" button, the mouse press event is dispatched to the button's handler, which triggers the save action.</p>
+
+<hr>
+
+<h3>8. Signals and Slots in Qt</h3>
+
+<div class="def">
+<strong>Definition:</strong> Signals and slots are Qt's mechanism for communication between objects. A signal is emitted when a particular event occurs; a slot is a function that is called in response to a signal. The connection is made with QObject::connect() [citation:2][citation:11].
+</div>
+
+<h4>Key Concepts</h4>
+<ul>
+  <li>A class using signals and slots must inherit from QObject and include the Q_OBJECT macro [citation:2].</li>
+  <li>Signals are declared under the <code>signals:</code> keyword and require no implementation.</li>
+  <li>Slots are declared under <code>public slots:</code> or <code>private slots:</code>.</li>
+  <li>The <code>emit</code> keyword triggers a signal [citation:2].</li>
+</ul>
+
+<h4>Connection Types</h4>
+<table>
+  <tr><th>Type</th><th>Behavior</th></tr>
+  <tr><td>Qt::DirectConnection</td><td>Slot runs immediately in the emitting thread [citation:2]</td></tr>
+  <tr><td>Qt::QueuedConnection</td><td>Slot runs later in the receiver's event loop [citation:2]</td></tr>
+  <tr><td>Qt::AutoConnection</td><td>Chooses direct or queued based on thread affinity (default) [citation:2]</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A smoke detector (signal) triggers an alarm (slot). The detector does not know or care what the alarm does; it simply emits the signal, and the connected alarm responds.</p>
+
+<h4>Syntax</h4>
+<pre><code>class MyClass : public QObject {
+    Q_OBJECT
+public slots:
+    void handleEvent(int value);
+signals:
+    void valueChanged(int value);
+};
+
+// Connecting
+QObject::connect(sender, &Sender::signalName,
+                 receiver, &Receiver::slotName);</code></pre>
+
+<hr>
+
+<h3>9. Introduction to Database Connectivity</h3>
+
+<div class="def">
+<strong>Definition:</strong> Database connectivity is the ability of an application to connect to a database management system, send queries, and retrieve results. It allows the application to store, update, and query persistent data.
+</div>
+
+<h4>Why GUI Applications Need Databases</h4>
+<ul>
+  <li>Store user records, transactions, and settings.</li>
+  <li>Retrieve large amounts of structured data.</li>
+  <li>Support multiple users accessing shared data.</li>
+  <li>Ensure data integrity through transactions.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A hospital reception GUI looks up patient records from a central database as the receptionist types a name, displaying results instantly.</p>
+
+<hr>
+
+<h3>10. Database Connectivity Using Qt SQL</h3>
+
+<div class="def">
+<strong>Definition:</strong> The Qt SQL module provides a database-independent API for connecting to databases, executing SQL statements, and handling results. It supports multiple database drivers including SQLite, MySQL, PostgreSQL, and Oracle [citation:24].
+</div>
+
+<h4>Core Classes</h4>
+<table>
+  <tr><th>Class</th><th>Purpose</th></tr>
+  <tr><td>QSqlDatabase</td><td>Manages database connections</td></tr>
+  <tr><td>QSqlQuery</td><td>Executes SQL statements and processes results</td></tr>
+  <tr><td>QSqlError</td><td>Reports database errors</td></tr>
+  <tr><td>QSqlTableModel</td><td>Maps a table to a GUI view</td></tr>
+</table>
+
+<h4>Supported Drivers</h4>
+<table>
+  <tr><th>Driver</th><th>Database</th></tr>
+  <tr><td>QSQLITE</td><td>SQLite 3 (built-in, no server required) [citation:19]</td></tr>
+  <tr><td>QMYSQL</td><td>MySQL or MariaDB [citation:24]</td></tr>
+  <tr><td>QPSQL</td><td>PostgreSQL [citation:24]</td></tr>
+  <tr><td>QODBC</td><td>ODBC-compliant databases [citation:24]</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A point-of-sale GUI connects to a MySQL database on a local server. Each sale is inserted into a transactions table, and daily reports are generated by querying the same table.</p>
+
+<hr>
+
+<h3>11. Connecting C++ Applications with Databases</h3>
+
+<h4>General Steps</h4>
+<ol>
+  <li>Add the SQL module to the project file: <code>QT += sql</code> [citation:3][citation:9].</li>
+  <li>Include the necessary headers: <code>&lt;QSqlDatabase&gt;</code>, <code>&lt;QSqlQuery&gt;</code>, <code>&lt;QSqlError&gt;</code> [citation:9].</li>
+  <li>Load the appropriate driver using <code>QSqlDatabase::addDatabase()</code> [citation:3].</li>
+  <li>Set connection parameters (host, database name, user, password) [citation:3].</li>
+  <li>Open the connection with <code>db.open()</code> and check for errors [citation:3].</li>
+  <li>Execute queries using <code>QSqlQuery</code> [citation:9].</li>
+  <li>Close the connection when done.</li>
+</ol>
+
+<h4>Connection Diagram</h4>
+<div class="diagram">  C++ GUI Application
+          |
+          v
+  QSqlDatabase::addDatabase(driver)
+          |
+          v
+  Set host, database, user, password
+          |
+          v
+      db.open()
+          |
+          v
+  QSqlQuery::exec("SQL statement")
+          |
+          v
+  Process results / handle errors</div>
+
+<hr>
+
+<h2>Part B: Practical Topics</h2>
+
+<h3>Practical 1: Introduction to Qt Creator</h3>
+
+<h4>Steps to Create a Qt Project</h4>
+<ol>
+  <li>Open Qt Creator.</li>
+  <li>Select <strong>File → New File or Project</strong>.</li>
+  <li>Choose <strong>Application (Qt)</strong> → <strong>Qt Widgets Application</strong>.</li>
+  <li>Name the project and select a build kit.</li>
+  <li>Qt Creator generates main.cpp, mainwindow.h, mainwindow.cpp, and the .pro file.</li>
+</ol>
+
+<h4>Project File (.pro)</h4>
+<pre><code>QT += core gui
+QT += sql
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+SOURCES += main.cpp \
+           mainwindow.cpp
+
+HEADERS += mainwindow.h</code></pre>
+
+<hr>
+
+<h3>Practical 2: Creating GUI Applications Using Qt</h3>
+
+<h4>Minimal Qt Application</h4>
+<pre><code>#include &lt;QApplication&gt;
+#include &lt;QLabel&gt;
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+
+    QLabel label("Hello, Qt!");
+    label.show();
+
+    return app.exec();
+}</code></pre>
+
+<h4>Output</h4>
+<div class="output">A window appears displaying "Hello, Qt!"</div>
+
+<hr>
+
+<h3>Practical 3: Working with Windows and Widgets</h3>
+
+<pre><code>#include &lt;QApplication&gt;
+#include &lt;QWidget&gt;
+#include &lt;QLabel&gt;
+#include &lt;QPushButton&gt;
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+
+    QWidget window;
+    window.setWindowTitle("My First Window");
+    window.resize(300, 200);
+
+    QLabel *label = new QLabel("Welcome", &amp;window);
+    label-&gt;move(100, 50);
+
+    QPushButton *button = new QPushButton("Click Me", &amp;window);
+    button-&gt;move(100, 100);
+
+    window.show();
+    return app.exec();
+}</code></pre>
+
+<hr>
+
+<h3>Practical 4: Creating Buttons, Labels, and Text Fields</h3>
+
+<pre><code>#include &lt;QApplication&gt;
+#include &lt;QWidget&gt;
+#include &lt;QLabel&gt;
+#include &lt;QLineEdit&gt;
+#include &lt;QPushButton&gt;
+#include &lt;QVBoxLayout&gt;
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+
+    QWidget window;
+    QVBoxLayout *layout = new QVBoxLayout(&amp;window);
+
+    QLabel *label = new QLabel("Enter your name:");
+    QLineEdit *input = new QLineEdit();
+    QPushButton *button = new QPushButton("Submit");
+
+    layout-&gt;addWidget(label);
+    layout-&gt;addWidget(input);
+    layout-&gt;addWidget(button);
+
+    window.setLayout(layout);
+    window.show();
+    return app.exec();
+}</code></pre>
+
+<hr>
+
+<h3>Practical 5: Implementing Layouts</h3>
+
+<h4>Horizontal and Vertical Layouts</h4>
+<pre><code>#include &lt;QApplication&gt;
+#include &lt;QWidget&gt;
+#include &lt;QHBoxLayout&gt;
+#include &lt;QVBoxLayout&gt;
+#include &lt;QPushButton&gt;
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+
+    QWidget window;
+
+    QHBoxLayout *top = new QHBoxLayout();
+    top-&gt;addWidget(new QPushButton("Left"));
+    top-&gt;addWidget(new QPushButton("Right"));
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(&amp;window);
+    mainLayout-&gt;addLayout(top);
+    mainLayout-&gt;addWidget(new QPushButton("Bottom"));
+
+    window.setLayout(mainLayout);
+    window.show();
+    return app.exec();
+}</code></pre>
+
+<h4>Grid Layout</h4>
+<pre><code>QGridLayout *grid = new QGridLayout(&amp;window);
+grid-&gt;addWidget(new QPushButton("0,0"), 0, 0);
+grid-&gt;addWidget(new QPushButton("0,1"), 0, 1);
+grid-&gt;addWidget(new QPushButton("1,0"), 1, 0);
+grid-&gt;addWidget(new QPushButton("1,1"), 1, 1);</code></pre>
+
+<hr>
+
+<h3>Practical 6: Handling Mouse and Keyboard Events</h3>
+
+<pre><code>#include &lt;QApplication&gt;
+#include &lt;QWidget&gt;
+#include &lt;QMouseEvent&gt;
+#include &lt;QKeyEvent&gt;
+#include &lt;QDebug&gt;
+
+class MyWidget : public QWidget {
+protected:
+    void mousePressEvent(QMouseEvent *event) override {
+        qDebug() &lt;&lt; "Mouse pressed at:" &lt;&lt; event-&gt;pos();
+    }
+
+    void keyPressEvent(QKeyEvent *event) override {
+        qDebug() &lt;&lt; "Key pressed:" &lt;&lt; event-&gt;key();
+        if (event-&gt;key() == Qt::Key_Escape)
+            close();
+    }
+};
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+    MyWidget w;
+    w.resize(400, 300);
+    w.show();
+    return app.exec();
+}</code></pre>
+
+<div class="note">
+<strong>Note:</strong> Clicking the widget must give it focus for keyboard events to be received. Call <code>setFocus()</code> in the mouse press handler if needed.
+</div>
+
+<hr>
+
+<h3>Practical 7: Implementing Signals and Slots</h3>
+
+<pre><code>#include &lt;QApplication&gt;
+#include &lt;QWidget&gt;
+#include &lt;QPushButton&gt;
+#include &lt;QLabel&gt;
+#include &lt;QVBoxLayout&gt;
+
+class MyWindow : public QWidget {
+    Q_OBJECT
+public:
+    MyWindow() {
+        QVBoxLayout *layout = new QVBoxLayout(this);
+
+        label = new QLabel("Not clicked yet");
+        button = new QPushButton("Click Me");
+
+        layout-&gt;addWidget(label);
+        layout-&gt;addWidget(button);
+
+        connect(button, &amp;QPushButton::clicked,
+                this, &amp;MyWindow::onButtonClicked);
+    }
+
+private slots:
+    void onButtonClicked() {
+        label-&gt;setText("Button was clicked!");
+    }
+
+private:
+    QLabel *label;
+    QPushButton *button;
+};
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+    MyWindow w;
+    w.show();
+    return app.exec();
+}
+
+#include "main.moc"</code></pre>
+
+<div class="output">Output: A window with a label and button. Clicking the button changes the label text to "Button was clicked!"</div>
+
+<hr>
+
+<h3>Practical 8: Developing Event-Driven Applications</h3>
+
+<pre><code>#include &lt;QApplication&gt;
+#include &lt;QWidget&gt;
+#include &lt;QPushButton&gt;
+#include &lt;QLabel&gt;
+#include &lt;QVBoxLayout&gt;
+
+class CounterApp : public QWidget {
+    Q_OBJECT
+public:
+    CounterApp() : count(0) {
+        QVBoxLayout *layout = new QVBoxLayout(this);
+
+        display = new QLabel("0");
+        incrementBtn = new QPushButton("+1");
+        resetBtn = new QPushButton("Reset");
+
+        layout-&gt;addWidget(display);
+        layout-&gt;addWidget(incrementBtn);
+        layout-&gt;addWidget(resetBtn);
+
+        connect(incrementBtn, &amp;QPushButton::clicked,
+                this, &amp;CounterApp::increment);
+        connect(resetBtn, &amp;QPushButton::clicked,
+                this, &amp;CounterApp::reset);
+    }
+
+private slots:
+    void increment() {
+        count++;
+        display-&gt;setText(QString::number(count));
+    }
+    void reset() {
+        count = 0;
+        display-&gt;setText("0");
+    }
+
+private:
+    int count;
+    QLabel *display;
+    QPushButton *incrementBtn;
+    QPushButton *resetBtn;
+};
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+    CounterApp w;
+    w.show();
+    return app.exec();
+}
+
+#include "main.moc"</code></pre>
+
+<div class="output">Output: A counter that increments when "+1" is clicked and resets to 0 when "Reset" is clicked.</div>
+
+<hr>
+
+<h3>Practical 9: Connecting C++ Applications with SQLite or MySQL</h3>
+
+<h4>SQLite Connection (No Server Required)</h4>
+<pre><code>#include &lt;QCoreApplication&gt;
+#include &lt;QSqlDatabase&gt;
+#include &lt;QSqlQuery&gt;
+#include &lt;QSqlError&gt;
+#include &lt;QDebug&gt;
+
+int main(int argc, char *argv[]) {
+    QCoreApplication app(argc, argv);
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("mydata.db");
+
+    if (!db.open()) {
+        qDebug() &lt;&lt; "Error:" &lt;&lt; db.lastError().text();
+        return -1;
+    }
+
+    qDebug() &lt;&lt; "SQLite connected";
+    db.close();
+    return 0;
+}</code></pre>
+
+<h4>MySQL Connection (Server Required)</h4>
+<pre><code>QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+db.setHostName("localhost");
+db.setPort(3306);
+db.setDatabaseName("testdb");
+db.setUserName("root");
+db.setPassword("password");
+
+if (!db.open()) {
+    qDebug() &lt;&lt; "MySQL error:" &lt;&lt; db.lastError().text();
+    return -1;
+}</code></pre>
+
+<div class="note">
+<strong>Note:</strong> For MySQL, the Qt MySQL driver must be installed and the MySQL client library must be available on the system [citation:9][citation:24]. SQLite works out of the box with Qt [citation:3].
+</div>
+
+<hr>
+
+<h3>Practical 10: Performing CRUD Operations</h3>
+
+<pre><code>#include &lt;QCoreApplication&gt;
+#include &lt;QSqlDatabase&gt;
+#include &lt;QSqlQuery&gt;
+#include &lt;QSqlError&gt;
+#include &lt;QDebug&gt;
+
+int main(int argc, char *argv[]) {
+    QCoreApplication app(argc, argv);
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("crud.db");
+    if (!db.open()) { qDebug() &lt;&lt; db.lastError().text(); return -1; }
+
+    QSqlQuery query;
+
+    // CREATE table
+    query.exec("CREATE TABLE IF NOT EXISTS users "
+               "(id INTEGER PRIMARY KEY, name TEXT, age INTEGER)");
+
+    // INSERT
+    query.prepare("INSERT INTO users (name, age) VALUES (?, ?)");
+    query.addBindValue("Alice");
+    query.addBindValue(30);
+    query.exec();
+
+    query.prepare("INSERT INTO users (name, age) VALUES (?, ?)");
+    query.addBindValue("Bob");
+    query.addBindValue(25);
+    query.exec();
+
+    // READ
+    query.exec("SELECT * FROM users");
+    qDebug() &lt;&lt; "--- Users ---";
+    while (query.next()) {
+        qDebug() &lt;&lt; query.value("id").toInt()
+                 &lt;&lt; query.value("name").toString()
+                 &lt;&lt; query.value("age").toInt();
+    }
+
+    // UPDATE
+    query.prepare("UPDATE users SET age = ? WHERE name = ?");
+    query.addBindValue(31);
+    query.addBindValue("Alice");
+    query.exec();
+
+    // DELETE
+    query.prepare("DELETE FROM users WHERE name = ?");
+    query.addBindValue("Bob");
+    query.exec();
+
+    // Verify
+    query.exec("SELECT * FROM users");
+    qDebug() &lt;&lt; "--- After Update/Delete ---";
+    while (query.next()) {
+        qDebug() &lt;&lt; query.value("name").toString()
+                 &lt;&lt; query.value("age").toInt();
+    }
+
+    db.close();
+    return 0;
+}</code></pre>
+
+<div class="output">Output (console):
+--- Users ---
+1 "Alice" 30
+2 "Bob" 25
+--- After Update/Delete ---
+"Alice" 31</div>
+
+<hr>
+
+<h3>Practical 11: Developing Database-Driven GUI Applications</h3>
+
+<pre><code>#include &lt;QApplication&gt;
+#include &lt;QWidget&gt;
+#include &lt;QTableView&gt;
+#include &lt;QVBoxLayout&gt;
+#include &lt;QSqlDatabase&gt;
+#include &lt;QSqlTableModel&gt;
+#include &lt;QSqlError&gt;
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("crud.db");
+    if (!db.open()) { return -1; }
+
+    QSqlTableModel *model = new QSqlTableModel;
+    model-&gt;setTable("users");
+    model-&gt;select();
+    model-&gt;setEditStrategy(QSqlTableModel::OnFieldChange);
+
+    QTableView *view = new QTableView;
+    view-&gt;setModel(model);
+    view-&gt;resize(500, 300);
+    view-&gt;show();
+
+    return app.exec();
+}</code></pre>
+
+<div class="output">Output: A window displaying the users table in a grid. Edits made in the table are automatically saved to the database.</div>
+
+<h4>GUI-Database Architecture Diagram</h4>
+<div class="diagram">  +-------------------+
+  |   QTableView      |   &lt;-- user sees and edits
+  +---------+---------+
+            |
+            v
+  +-------------------+
+  |  QSqlTableModel   |   &lt;-- maps rows to widgets
+  +---------+---------+
+            |
+            v
+  +-------------------+
+  |   QSqlDatabase    |   &lt;-- connection
+  +---------+---------+
+            |
+            v
+  +-------------------+
+  |  SQLite / MySQL   |
+  +-------------------+</div>
+
+<hr>
+
+<h2>Module 9: Quick Revision Summary</h2>
+
+<table>
+  <tr><th>Topic</th><th>Key Takeaway</th></tr>
+  <tr><td>GUI</td><td>Visual interface using windows, buttons, and fields</td></tr>
+  <tr><td>Qt</td><td>Cross-platform C++ framework with widgets and signals</td></tr>
+  <tr><td>Widgets</td><td>Building blocks: QPushButton, QLabel, QLineEdit</td></tr>
+  <tr><td>Layouts</td><td>QHBoxLayout, QVBoxLayout, QGridLayout, QFormLayout</td></tr>
+  <tr><td>Event-driven programming</td><td>Program flow controlled by user actions</td></tr>
+  <tr><td>Event handling</td><td>mousePressEvent, keyPressEvent, and similar handlers</td></tr>
+  <tr><td>Signals and slots</td><td>Qt's object communication; connect() binds them</td></tr>
+  <tr><td>Database connectivity</td><td>Application connects to a database for persistent storage</td></tr>
+  <tr><td>Qt SQL</td><td>QSqlDatabase, QSqlQuery, QSqlError, QSqlTableModel</td></tr>
+  <tr><td>Drivers</td><td>QSQLITE (built-in), QMYSQL, QPSQL, QODBC</td></tr>
+  <tr><td>Connection steps</td><td>Add QT += sql, load driver, set params, open, query, close</td></tr>
+  <tr><td>CRUD</td><td>CREATE, READ, UPDATE, DELETE via QSqlQuery</td></tr>
+  <tr><td>Database-driven GUI</td><td>QSqlTableModel connects QTableView to database</td></tr>
+</table>
+
+
+<table>
+Compilation Notes for Qt Code
+The C++ examples in this module use Qt framework classes and require the Qt development environment. To compile:
+
+For QCoreApplication / QSqlDatabase (console):
+
+bash
+qmake -project
+# Add QT += sql to the .pro file
+qmake
+make
+For QApplication / Widgets (GUI):
+
+bash
+qmake -project
+# Add QT += core gui sql to the .pro file
+qmake
+make
+For classes with Q_OBJECT (signals/slots examples), the #include "main.moc" line at the bottom is required when the class is defined in the main.cpp file. In Qt Creator, the build system handles this automatically.
+
+</table>
+
+
+
+
+
+
+</body>
+</html>

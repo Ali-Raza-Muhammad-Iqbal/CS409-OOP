@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS409 Module 4 - Inheritance and Code Reusability</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    font-size: 15px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    border-bottom: 4px solid #1f4e79;
+    padding-bottom: 12px;
+    color: #1f4e79;
+  }
+  h2 {
+    font-size: 20px;
+    color: #ffffff;
+    background: #1f4e79;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+  h3 {
+    font-size: 17px;
+    color: #1f4e79;
+    border-left: 5px solid #1f4e79;
+    padding-left: 10px;
+    margin-top: 28px;
+  }
+  h4 {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 20px;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    color: #b00020;
+  }
+  pre {
+    background: #f5f7fa;
+    border: 1px solid #d0d7de;
+    border-left: 4px solid #1f4e79;
+    padding: 14px 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #24292e;
+  }
+  pre code {
+    background: none;
+    color: #24292e;
+    padding: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1f4e79;
+    color: #ffffff;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  td {
+    border: 1px solid #cfd8dc;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f8fb;
+  }
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid #f0ad4e;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .def {
+    background: #e8f1f8;
+    border-left: 4px solid #1f4e79;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .output {
+    background: #eef6ee;
+    border-left: 4px solid #2e7d32;
+    padding: 8px 14px;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    margin: 8px 0;
+    border-radius: 3px;
+  }
+  .diagram {
+    background: #f9f9f9;
+    border: 1px dashed #888888;
+    padding: 14px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 26px;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #d0d7de;
+    margin: 36px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>CS409 – Object Oriented Programming<br>Module 4: Inheritance and Code Reusability</h1>
+
+<h2>Part A: Theory Topics</h2>
+
+<h3>1. Introduction to Inheritance and Its Advantages</h3>
+
+<div class="def">
+<strong>Definition:</strong> Inheritance is a mechanism in object-oriented programming by which one class (the derived class) acquires the properties and behaviors of another class (the base class). It promotes code reusability and establishes an "is-a" relationship between classes.
+</div>
+
+<h4>Key Terms</h4>
+<ul>
+  <li><strong>Base class (parent):</strong> The class whose members are inherited.</li>
+  <li><strong>Derived class (child):</strong> The class that inherits members from the base class.</li>
+  <li><strong>Reusability:</strong> Existing code can be reused without rewriting it.</li>
+</ul>
+
+<h4>Advantages of Inheritance</h4>
+<table>
+  <tr><th>No.</th><th>Advantage</th><th>Explanation</th></tr>
+  <tr><td>1</td><td>Code reusability</td><td>Common code is written once and reused by derived classes.</td></tr>
+  <tr><td>2</td><td>Extensibility</td><td>New features can be added without modifying existing code.</td></tr>
+  <tr><td>3</td><td>Reduced redundancy</td><td>Duplicate code is avoided across related classes.</td></tr>
+  <tr><td>4</td><td>Maintainability</td><td>Changes in the base class propagate to derived classes.</td></tr>
+  <tr><td>5</td><td>Polymorphism support</td><td>Enables dynamic binding and virtual functions.</td></tr>
+  <tr><td>6</td><td>Real-world modeling</td><td>Natural "is-a" hierarchies are easy to represent.</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A Car is a Vehicle, a Dog is an Animal, a Savings Account is a Bank Account. Each derived concept inherits the general features of its parent while adding its own specifics.</p>
+
+<hr>
+
+<h3>2. Base Class and Derived Class</h3>
+
+<div class="def">
+<strong>Base Class:</strong> The original class whose members are inherited.<br><br>
+<strong>Derived Class:</strong> The class that inherits members from the base class and may add new members of its own.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>class BaseClass {
+    // members
+};
+
+class DerivedClass : accessMode BaseClass {
+    // additional members
+};</code></pre>
+
+<h4>Inheritance Relationship Diagram</h4>
+<div class="diagram">     +----------------+
+     |   Base Class   |
+     |  (Vehicle)     |
+     +--------+-------+
+              |
+              | inherits
+              v
+     +----------------+
+     | Derived Class  |
+     |    (Car)       |
+     +----------------+</div>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Vehicle {
+public:
+    void start() { cout &lt;&lt; "Vehicle starting" &lt;&lt; endl; }
+};
+
+class Car : public Vehicle {
+public:
+    void drive() { cout &lt;&lt; "Car driving" &lt;&lt; endl; }
+};
+
+int main() {
+    Car c;
+    c.start();       // inherited
+    c.drive();       // own method
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Vehicle starting
+Car driving</div>
+
+<hr>
+
+<h3>3. Types of Inheritance</h3>
+
+<p>C++ supports five types of inheritance: single, multilevel, multiple, hierarchical, and hybrid.</p>
+
+<h4>3.1 Single Inheritance</h4>
+<div class="def">
+<strong>Definition:</strong> One derived class inherits from exactly one base class.
+</div>
+<div class="diagram"> +--------+        +--------+
+ | Base A | ------&gt;| Der. B |
+ +--------+        +--------+</div>
+<pre><code>class Animal {
+public:
+    void eat() { cout &lt;&lt; "Eating" &lt;&lt; endl; }
+};
+
+class Dog : public Animal {
+public:
+    void bark() { cout &lt;&lt; "Barking" &lt;&lt; endl; }
+};</code></pre>
+
+<h4>3.2 Multilevel Inheritance</h4>
+<div class="def">
+<strong>Definition:</strong> A derived class becomes the base class for another derived class, forming a chain.
+</div>
+<div class="diagram"> +--------+    +--------+    +--------+
+ | Base A |---&gt;| Der. B |---&gt;| Der. C |
+ +--------+    +--------+    +--------+</div>
+<pre><code>class Animal {
+public:
+    void eat() { cout &lt;&lt; "Eating" &lt;&lt; endl; }
+};
+
+class Dog : public Animal {
+public:
+    void bark() { cout &lt;&lt; "Barking" &lt;&lt; endl; }
+};
+
+class Puppy : public Dog {
+public:
+    void weep() { cout &lt;&lt; "Weeping" &lt;&lt; endl; }
+};</code></pre>
+
+<h4>3.3 Multiple Inheritance</h4>
+<div class="def">
+<strong>Definition:</strong> A single derived class inherits from two or more base classes.
+</div>
+<div class="diagram"> +--------+     +--------+
+ | Base A |     | Base B |
+ +---+----+     +----+---+
+     \              /
+      \            /
+       v          v
+        +--------+
+        | Der. C |
+        +--------+</div>
+<pre><code>class Printer {
+public:
+    void print() { cout &lt;&lt; "Printing" &lt;&lt; endl; }
+};
+
+class Scanner {
+public:
+    void scan() { cout &lt;&lt; "Scanning" &lt;&lt; endl; }
+};
+
+class Copier : public Printer, public Scanner {
+public:
+    void copy() {
+        print();
+        scan();
+    }
+};</code></pre>
+
+<h4>3.4 Hierarchical Inheritance</h4>
+<div class="def">
+<strong>Definition:</strong> Two or more derived classes inherit from a single base class.
+</div>
+<div class="diagram">          +--------+
+          | Base A |
+          +---+----+
+         /    |    \
+        v     v     v
+   +------+ +-----+ +------+
+   | Der.B| |Der.C| |Der.D |
+   +------+ +-----+ +------+</div>
+<pre><code>class Shape {
+public:
+    void draw() { cout &lt;&lt; "Drawing shape" &lt;&lt; endl; }
+};
+
+class Circle : public Shape { };
+class Square : public Shape { };
+class Triangle : public Shape { };</code></pre>
+
+<h4>3.5 Hybrid Inheritance</h4>
+<div class="def">
+<strong>Definition:</strong> A combination of two or more of the above inheritance types, such as multiple plus hierarchical or multilevel plus hierarchical.
+</div>
+<div class="diagram">          +--------+
+          | Base A |
+          +---+----+
+         /         \
+        v           v
+   +--------+   +--------+
+   |  B     |   |  C     |
+   +---+----+   +----+---+
+        \          /
+         \        /
+          v      v
+          +--------+
+          |   D    |
+          +--------+</div>
+<pre><code>class A {
+public:
+    void showA() { cout &lt;&lt; "A" &lt;&lt; endl; }
+};
+
+class B : public A { };
+class C : public A { };
+
+class D : public B, public C { };</code></pre>
+
+<div class="note">
+<strong>Note:</strong> Without virtual inheritance in the example above, class D receives two copies of A's members, causing ambiguity.
+</div>
+
+<hr>
+
+<h3>4. Public, Private, and Protected Inheritance</h3>
+
+<div class="def">
+<strong>Definition:</strong> The inheritance access specifier determines how the access level of inherited members is transformed in the derived class.
+</div>
+
+<h4>Access Transformation Table</h4>
+<table>
+  <tr><th>Base Member</th><th>public inheritance</th><th>protected inheritance</th><th>private inheritance</th></tr>
+  <tr><td>public</td><td>public</td><td>protected</td><td>private</td></tr>
+  <tr><td>protected</td><td>protected</td><td>protected</td><td>private</td></tr>
+  <tr><td>private</td><td>not accessible</td><td>not accessible</td><td>not accessible</td></tr>
+</table>
+
+<h4>Real-Life Analogy</h4>
+<ul>
+  <li><strong>public inheritance</strong> – "is-a" relationship (a Car is a Vehicle).</li>
+  <li><strong>protected inheritance</strong> – "is-implemented-in-terms-of" within a family (only derived classes may use the base).</li>
+  <li><strong>private inheritance</strong> – strict internal reuse; externally the derived class does not reveal the base.</li>
+</ul>
+
+<h4>Syntax</h4>
+<pre><code>class Derived : public    Base { };
+class Derived : protected Base { };
+class Derived : private   Base { };</code></pre>
+
+<hr>
+
+<h3>5. Function Overriding</h3>
+
+<div class="def">
+<strong>Definition:</strong> Function overriding occurs when a derived class defines a function with the same name, return type, and parameter list as a function in its base class. The derived version replaces the base version when called through a derived object.
+</div>
+
+<h4>Function Overloading vs Overriding</h4>
+<table>
+  <tr><th>Feature</th><th>Overloading</th><th>Overriding</th></tr>
+  <tr><td>Scope</td><td>Same class</td><td>Base and derived class</td></tr>
+  <tr><td>Parameters</td><td>Must differ</td><td>Must be identical</td></tr>
+  <tr><td>Binding</td><td>Compile-time</td><td>Runtime (if virtual)</td></tr>
+  <tr><td>Keyword</td><td>Not required</td><td>virtual, override recommended</td></tr>
+</table>
+
+<h4>Syntax</h4>
+<pre><code>class Base {
+public:
+    virtual void show() { /* base version */ }
+};
+
+class Derived : public Base {
+public:
+    void show() override { /* derived version */ }
+};</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>All animals "speak," but a Dog barks and a Cat meows. The base behavior is replaced by each derived version.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Animal {
+public:
+    virtual void sound() { cout &lt;&lt; "Some sound" &lt;&lt; endl; }
+};
+
+class Dog : public Animal {
+public:
+    void sound() override { cout &lt;&lt; "Bark" &lt;&lt; endl; }
+};
+
+class Cat : public Animal {
+public:
+    void sound() override { cout &lt;&lt; "Meow" &lt;&lt; endl; }
+};
+
+int main() {
+    Dog d; Cat c;
+    d.sound();
+    c.sound();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Bark
+Meow</div>
+
+<hr>
+
+<h3>6. Constructor and Destructor Execution in Inheritance</h3>
+
+<div class="def">
+<strong>Definition:</strong> When an object of a derived class is created, constructors execute from base to derived. When it is destroyed, destructors execute from derived to base.
+</div>
+
+<h4>Execution Order</h4>
+<div class="diagram">Construction:   Base  --&gt;  Intermediate  --&gt;  Derived
+Destruction:    Derived  --&gt;  Intermediate  --&gt;  Base</div>
+
+<h4>Rules</h4>
+<ul>
+  <li>Base class constructors are called first, in the order of inheritance.</li>
+  <li>Then the derived class constructor body executes.</li>
+  <li>Destructors are called in the exact reverse order.</li>
+  <li>If the base class has no default constructor, the derived constructor must explicitly call it using an initializer list.</li>
+</ul>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Base {
+public:
+    Base() { cout &lt;&lt; "Base constructor" &lt;&lt; endl; }
+    ~Base() { cout &lt;&lt; "Base destructor" &lt;&lt; endl; }
+};
+
+class Derived : public Base {
+public:
+    Derived() { cout &lt;&lt; "Derived constructor" &lt;&lt; endl; }
+    ~Derived() { cout &lt;&lt; "Derived destructor" &lt;&lt; endl; }
+};
+
+int main() {
+    Derived d;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Base constructor
+Derived constructor
+Derived destructor
+Base destructor</div>
+
+<hr>
+
+<h3>7. Ambiguity in Multiple Inheritance</h3>
+
+<div class="def">
+<strong>Definition:</strong> Ambiguity arises in multiple inheritance when two or more base classes contain a member (function or data) with the same name. The compiler cannot decide which version to use when the derived class calls that member.
+</div>
+
+<h4>Diamond Problem Diagram</h4>
+<div class="diagram">          +--------+
+          |  Base  |
+          +---+----+
+         /         \
+        v           v
+   +--------+   +--------+
+   |  B     |   |  C     |
+   +---+----+   +----+---+
+        \          /
+         \        /
+          v      v
+          +--------+
+          |   D    |
+          +--------+
+  D inherits two copies of Base, causing ambiguity.</div>
+
+<h4>Code Example (Ambiguity)</h4>
+<pre><code>class A {
+public:
+    void show() { cout &lt;&lt; "A" &lt;&lt; endl; }
+};
+
+class B : public A { };
+class C : public A { };
+
+class D : public B, public C { };
+
+int main() {
+    D d;
+    // d.show();       // AMBIGUOUS
+    d.B::show();       // resolved using scope resolution
+    d.C::show();
+    return 0;
+}</code></pre>
+
+<h4>Ways to Resolve Ambiguity</h4>
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td>Scope resolution</td><td>Use <code>obj.Base::member()</code> to specify which version to call</td></tr>
+  <tr><td>Override in derived class</td><td>Redefine the member in the derived class to hide both base versions</td></tr>
+  <tr><td>Virtual base class</td><td>Ensure only one copy of the common base exists</td></tr>
+</table>
+
+<hr>
+
+<h3>8. Virtual Base Classes</h3>
+
+<div class="def">
+<strong>Definition:</strong> A virtual base class is used in hybrid or multiple inheritance to prevent multiple copies of a common base class. When a base class is inherited virtually, only one shared instance of that base exists in the derived class.
+</div>
+
+<h4>Purpose</h4>
+<ul>
+  <li>Solves the diamond problem.</li>
+  <li>Ensures a single copy of the common base class.</li>
+  <li>Reduces memory waste and removes ambiguity.</li>
+</ul>
+
+<h4>Syntax</h4>
+<pre><code>class B : virtual public A { };
+class C : virtual public A { };
+class D : public B, public C { };</code></pre>
+
+<h4>Diamond Problem Resolution Diagram</h4>
+<div class="diagram">          +--------+
+          |  Base  |   (virtual)
+          +---+----+
+         /         \
+        v           v
+   +--------+   +--------+
+   |  B(v)  |   |  C(v)  |
+   +---+----+   +----+---+
+        \          /
+         \        /
+          v      v
+          +--------+
+          |   D    |   only one copy of Base
+          +--------+</div>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class A {
+public:
+    int value = 10;
+};
+
+class B : virtual public A { };
+class C : virtual public A { };
+
+class D : public B, public C { };
+
+int main() {
+    D d;
+    cout &lt;&lt; d.value &lt;&lt; endl;    // no ambiguity now
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+10</div>
+
+<hr>
+
+<h3>9. Code Reusability Through Inheritance</h3>
+
+<div class="def">
+<strong>Definition:</strong> Code reusability through inheritance means writing common functionality once in a base class and reusing it in all derived classes, instead of duplicating it.
+</div>
+
+<h4>Benefits</h4>
+<ul>
+  <li>Single point of maintenance for shared logic.</li>
+  <li>Reduced total source code size.</li>
+  <li>Improved consistency across related classes.</li>
+  <li>Faster development through reuse of tested code.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A payroll system defines an <code>Employee</code> base class with <code>name</code>, <code>id</code>, and <code>calculateSalary()</code>. The derived classes <code>Manager</code>, <code>Engineer</code>, and <code>Intern</code> reuse these members and add their own logic without rewriting the common parts.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Employee {
+protected:
+    string name;
+    int id;
+public:
+    Employee(string n, int i) : name(n), id(i) { }
+
+    void showInfo() {
+        cout &lt;&lt; name &lt;&lt; " (ID: " &lt;&lt; id &lt;&lt; ")" &lt;&lt; endl;
+    }
+};
+
+class Manager : public Employee {
+public:
+    Manager(string n, int i) : Employee(n, i) { }
+
+    void role() { cout &lt;&lt; "Manages the team" &lt;&lt; endl; }
+};
+
+class Engineer : public Employee {
+public:
+    Engineer(string n, int i) : Employee(n, i) { }
+
+    void role() { cout &lt;&lt; "Develops software" &lt;&lt; endl; }
+};
+
+int main() {
+    Manager m("Ali", 101);
+    Engineer e("Sara", 102);
+
+    m.showInfo(); m.role();
+    e.showInfo(); e.role();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Ali (ID: 101)
+Manages the team
+Sara (ID: 102)
+Develops software</div>
+
+<hr>
+
+<h2>Part B: Practical Topics</h2>
+
+<h3>Practical 1: Implementing Single and Multilevel Inheritance</h3>
+
+<h4>Single Inheritance</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Vehicle {
+public:
+    void start() { cout &lt;&lt; "Vehicle started" &lt;&lt; endl; }
+};
+
+class Car : public Vehicle {
+public:
+    void drive() { cout &lt;&lt; "Car is driving" &lt;&lt; endl; }
+};
+
+int main() {
+    Car c;
+    c.start();
+    c.drive();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Vehicle started
+Car is driving</div>
+
+<h4>Multilevel Inheritance</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Vehicle {
+public:
+    void start() { cout &lt;&lt; "Vehicle started" &lt;&lt; endl; }
+};
+
+class Car : public Vehicle {
+public:
+    void drive() { cout &lt;&lt; "Car is driving" &lt;&lt; endl; }
+};
+
+class SportsCar : public Car {
+public:
+    void turbo() { cout &lt;&lt; "Turbo engaged" &lt;&lt; endl; }
+};
+
+int main() {
+    SportsCar s;
+    s.start();
+    s.drive();
+    s.turbo();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Vehicle started
+Car is driving
+Turbo engaged</div>
+
+<hr>
+
+<h3>Practical 2: Implementing Multiple and Hierarchical Inheritance</h3>
+
+<h4>Multiple Inheritance</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Printer {
+public:
+    void print() { cout &lt;&lt; "Printing..." &lt;&lt; endl; }
+};
+
+class Scanner {
+public:
+    void scan() { cout &lt;&lt; "Scanning..." &lt;&lt; endl; }
+};
+
+class Copier : public Printer, public Scanner {
+public:
+    void copy() {
+        cout &lt;&lt; "Copier working" &lt;&lt; endl;
+        print();
+        scan();
+    }
+};
+
+int main() {
+    Copier c;
+    c.copy();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Copier working
+Printing...
+Scanning...</div>
+
+<h4>Hierarchical Inheritance</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Shape {
+public:
+    void describe() { cout &lt;&lt; "A shape" &lt;&lt; endl; }
+};
+
+class Circle : public Shape {
+public:
+    void draw() { cout &lt;&lt; "Drawing circle" &lt;&lt; endl; }
+};
+
+class Square : public Shape {
+public:
+    void draw() { cout &lt;&lt; "Drawing square" &lt;&lt; endl; }
+};
+
+int main() {
+    Circle c;
+    Square s;
+    c.describe(); c.draw();
+    s.describe(); s.draw();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+A shape
+Drawing circle
+A shape
+Drawing square</div>
+
+<hr>
+
+<h3>Practical 3: Implementing Hybrid Inheritance</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Person {
+public:
+    void info() { cout &lt;&lt; "Person info" &lt;&lt; endl; }
+};
+
+class Student : virtual public Person {
+public:
+    void study() { cout &lt;&lt; "Studying" &lt;&lt; endl; }
+};
+
+class Employee : virtual public Person {
+public:
+    void work() { cout &lt;&lt; "Working" &lt;&lt; endl; }
+};
+
+class Intern : public Student, public Employee {
+public:
+    void role() {
+        info();       // no ambiguity thanks to virtual inheritance
+        study();
+        work();
+        cout &lt;&lt; "Intern role" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Intern i;
+    i.role();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Person info
+Studying
+Working
+Intern role</div>
+
+<hr>
+
+<h3>Practical 4: Applying Different Inheritance Access Modes</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Base {
+public:
+    int a = 1;
+protected:
+    int b = 2;
+private:
+    int c = 3;
+};
+
+class PublicDerived : public Base {
+public:
+    void show() {
+        cout &lt;&lt; "a=" &lt;&lt; a &lt;&lt; " b=" &lt;&lt; b &lt;&lt; endl;   // c not accessible
+    }
+};
+
+class ProtectedDerived : protected Base {
+public:
+    void show() {
+        cout &lt;&lt; "a=" &lt;&lt; a &lt;&lt; " b=" &lt;&lt; b &lt;&lt; endl;
+    }
+};
+
+class PrivateDerived : private Base {
+public:
+    void show() {
+        cout &lt;&lt; "a=" &lt;&lt; a &lt;&lt; " b=" &lt;&lt; b &lt;&lt; endl;
+    }
+};
+
+int main() {
+    PublicDerived p;
+    p.show();
+
+    ProtectedDerived pr;
+    pr.show();
+
+    PrivateDerived pv;
+    pv.show();
+
+    // cout &lt;&lt; p.a;    // allowed in public only
+    // cout &lt;&lt; pr.a;   // NOT allowed; now protected
+    // cout &lt;&lt; pv.a;   // NOT allowed; now private
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+a=1 b=2
+a=1 b=2
+a=1 b=2</div>
+
+<hr>
+
+<h3>Practical 5: Implementing Function Overriding</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Shape {
+public:
+    virtual void area() {
+        cout &lt;&lt; "Area of shape not defined" &lt;&lt; endl;
+    }
+};
+
+class Rectangle : public Shape {
+private:
+    int l, w;
+public:
+    Rectangle(int length, int width) { l = length; w = width; }
+    void area() override {
+        cout &lt;&lt; "Rectangle area: " &lt;&lt; l * w &lt;&lt; endl;
+    }
+};
+
+class Triangle : public Shape {
+private:
+    int base, height;
+public:
+    Triangle(int b, int h) { base = b; height = h; }
+    void area() override {
+        cout &lt;&lt; "Triangle area: " &lt;&lt; 0.5 * base * height &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Rectangle r(4, 5);
+    Triangle t(6, 3);
+
+    Shape *s1 = &amp;r;
+    Shape *s2 = &amp;t;
+    s1-&gt;area();
+    s2-&gt;area();
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Rectangle area: 20
+Triangle area: 9</div>
+
+<hr>
+
+<h3>Practical 6: Understanding Constructor and Destructor Execution Order</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class A {
+public:
+    A() { cout &lt;&lt; "A constructor" &lt;&lt; endl; }
+    ~A() { cout &lt;&lt; "A destructor" &lt;&lt; endl; }
+};
+
+class B : public A {
+public:
+    B() { cout &lt;&lt; "B constructor" &lt;&lt; endl; }
+    ~B() { cout &lt;&lt; "B destructor" &lt;&lt; endl; }
+};
+
+class C : public B {
+public:
+    C() { cout &lt;&lt; "C constructor" &lt;&lt; endl; }
+    ~C() { cout &lt;&lt; "C destructor" &lt;&lt; endl; }
+};
+
+int main() {
+    C obj;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+A constructor
+B constructor
+C constructor
+C destructor
+B destructor
+A destructor</div>
+
+<h4>Execution Order Diagram</h4>
+<div class="diagram"> Construction:  A  --&gt;  B  --&gt;  C
+ Destruction:   C  --&gt;  B  --&gt;  A</div>
+
+<hr>
+
+<h3>Practical 7: Resolving Ambiguity in Multiple Inheritance</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class A {
+public:
+    void show() { cout &lt;&lt; "A::show" &lt;&lt; endl; }
+};
+
+class B : public A { };
+class C : public A { };
+class D : public B, public C { };
+
+int main() {
+    D d;
+
+    // d.show();        // ambiguous
+    d.B::show();        // resolve via scope
+    d.C::show();        // resolve via scope
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+A::show
+A::show</div>
+
+<h4>Alternative Resolution: Overriding in D</h4>
+<pre><code>class D : public B, public C {
+public:
+    void show() { cout &lt;&lt; "D::show" &lt;&lt; endl; }   // hides both base versions
+};</code></pre>
+
+<hr>
+
+<h3>Practical 8: Implementing Virtual Base Classes</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Person {
+protected:
+    string name;
+public:
+    Person(string n) : name(n) { }
+    void show() { cout &lt;&lt; "Name: " &lt;&lt; name &lt;&lt; endl; }
+};
+
+class Student : virtual public Person {
+public:
+    Student(string n) : Person(n) { }
+};
+
+class Employee : virtual public Person {
+public:
+    Employee(string n) : Person(n) { }
+};
+
+class Intern : public Student, public Employee {
+public:
+    Intern(string n) : Person(n), Student(n), Employee(n) { }
+};
+
+int main() {
+    Intern i("Ali");
+    i.show();            // single shared Person instance
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Name: Ali</div>
+
+<div class="note">
+<strong>Note:</strong> When a virtual base class is used, the most-derived class (Intern) is responsible for calling the virtual base class constructor directly. This ensures only one instance of the shared base exists.
+</div>
+
+<hr>
+
+<h2>Module 4: Quick Revision Summary</h2>
+
+<table>
+  <tr><th>Topic</th><th>Key Takeaway</th></tr>
+  <tr><td>Inheritance</td><td>Derived class acquires members of the base class; is-a relationship</td></tr>
+  <tr><td>Base and derived class</td><td>Base is the parent; derived is the child that reuses and extends</td></tr>
+  <tr><td>Single inheritance</td><td>One base, one derived</td></tr>
+  <tr><td>Multilevel inheritance</td><td>Chain of inheritance: A to B to C</td></tr>
+  <tr><td>Multiple inheritance</td><td>One derived, two or more bases</td></tr>
+  <tr><td>Hierarchical inheritance</td><td>One base, multiple derived</td></tr>
+  <tr><td>Hybrid inheritance</td><td>Combination of two or more types</td></tr>
+  <tr><td>Access modes</td><td>public, protected, private; public, protected and private members transform accordingly</td></tr>
+  <tr><td>Function overriding</td><td>Same signature in derived class; use virtual for runtime binding</td></tr>
+  <tr><td>Constructor and destructor order</td><td>Base to derived on construction; derived to base on destruction</td></tr>
+  <tr><td>Ambiguity</td><td>Occurs in multiple inheritance; resolve via scope, override, or virtual base</td></tr>
+  <tr><td>Virtual base class</td><td>Only one shared copy of common base; resolves the diamond problem</td></tr>
+  <tr><td>Code reusability</td><td>Common logic in base class reused by all derived classes</td></tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS409 Module 2 - Constructors, Destructors, and Encapsulation</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    font-size: 15px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    border-bottom: 4px solid #1f4e79;
+    padding-bottom: 12px;
+    color: #1f4e79;
+  }
+  h2 {
+    font-size: 20px;
+    color: #ffffff;
+    background: #1f4e79;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+  h3 {
+    font-size: 17px;
+    color: #1f4e79;
+    border-left: 5px solid #1f4e79;
+    padding-left: 10px;
+    margin-top: 28px;
+  }
+  h4 {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 20px;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    color: #b00020;
+  }
+  pre {
+    background: #f5f7fa;
+    border: 1px solid #d0d7de;
+    border-left: 4px solid #1f4e79;
+    padding: 14px 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #24292e;
+  }
+  pre code {
+    background: none;
+    color: #24292e;
+    padding: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1f4e79;
+    color: #ffffff;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  td {
+    border: 1px solid #cfd8dc;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f8fb;
+  }
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid #f0ad4e;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .def {
+    background: #e8f1f8;
+    border-left: 4px solid #1f4e79;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .output {
+    background: #eef6ee;
+    border-left: 4px solid #2e7d32;
+    padding: 8px 14px;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    margin: 8px 0;
+    border-radius: 3px;
+  }
+  .diagram {
+    background: #f9f9f9;
+    border: 1px dashed #888888;
+    padding: 14px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 26px;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #d0d7de;
+    margin: 36px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>CS409 – Object Oriented Programming<br>Module 2: Constructors, Destructors, and Encapsulation</h1>
+
+<h2>Part A: Theory Topics</h2>
+
+<h3>1. Introduction to Constructors</h3>
+
+<div class="def">
+<strong>Definition:</strong> A constructor is a special member function of a class that is automatically called when an object is created. Its primary purpose is to initialize the object's data members.
+</div>
+
+<h4>Key Characteristics</h4>
+<ul>
+  <li>Has the same name as the class.</li>
+  <li>Has no return type (not even void).</li>
+  <li>Called automatically at the time of object creation.</li>
+  <li>Can be overloaded (multiple constructors with different parameters).</li>
+  <li>Cannot be called explicitly like normal functions.</li>
+</ul>
+
+<h4>Syntax</h4>
+<pre><code>class ClassName {
+public:
+    ClassName() {
+        // constructor body
+    }
+};</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>When a new bank account is opened, the system automatically fills in details such as account number and opening balance. The constructor performs this automatic setup.</p>
+
+<h4>Simple Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+public:
+    string name;
+    Student() {
+        name = "Unknown";
+        cout &lt;&lt; "Constructor called" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Student s1;
+    cout &lt;&lt; "Name: " &lt;&lt; s1.name &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Constructor called
+Name: Unknown</div>
+
+<hr>
+
+<h3>2. Default Constructors</h3>
+
+<div class="def">
+<strong>Definition:</strong> A default constructor is a constructor that takes no parameters. It initializes objects with default values. If no constructor is defined by the programmer, the compiler generates a default constructor automatically.
+</div>
+
+<h4>Types</h4>
+<table>
+  <tr><th>Type</th><th>Description</th></tr>
+  <tr><td>Compiler-generated default constructor</td><td>Automatically created by the compiler when no constructor is declared. Does not initialize data members (they contain garbage values).</td></tr>
+  <tr><td>Programmer-defined default constructor</td><td>Written by the programmer to assign specific default values.</td></tr>
+</table>
+
+<h4>Syntax</h4>
+<pre><code>ClassName() {
+    // default initialization
+}</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A new mobile phone comes with factory default settings (language, wallpaper, brightness) before the user changes anything.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Mobile {
+public:
+    string brand;
+    int battery;
+
+    Mobile() {              // default constructor
+        brand = "Generic";
+        battery = 100;
+    }
+
+    void show() {
+        cout &lt;&lt; brand &lt;&lt; " - " &lt;&lt; battery &lt;&lt; "%" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Mobile m;
+    m.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Generic - 100%</div>
+
+<hr>
+
+<h3>3. Parameterized Constructors</h3>
+
+<div class="def">
+<strong>Definition:</strong> A parameterized constructor is a constructor that accepts arguments. It allows objects to be initialized with specific values at the time of creation.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>ClassName(dataType param1, dataType param2) {
+    member1 = param1;
+    member2 = param2;
+}</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>When opening a bank account, you provide your name and initial deposit. These values are passed to the constructor, which sets up the account accordingly.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Account {
+public:
+    string owner;
+    double balance;
+
+    Account(string n, double b) {
+        owner = n;
+        balance = b;
+    }
+
+    void show() {
+        cout &lt;&lt; owner &lt;&lt; " has $" &lt;&lt; balance &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Account a1("Ali", 5000);
+    Account a2("Sara", 8000);
+    a1.show();
+    a2.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Ali has $5000
+Sara has $8000</div>
+
+<hr>
+
+<h3>4. Copy Constructors</h3>
+
+<div class="def">
+<strong>Definition:</strong> A copy constructor is a constructor that creates a new object as a copy of an existing object of the same class. It takes a reference to an object of the same class as its parameter.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>ClassName(const ClassName &amp;obj) {
+    // copy members from obj
+}</code></pre>
+
+<h4>When Is It Called?</h4>
+<ul>
+  <li>When an object is initialized from another object: <code>ClassName obj2 = obj1;</code></li>
+  <li>When an object is passed by value to a function.</li>
+  <li>When an object is returned by value from a function.</li>
+</ul>
+
+<h4>Types</h4>
+<table>
+  <tr><th>Type</th><th>Description</th></tr>
+  <tr><td>Default copy constructor</td><td>Automatically provided by the compiler; performs a shallow copy (copies member values directly).</td></tr>
+  <tr><td>User-defined copy constructor</td><td>Written by the programmer to perform a deep copy (e.g., allocating new memory for pointers).</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>Photocopying a document: the copy has the same content as the original but is a separate physical object.</p>
+
+<h4>Code Example (Deep Copy)</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Box {
+public:
+    int *data;
+
+    Box(int v) {
+        data = new int(v);
+    }
+
+    Box(const Box &amp;other) {          // copy constructor
+        data = new int(*(other.data));
+    }
+
+    void show() {
+        cout &lt;&lt; "Value: " &lt;&lt; *data &lt;&lt; endl;
+    }
+
+    ~Box() { delete data; }
+};
+
+int main() {
+    Box b1(50);
+    Box b2 = b1;                      // invokes copy constructor
+    b1.show();
+    b2.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Value: 50
+Value: 50</div>
+
+<hr>
+
+<h3>5. Constructor Overloading</h3>
+
+<div class="def">
+<strong>Definition:</strong> Constructor overloading means defining multiple constructors in the same class with different parameter lists. The compiler chooses the appropriate constructor based on the arguments provided at object creation.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>class ClassName {
+public:
+    ClassName() { }
+    ClassName(int a) { }
+    ClassName(int a, int b) { }
+};</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>Booking a hotel room: you may book with only a name, or with name and number of nights, or with name, nights, and room type. Different sets of information are accepted.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Room {
+public:
+    string guest;
+    int nights;
+    string type;
+
+    Room() { guest = "None"; nights = 0; type = "Standard"; }
+    Room(string g) { guest = g; nights = 1; type = "Standard"; }
+    Room(string g, int n, string t) { guest = g; nights = n; type = t; }
+
+    void show() {
+        cout &lt;&lt; guest &lt;&lt; " | " &lt;&lt; nights &lt;&lt; " nights | " &lt;&lt; type &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Room r1;
+    Room r2("Ali");
+    Room r3("Sara", 3, "Deluxe");
+    r1.show();
+    r2.show();
+    r3.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+None | 0 nights | Standard
+Ali | 1 nights | Standard
+Sara | 3 nights | Deluxe</div>
+
+<hr>
+
+<h3>6. Destructors</h3>
+
+<div class="def">
+<strong>Definition:</strong> A destructor is a special member function that is automatically called when an object is destroyed (goes out of scope or is explicitly deleted). It is used to release resources such as memory, file handles, or network connections.
+</div>
+
+<h4>Key Characteristics</h4>
+<ul>
+  <li>Has the same name as the class, prefixed with a tilde (<code>~</code>).</li>
+  <li>Takes no parameters and has no return type.</li>
+  <li>Only one destructor per class (cannot be overloaded).</li>
+  <li>Called in reverse order of object creation.</li>
+</ul>
+
+<h4>Syntax</h4>
+<pre><code>~ClassName() {
+    // cleanup code
+}</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>When you check out of a hotel room, the room is cleaned and prepared for the next guest. The destructor performs a similar cleanup when an object is no longer needed.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class File {
+public:
+    File() { cout &lt;&lt; "File opened" &lt;&lt; endl; }
+    ~File() { cout &lt;&lt; "File closed" &lt;&lt; endl; }
+};
+
+int main() {
+    File f1;
+    cout &lt;&lt; "Using file..." &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+File opened
+Using file...
+File closed</div>
+
+<hr>
+
+<h3>7. Data Encapsulation</h3>
+
+<div class="def">
+<strong>Definition:</strong> Encapsulation is the bundling of data (variables) and the methods (functions) that operate on that data into a single unit (a class). It also restricts direct access to some of the object's components, protecting data from unauthorized modification.
+</div>
+
+<h4>Real-Life Example</h4>
+<p>A capsule medicine: the medicine (data) is enclosed within a protective shell (class), and it can only be released in a controlled manner (through member functions).</p>
+
+<h4>Diagram</h4>
+<div class="diagram">  +--------------------------------+
+  |          CLASS: BankAccount    |
+  |  ------------------------------|
+  |  Private (hidden data):        |
+  |     balance                    |
+  |                                |
+  |  Public (controlled access):   |
+  |     deposit(amount)            |
+  |     withdraw(amount)           |
+  |     getBalance()               |
+  +--------------------------------+</div>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class BankAccount {
+private:
+    double balance;
+
+public:
+    void deposit(double amt) {
+        if (amt &gt; 0) balance += amt;
+    }
+    void withdraw(double amt) {
+        if (amt &gt; 0 &amp;&amp; amt &lt;= balance) balance -= amt;
+    }
+    double getBalance() { return balance; }
+};
+
+int main() {
+    BankAccount acc;
+    acc.deposit(1000);
+    acc.withdraw(300);
+    cout &lt;&lt; "Balance: $" &lt;&lt; acc.getBalance() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Balance: $700</div>
+
+<hr>
+
+<h3>8. Access Specifiers: public, private, protected</h3>
+
+<div class="def">
+<strong>Definition:</strong> Access specifiers control the visibility of class members. They determine which parts of a program can access a class's data and functions.
+</div>
+
+<h4>Types</h4>
+<table>
+  <tr><th>Specifier</th><th>Accessible From</th><th>Purpose</th></tr>
+  <tr><td>public</td><td>Inside class, outside class, derived classes</td><td>Open access; used for interfaces and methods</td></tr>
+  <tr><td>private</td><td>Only within the class</td><td>Hidden data; default for class members</td></tr>
+  <tr><td>protected</td><td>Within class and derived classes</td><td>Controlled inheritance-based access</td></tr>
+</table>
+
+<h4>Access Diagram</h4>
+<div class="diagram">                  Inside   Outside   Derived
+                   Class    Class     Class
+  +----------+       |        |         |
+  | public   |      YES      YES       YES
+  | private  |      YES       NO        NO
+  | protected|      YES       NO       YES
+  +----------+</div>
+
+<h4>Real-Life Example</h4>
+<ul>
+  <li><strong>public</strong> – A car's accelerator pedal (accessible to driver).</li>
+  <li><strong>private</strong> – The engine's internal wiring (hidden from driver).</li>
+  <li><strong>protected</strong> – Service panel accessible only to authorized mechanics (derived types).</li>
+</ul>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Vehicle {
+protected:
+    int speed;
+
+public:
+    void setSpeed(int s) { speed = s; }
+};
+
+class Car : public Vehicle {
+public:
+    void show() {
+        cout &lt;&lt; "Speed: " &lt;&lt; speed &lt;&lt; endl;   // protected accessible
+    }
+};
+
+int main() {
+    Car c;
+    c.setSpeed(80);
+    c.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Speed: 80</div>
+
+<hr>
+
+<h3>9. Getter and Setter Functions</h3>
+
+<div class="def">
+<strong>Definition:</strong> Getter (accessor) functions return the value of a private data member. Setter (mutator) functions assign a new value to a private data member. They provide controlled access to encapsulated data.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>returnType getMember() { return member; }
+void setMember(dataType value) { member = value; }</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A television's volume can be changed only through the remote's volume button (setter) and checked via the display (getter), while the internal speaker circuit remains hidden.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+
+public:
+    void setName(string n) { name = n; }
+    string getName() { return name; }
+
+    void setAge(int a) {
+        if (a &gt; 0) age = a;      // validation
+    }
+    int getAge() { return age; }
+};
+
+int main() {
+    Person p;
+    p.setName("Ali");
+    p.setAge(25);
+    cout &lt;&lt; p.getName() &lt;&lt; " is " &lt;&lt; p.getAge() &lt;&lt; " years old." &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Ali is 25 years old.</div>
+
+<hr>
+
+<h3>10. This Pointer</h3>
+
+<div class="def">
+<strong>Definition:</strong> The <code>this</code> pointer is an implicit pointer available inside every non-static member function. It points to the current object that invoked the function.
+</div>
+
+<h4>Uses of this Pointer</h4>
+<ul>
+  <li>To distinguish between a data member and a parameter with the same name.</li>
+  <li>To return the current object from a member function.</li>
+  <li>To access members of the current object through a pointer.</li>
+  <li>To pass the current object to another function.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>When a person says "my name," the word "my" refers to the person currently speaking. Similarly, <code>this</code> refers to the current object.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+private:
+    string name;
+
+public:
+    void setName(string name) {
+        this-&gt;name = name;       // this distinguishes member from parameter
+    }
+    string getName() { return name; }
+
+    Student&amp; getSelf() { return *this; }
+};
+
+int main() {
+    Student s;
+    s.setName("Sara");
+    cout &lt;&lt; s.getName() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Sara</div>
+
+<hr>
+
+<h3>11. Static Data Members and Static Member Functions</h3>
+
+<div class="def">
+<strong>Definition:</strong> A static data member belongs to the class rather than to any specific object. Only one copy exists and it is shared by all objects. A static member function belongs to the class and can be called without creating an object. It can only access static members.
+</div>
+
+<h4>Key Points</h4>
+<ul>
+  <li>Static data members must be defined outside the class.</li>
+  <li>Static member functions do not have a <code>this</code> pointer.</li>
+  <li>Accessed using the class name: <code>ClassName::member</code>.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>The number of students enrolled in a university is common to all students; it is a property of the university, not of any single student. This is a static data member.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+public:
+    static int totalCount;          // shared data member
+
+    Student() { totalCount++; }
+
+    static void showCount() {       // static member function
+        cout &lt;&lt; "Total students: " &lt;&lt; totalCount &lt;&lt; endl;
+    }
+};
+
+int Student::totalCount = 0;        // definition outside class
+
+int main() {
+    Student s1, s2, s3;
+    Student::showCount();           // called without object
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Total students: 3</div>
+
+<hr>
+
+<h3>12. Constant Data Members and Constant Member Functions</h3>
+
+<div class="def">
+<strong>Definition:</strong> A constant data member is a data member whose value cannot be modified after initialization. A constant member function is a function that guarantees not to modify any data members of the object. It is declared with the <code>const</code> keyword.
+</div>
+
+<h4>Rules</h4>
+<ul>
+  <li>Constant data members must be initialized using an initializer list in the constructor.</li>
+  <li>A constant member function can be called on both constant and non-constant objects.</li>
+  <li>A non-constant member function cannot be called on a constant object.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A person's date of birth (constant) cannot change, while their age (non-constant) changes each year. A function that reads the date of birth must be declared constant.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Person {
+private:
+    const int id;                 // constant data member
+    int age;
+
+public:
+    Person(int idVal, int ageVal) : id(idVal), age(ageVal) { }
+
+    int getID() const { return id; }     // constant member function
+    int getAge() const { return age; }
+};
+
+int main() {
+    Person p(101, 25);
+    cout &lt;&lt; "ID: " &lt;&lt; p.getID() &lt;&lt; ", Age: " &lt;&lt; p.getAge() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+ID: 101, Age: 25</div>
+
+<hr>
+
+<h3>13. Array of Objects</h3>
+
+<div class="def">
+<strong>Definition:</strong> An array of objects is a collection of objects of the same class stored in contiguous memory, accessed using an index. Each element is a separate object with its own set of data members.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>ClassName arrayName[size];
+ClassName arrayName[size] = { Object1, Object2, ... };</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A classroom contains multiple students, each with their own name, roll number, and marks. These are naturally represented as an array of <code>Student</code> objects.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int marks;
+
+    void set(string n, int m) { name = n; marks = m; }
+    void show() { cout &lt;&lt; name &lt;&lt; ": " &lt;&lt; marks &lt;&lt; endl; }
+};
+
+int main() {
+    Student list[3];
+    list[0].set("Ali", 85);
+    list[1].set("Sara", 92);
+    list[2].set("John", 78);
+
+    for (int i = 0; i &lt; 3; i++)
+        list[i].show();
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Ali: 85
+Sara: 92
+John: 78</div>
+
+<h4>Array of Objects Diagram</h4>
+<div class="diagram">  Student list[3];
+
+  Index:     0           1           2
+          +--------+  +--------+  +--------+
+          |  Ali   |  |  Sara  |  |  John  |
+          |  85    |  |  92    |  |  78    |
+          +--------+  +--------+  +--------+
+          list[0]     list[1]     list[2]</div>
+
+<hr>
+
+<h2>Part B: Practical Topics</h2>
+
+<h3>Practical 1: Implementing Default and Parameterized Constructors</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Book {
+private:
+    string title;
+    double price;
+
+public:
+    Book() {                         // default constructor
+        title = "Untitled";
+        price = 0.0;
+    }
+
+    Book(string t, double p) {       // parameterized constructor
+        title = t;
+        price = p;
+    }
+
+    void show() {
+        cout &lt;&lt; title &lt;&lt; " - $" &lt;&lt; price &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Book b1;                         // default
+    Book b2("C++ Primer", 45.50);    // parameterized
+    b1.show();
+    b2.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Untitled - $0
+C++ Primer - $45.5</div>
+
+<hr>
+
+<h3>Practical 2: Implementing Copy Constructors</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Number {
+private:
+    int value;
+
+public:
+    Number(int v) { value = v; }
+
+    Number(const Number &amp;n) {       // copy constructor
+        value = n.value;
+        cout &lt;&lt; "Copy constructor called" &lt;&lt; endl;
+    }
+
+    void show() { cout &lt;&lt; "Value: " &lt;&lt; value &lt;&lt; endl; }
+};
+
+int main() {
+    Number n1(10);
+    Number n2 = n1;                  // invokes copy constructor
+    n1.show();
+    n2.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Copy constructor called
+Value: 10
+Value: 10</div>
+
+<hr>
+
+<h3>Practical 3: Constructor Overloading</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Time {
+private:
+    int hours, minutes;
+
+public:
+    Time() { hours = 0; minutes = 0; }
+    Time(int h) { hours = h; minutes = 0; }
+    Time(int h, int m) { hours = h; minutes = m; }
+
+    void show() {
+        cout &lt;&lt; hours &lt;&lt; "h " &lt;&lt; minutes &lt;&lt; "m" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Time t1;
+    Time t2(5);
+    Time t3(5, 45);
+    t1.show();
+    t2.show();
+    t3.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+0h 0m
+5h 0m
+5h 45m</div>
+
+<hr>
+
+<h3>Practical 4: Implementing Destructors</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Connection {
+public:
+    Connection() { cout &lt;&lt; "Connection opened" &lt;&lt; endl; }
+    ~Connection() { cout &lt;&lt; "Connection closed" &lt;&lt; endl; }
+};
+
+int main() {
+    {
+        Connection c1;
+        cout &lt;&lt; "Using connection" &lt;&lt; endl;
+    }                                 // scope ends, destructor called
+    cout &lt;&lt; "Outside block" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Connection opened
+Using connection
+Connection closed
+Outside block</div>
+
+<hr>
+
+<h3>Practical 5: Applying Encapsulation and Access Specifiers</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Employee {
+private:
+    string name;
+    double salary;
+
+protected:
+    int departmentCode;
+
+public:
+    Employee(string n, double s, int d) : name(n), salary(s), departmentCode(d) { }
+
+    void display() {
+        cout &lt;&lt; name &lt;&lt; " | $" &lt;&lt; salary &lt;&lt; " | Dept: " &lt;&lt; departmentCode &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Employee e("Ali", 55000, 12);
+    e.display();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Ali | $55000 | Dept: 12</div>
+
+<hr>
+
+<h3>Practical 6: Implementing Getter and Setter Methods</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Product {
+private:
+    string name;
+    double price;
+
+public:
+    void setName(string n) { name = n; }
+    string getName() { return name; }
+
+    void setPrice(double p) {
+        if (p &gt;= 0) price = p;
+    }
+    double getPrice() { return price; }
+};
+
+int main() {
+    Product p;
+    p.setName("Laptop");
+    p.setPrice(1200);
+    cout &lt;&lt; p.getName() &lt;&lt; " costs $" &lt;&lt; p.getPrice() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Laptop costs $1200</div>
+
+<hr>
+
+<h3>Practical 7: Using the this Pointer</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Counter {
+private:
+    int count;
+
+public:
+    Counter(int count) {
+        this-&gt;count = count;        // resolves name conflict
+    }
+
+    Counter&amp; increment() {
+        count++;
+        return *this;               // returns current object
+    }
+
+    void show() { cout &lt;&lt; "Count: " &lt;&lt; count &lt;&lt; endl; }
+};
+
+int main() {
+    Counter c(5);
+    c.increment().increment().increment();    // chained calls
+    c.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Count: 8</div>
+
+<hr>
+
+<h3>Practical 8: Implementing Static Members and Functions</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Bank {
+public:
+    static int accountCount;
+    static double interestRate;
+
+    static void setInterest(double r) { interestRate = r; }
+    static void showInfo() {
+        cout &lt;&lt; "Accounts: " &lt;&lt; accountCount
+             &lt;&lt; " | Rate: " &lt;&lt; interestRate &lt;&lt; "%" &lt;&lt; endl;
+    }
+
+    Bank() { accountCount++; }
+};
+
+int Bank::accountCount = 0;
+double Bank::interestRate = 5.0;
+
+int main() {
+    Bank b1, b2, b3;
+    Bank::setInterest(6.5);
+    Bank::showInfo();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Accounts: 3 | Rate: 6.5%</div>
+
+<hr>
+
+<h3>Practical 9: Working with Constant Data Members and Functions</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Circle {
+private:
+    const double PI;             // constant data member
+    double radius;
+
+public:
+    Circle(double r) : PI(3.14159), radius(r) { }
+
+    double area() const {        // constant member function
+        return PI * radius * radius;
+    }
+    double circumference() const {
+        return 2 * PI * radius;
+    }
+};
+
+int main() {
+    Circle c(7);
+    cout &lt;&lt; "Area: " &lt;&lt; c.area() &lt;&lt; endl;
+    cout &lt;&lt; "Circumference: " &lt;&lt; c.circumference() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Area: 153.938
+Circumference: 43.9823</div>
+
+<hr>
+
+<h3>Practical 10: Creating Arrays of Objects</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Product {
+private:
+    string name;
+    double price;
+
+public:
+    void set(string n, double p) { name = n; price = p; }
+    void show() { cout &lt;&lt; name &lt;&lt; " - $" &lt;&lt; price &lt;&lt; endl; }
+};
+
+int main() {
+    Product items[4];
+
+    items[0].set("Pen", 1.5);
+    items[1].set("Notebook", 3.0);
+    items[2].set("Bag", 25.0);
+    items[3].set("Bottle", 12.0);
+
+    for (int i = 0; i &lt; 4; i++)
+        items[i].show();
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Pen - $1.5
+Notebook - $3
+Bag - $25
+Bottle - $12</div>
+
+<hr>
+
+<h2>Module 2: Quick Revision Summary</h2>
+
+<table>
+  <tr><th>Topic</th><th>Key Takeaway</th></tr>
+  <tr><td>Constructor</td><td>Auto-called at object creation; same name as class; no return type</td></tr>
+  <tr><td>Default constructor</td><td>No parameters; initializes default values</td></tr>
+  <tr><td>Parameterized constructor</td><td>Accepts arguments to initialize objects with specific values</td></tr>
+  <tr><td>Copy constructor</td><td>Creates a copy of an existing object; use for deep copy</td></tr>
+  <tr><td>Constructor overloading</td><td>Multiple constructors with different parameter lists</td></tr>
+  <tr><td>Destructor</td><td>Prefix <code>~</code>; auto-called at destruction; releases resources</td></tr>
+  <tr><td>Encapsulation</td><td>Bundles data and methods; hides data through access specifiers</td></tr>
+  <tr><td>Access specifiers</td><td>public (open), private (hidden), protected (inheritance only)</td></tr>
+  <tr><td>Getters/Setters</td><td>Controlled access to private data members</td></tr>
+  <tr><td>this pointer</td><td>Points to the current object; resolves name conflicts</td></tr>
+  <tr><td>Static members</td><td>Shared by all objects; belong to the class</td></tr>
+  <tr><td>Constant members</td><td>Value cannot change; constant functions cannot modify data</td></tr>
+  <tr><td>Array of objects</td><td>Collection of objects of the same class; indexed access</td></tr>
+</table>
+
+</body>
+</html>

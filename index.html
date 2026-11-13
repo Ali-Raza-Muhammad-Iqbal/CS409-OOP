@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OOP · Complete Module Index</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #f8faff 0%, #eef2f9 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem 1.5rem;
+    }
+
+    .card {
+      max-width: 1300px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 2.5rem;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 30px 50px -15px rgba(0, 20, 60, 0.25),
+                  0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+      transition: all 0.2s ease;
+    }
+
+    /* ---------- CREDITS HEADER ---------- */
+    .credits-header {
+      text-align: center;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #eef4ff 0%, #dce8fb 100%);
+      border-radius: 1.5rem;
+      border: 1px solid #cddff5;
+      box-shadow: 0 4px 12px rgba(30, 76, 140, 0.08);
+    }
+
+    .credits-header .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #6b7f99;
+      margin-bottom: 0.3rem;
+    }
+
+    .credits-header .author {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #0b1e3a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .credits-header .author .badge {
+      background: #1e4c8c;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.75rem;
+      border-radius: 40px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ---------- MAIN HEADING ---------- */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #0b1e3a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 0.4rem;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    h1 span {
+      background: #1e4c8c;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 0.25rem 1rem;
+      border-radius: 40px;
+      letter-spacing: normal;
+      white-space: nowrap;
+    }
+
+    .subhead {
+      color: #4a5c72;
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px dashed #b8c8dd;
+      text-align: center;
+    }
+
+    /* ---------- TABLE ---------- */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 0.75rem;
+      table-layout: fixed;
+    }
+
+    th {
+      text-align: center;
+      vertical-align: middle;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #3f5470;
+      padding: 0.6rem 0.8rem;
+      background: transparent;
+    }
+
+    th:nth-of-type(1) { width: 5%; }
+    th:nth-of-type(2) { width: 16%; }
+    th:nth-of-type(3) { width: 24%; }
+    th:nth-of-type(4) { width: 24%; }
+    th:nth-of-type(5) { width: 31%; }
+
+    tbody tr {
+      background: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 6px 14px rgba(0, 20, 40, 0.06);
+      transition: all 0.15s ease;
+    }
+
+    tbody tr:hover {
+      transform: scale(1.002);
+      box-shadow: 0 12px 22px -6px rgba(20, 60, 120, 0.18);
+      background: #ffffff;
+    }
+
+    td {
+      padding: 1.1rem 0.8rem;
+      vertical-align: middle;
+      text-align: center;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      border: none;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    td:first-child {
+      font-weight: 600;
+      color: #1f3b5c;
+      border-top-left-radius: 1.5rem;
+      border-bottom-left-radius: 1.5rem;
+      font-feature-settings: "tnum";
+      font-size: 1.1rem;
+    }
+
+    td:last-child {
+      border-top-right-radius: 1.5rem;
+      border-bottom-right-radius: 1.5rem;
+    }
+
+    /* inner content is left aligned for readability but centered within cell */
+    .cell-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+    }
+
+    .module-title {
+      display: inline-block;
+      background: #eef4ff;
+      color: #0d2e5c;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 2rem;
+      border: 1px solid #cddff5;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .topic-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      display: inline-block;
+    }
+
+    .topic-list li {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: 0.25rem;
+      color: #2a3f5a;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    .topic-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #1e4c8c;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .theory-badge,
+    .practical-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.55rem;
+      border-radius: 30px;
+      margin-bottom: 0.45rem;
+    }
+
+    .theory-badge {
+      background: #e4edfb;
+      color: #1a3d6e;
+    }
+
+    .practical-badge {
+      background: #e8f5e6;
+      color: #1e5c2e;
+    }
+
+    .module-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: #eef4ff;
+      color: #0d2e5c;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.88rem;
+      padding: 0.55rem 0.9rem;
+      border-radius: 2rem;
+      transition: all 0.15s;
+      border: 1px solid #cddff5;
+      line-height: 1.3;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+      word-break: break-all;
+      text-align: center;
+    }
+
+    .module-link:hover {
+      background: #1e4c8c;
+      color: white;
+      border-color: #1e4c8c;
+      box-shadow: 0 8px 18px -6px #1e4c8c70;
+      transform: translateY(-1px);
+    }
+
+    .module-link::before {
+      content: "📘";
+      font-size: 1.05rem;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+      flex-shrink: 0;
+    }
+
+    .module-link:hover::before {
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+    }
+
+    .file-hint {
+      display: block;
+      font-size: 0.7rem;
+      color: #7b8da6;
+      margin-top: 0.2rem;
+      text-align: center;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .footer {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px dashed #b8c8dd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #eef4ff;
+      color: #0d2e5c;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 0.45rem 1rem;
+      border-radius: 2rem;
+      border: 1px solid #cddff5;
+      transition: all 0.15s;
+    }
+
+    .social-link:hover {
+      background: #1e4c8c;
+      color: white;
+      border-color: #1e4c8c;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px -4px #1e4c8c70;
+    }
+
+    .social-link svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .copyright {
+      font-size: 0.85rem;
+      color: #6b7f99;
+      line-height: 1.6;
+    }
+
+    .copyright .powered {
+      display: inline-block;
+      margin-top: 0.35rem;
+      background: #1e4c8c;
+      color: white;
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      letter-spacing: 0.03em;
+    }
+
+    .copyright .powered strong {
+      color: #ffd966;
+    }
+
+    .footer-stats {
+      font-size: 0.8rem;
+      color: #7b8da6;
+    }
+
+    .footer-stats span {
+      background: #d9e6fa;
+      padding: 0.2rem 0.9rem;
+      border-radius: 30px;
+      font-weight: 500;
+      color: #1e3b5e;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1000px) {
+      th:nth-of-type(1) { width: 6%; }
+      th:nth-of-type(2) { width: 17%; }
+      th:nth-of-type(3) { width: 24%; }
+      th:nth-of-type(4) { width: 24%; }
+      th:nth-of-type(5) { width: 29%; }
+
+      td { font-size: 0.85rem; padding: 0.9rem 0.6rem; }
+      .topic-list li { font-size: 0.8rem; }
+    }
+
+    @media (max-width: 780px) {
+      .card {
+        padding: 1.8rem 1rem;
+        border-radius: 1.8rem;
+      }
+
+      h1 { font-size: 1.7rem; }
+
+      .credits-header .author { font-size: 1.1rem; }
+
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead { display: none; }
+
+      tbody tr {
+        margin-bottom: 1.2rem;
+        padding: 1rem;
+        border-radius: 1.2rem;
+        box-shadow: 0 8px 18px rgba(0, 20, 40, 0.08);
+      }
+
+      td {
+        padding: 0.5rem 0.4rem;
+        font-size: 0.9rem;
+        border-radius: 0 !important;
+      }
+
+      td:first-child {
+        font-size: 1.3rem;
+        padding-bottom: 0.6rem !important;
+        border-bottom: 2px solid #eef4ff;
+        margin-bottom: 0.4rem;
+      }
+
+      td:first-child::before {
+        content: "Module ";
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #6b7f99;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .module-title {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+        display: block;
+      }
+
+      .theory-badge,
+      .practical-badge {
+        font-size: 0.7rem;
+        margin-top: 0.4rem;
+      }
+
+      .topic-list li { font-size: 0.85rem; }
+
+      .module-link {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
+      }
+
+      .cell-inner { align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <!-- ================= CREDITS HEADER ================= -->
+    <div class="credits-header">
+      <div class="label">Designed &amp; Developed by</div>
+      <div class="author">
+        ALI RAZA
+        <span class="badge">OOP Series</span>
+      </div>
+    </div>
+
+    <h1>
+      📚 OOP — Complete Module Index
+      <span>1 – 9</span>
+    </h1>
+    <div class="subhead">
+      Table of contents with theory topics, practical topics, and direct links to each module file
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Sr no</th>
+          <th>Module</th>
+          <th>Theory topics</th>
+          <th>Practical topics</th>
+          <th>Module file link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- ==================== MODULE 1 ==================== -->
+        <tr>
+          <td><div class="cell-inner">1</div></td>
+          <td>
+            <div class="cell-inner">
+              <div class="module-title">Module 1: Introduction to Object-Oriented Programming</div>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="theory-badge">Theory</div>
+              <ul class="topic-list">
+                <li>Introduction to Object-Oriented Programming</li>
+                <li>History and evolution of OOP</li>
+                <li>Object-oriented design</li>
+                <li>Advantages of object-oriented programming</li>
+                <li>Procedural programming vs. object-oriented programming</li>
+                <li>Basic principles of OOP</li>
+                <li>Classes and objects</li>
+                <li>Data members and member functions</li>
+                <li>Real-world applications of OOP</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="practical-badge">Practical</div>
+              <ul class="topic-list">
+                <li>Introduction to the C++ OOP programming environment</li>
+                <li>Creating classes and objects</li>
+                <li>Defining data members and member functions</li>
+                <li>Accessing class members</li>
+                <li>Creating multiple objects of a class</li>
+                <li>Implementing real-world examples using classes and objects</li>
+                <li>Compilation and debugging of OOP programs</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <a class="module-link" href="module1-oop.html" target="_blank" rel="noopener">
+                module1-oop.html
+              </a>
+              <span class="file-hint">opens in new tab</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ==================== MODULE 2 ==================== -->
+        <tr>
+          <td><div class="cell-inner">2</div></td>
+          <td>
+            <div class="cell-inner">
+              <div class="module-title">Module 2: Constructors, Destructors, and Encapsulation</div>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="theory-badge">Theory</div>
+              <ul class="topic-list">
+                <li>Introduction to constructors</li>
+                <li>Default constructors</li>
+                <li>Parameterized constructors</li>
+                <li>Copy constructors</li>
+                <li>Constructor overloading</li>
+                <li>Destructors</li>
+                <li>Data encapsulation</li>
+                <li>Access specifiers: public, private, and protected</li>
+                <li>Getter and setter functions</li>
+                <li>This pointer</li>
+                <li>Static data members and static member functions</li>
+                <li>Constant data members and constant member functions</li>
+                <li>Array of objects</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="practical-badge">Practical</div>
+              <ul class="topic-list">
+                <li>Implementing default and parameterized constructors</li>
+                <li>Implementing copy constructors</li>
+                <li>Constructor overloading</li>
+                <li>Implementing destructors</li>
+                <li>Applying encapsulation and access specifiers</li>
+                <li>Implementing getter and setter methods</li>
+                <li>Using the this pointer</li>
+                <li>Implementing static members and functions</li>
+                <li>Working with constant data members and functions</li>
+                <li>Creating arrays of objects</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <a class="module-link" href="module2-oop.html" target="_blank" rel="noopener">
+                module2-oop.html
+              </a>
+              <span class="file-hint">opens in new tab</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ==================== MODULE 3 ==================== -->
+        <tr>
+          <td><div class="cell-inner">3</div></td>
+          <td>
+            <div class="cell-inner">
+              <div class="module-title">Module 3: Advanced Class Concepts and Object Relationships</div>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="theory-badge">Theory</div>
+              <ul class="topic-list">
+                <li>Function overloading</li>
+                <li>Operator overloading</li>
+                <li>Friend functions</li>
+                <li>Friend classes</li>
+                <li>Dynamic memory allocation</li>
+                <li>New and delete operators</li>
+                <li>Identification of classes and objects</li>
+                <li>Relationships between classes</li>
+                <li>Association</li>
+                <li>Aggregation</li>
+                <li>Composition</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="practical-badge">Practical</div>
+              <ul class="topic-list">
+                <li>Implementing function overloading</li>
+                <li>Implementing unary and binary operator overloading</li>
+                <li>Operator overloading using member functions</li>
+                <li>Operator overloading using friend functions</li>
+                <li>Creating friend functions and friend classes</li>
+                <li>Dynamic memory allocation using new and delete</li>
+                <li>Implementing association between classes</li>
+                <li>Implementing aggregation and composition</li>
+                <li>Designing real-world object relationships</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <a class="module-link" href="module3-oop.html" target="_blank" rel="noopener">
+                module3-oop.html
+              </a>
+              <span class="file-hint">opens in new tab</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ==================== MODULE 4 ==================== -->
+        <tr>
+          <td><div class="cell-inner">4</div></td>
+          <td>
+            <div class="cell-inner">
+              <div class="module-title">Module 4: Inheritance and Code Reusability</div>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="theory-badge">Theory</div>
+              <ul class="topic-list">
+                <li>Introduction to inheritance and its advantages</li>
+                <li>Base class and derived class</li>
+                <li>Types of inheritance: single, multilevel, multiple, hierarchical, and hybrid</li>
+                <li>Public, private, and protected inheritance</li>
+                <li>Function overriding</li>
+                <li>Constructor and destructor execution in inheritance</li>
+                <li>Ambiguity in multiple inheritance</li>
+                <li>Virtual base classes</li>
+                <li>Code reusability through inheritance</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="practical-badge">Practical</div>
+              <ul class="topic-list">
+                <li>Implementing single and multilevel inheritance</li>
+                <li>Implementing multiple and hierarchical inheritance</li>
+                <li>Implementing hybrid inheritance</li>
+                <li>Applying different inheritance access modes</li>
+                <li>Implementing function overriding</li>
+                <li>Understanding constructor and destructor execution order</li>
+                <li>Resolving ambiguity in multiple inheritance</li>
+                <li>Implementing virtual base classes</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <a class="module-link" href="module4-oop.html" target="_blank" rel="noopener">
+                module4-oop.html
+              </a>
+              <span class="file-hint">opens in new tab</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ==================== MODULE 5 ==================== -->
+        <tr>
+          <td><div class="cell-inner">5</div></td>
+          <td>
+            <div class="cell-inner">
+              <div class="module-title">Module 5: Polymorphism and Dynamic Binding</div>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="theory-badge">Theory</div>
+              <ul class="topic-list">
+                <li>Introduction to polymorphism and its advantages</li>
+                <li>Compile-time polymorphism</li>
+                <li>Runtime polymorphism</li>
+                <li>Function overloading</li>
+                <li>Operator overloading</li>
+                <li>Function overriding</li>
+                <li>Virtual functions</li>
+                <li>Pure virtual functions</li>
+                <li>Dynamic binding</li>
+                <li>Static and dynamic binding</li>
+                <li>Virtual destructors</li>
+                <li>Early and late binding</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="practical-badge">Practical</div>
+              <ul class="topic-list">
+                <li>Implementing compile-time and runtime polymorphism</li>
+                <li>Implementing function and operator overloading</li>
+                <li>Implementing function overriding</li>
+                <li>Creating virtual functions</li>
+                <li>Implementing pure virtual functions</li>
+                <li>Working with base-class pointers</li>
+                <li>Demonstrating dynamic binding</li>
+                <li>Implementing virtual destructors</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <a class="module-link" href="module5-oop.html" target="_blank" rel="noopener">
+                module5-oop.html
+              </a>
+              <span class="file-hint">opens in new tab</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ==================== MODULE 6 ==================== -->
+        <tr>
+          <td><div class="cell-inner">6</div></td>
+          <td>
+            <div class="cell-inner">
+              <div class="module-title">Module 6: Abstraction, Abstract Classes, and Templates</div>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="theory-badge">Theory</div>
+              <ul class="topic-list">
+                <li>Introduction to abstraction</li>
+                <li>Data abstraction in C++</li>
+                <li>Abstract classes</li>
+                <li>Pure virtual functions</li>
+                <li>Interfaces using abstract classes</li>
+                <li>Introduction to templates</li>
+                <li>Function templates</li>
+                <li>Class templates</li>
+                <li>Template overloading and specialization</li>
+                <li>Generic programming</li>
+                <li>Standard Template Library (STL)</li>
+                <li>STL containers, iterators, and algorithms</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="practical-badge">Practical</div>
+              <ul class="topic-list">
+                <li>Implementing data abstraction</li>
+                <li>Creating abstract classes and pure virtual functions</li>
+                <li>Designing interface-like structures using abstract classes</li>
+                <li>Creating function and class templates</li>
+                <li>Implementing template specialization</li>
+                <li>Working with STL containers</li>
+                <li>Using vectors, lists, stacks, queues, and maps</li>
+                <li>Working with STL iterators and algorithms</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <a class="module-link" href="module6-oop.html" target="_blank" rel="noopener">
+                module6-oop.html
+              </a>
+              <span class="file-hint">opens in new tab</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ==================== MODULE 7 ==================== -->
+        <tr>
+          <td><div class="cell-inner">7</div></td>
+          <td>
+            <div class="cell-inner">
+              <div class="module-title">Module 7: String Manipulation and Exception Handling</div>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="theory-badge">Theory</div>
+              <ul class="topic-list">
+                <li>Introduction to strings in C++</li>
+                <li>Character arrays and the string class</li>
+                <li>String manipulation functions</li>
+                <li>Introduction to exception handling</li>
+                <li>Types of errors and exceptions</li>
+                <li>try, catch, and throw</li>
+                <li>Multiple catch blocks</li>
+                <li>Nested exception handling</li>
+                <li>User-defined exceptions</li>
+                <li>Stack unwinding</li>
+                <li>Dynamic memory management</li>
+                <li>Memory leaks and dangling pointers</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="practical-badge">Practical</div>
+              <ul class="topic-list">
+                <li>Working with character arrays</li>
+                <li>Creating and manipulating strings</li>
+                <li>Using C++ string class functions</li>
+                <li>Implementing try-catch blocks</li>
+                <li>Handling multiple exceptions</li>
+                <li>Creating user-defined exceptions</li>
+                <li>Implementing nested exception handling</li>
+                <li>Dynamic memory allocation and deallocation</li>
+                <li>Identifying memory leaks</li>
+                <li>Understanding dangling pointers</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <a class="module-link" href="module7-oop.html" target="_blank" rel="noopener">
+                module7-oop.html
+              </a>
+              <span class="file-hint">opens in new tab</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ==================== MODULE 8 ==================== -->
+        <tr>
+          <td><div class="cell-inner">8</div></td>
+          <td>
+            <div class="cell-inner">
+              <div class="module-title">Module 8: File Handling, Streams, and Object Data Storage</div>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="theory-badge">Theory</div>
+              <ul class="topic-list">
+                <li>Introduction to file handling</li>
+                <li>Introduction to C++ streams</li>
+                <li>Input and output streams</li>
+                <li>File input and output streams</li>
+                <li>File processing</li>
+                <li>Text files and binary files</li>
+                <li>Reading and writing files</li>
+                <li>File opening modes</li>
+                <li>Object data storage</li>
+                <li>Object serialization and deserialization concepts</li>
+                <li>File position pointers</li>
+                <li>Debugging strategies</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="practical-badge">Practical</div>
+              <ul class="topic-list">
+                <li>Creating and opening files</li>
+                <li>Reading data from text files</li>
+                <li>Writing data into text files</li>
+                <li>Working with ifstream, ofstream, and fstream</li>
+                <li>Implementing file opening modes</li>
+                <li>Working with binary files</li>
+                <li>Saving object information into files</li>
+                <li>Retrieving object information from files</li>
+                <li>Using file position pointers</li>
+                <li>Debugging file-handling programs</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <a class="module-link" href="module8-oop.html" target="_blank" rel="noopener">
+                module8-oop.html
+              </a>
+              <span class="file-hint">opens in new tab</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ==================== MODULE 9 ==================== -->
+        <tr>
+          <td><div class="cell-inner">9</div></td>
+          <td>
+            <div class="cell-inner">
+              <div class="module-title">Module 9: GUI Development, Event Handling, and Database Connectivity</div>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="theory-badge">Theory</div>
+              <ul class="topic-list">
+                <li>Introduction to graphical user interfaces (GUI)</li>
+                <li>GUI development in C++</li>
+                <li>Introduction to the Qt framework</li>
+                <li>GUI components and widgets</li>
+                <li>Layout management</li>
+                <li>Event-driven programming</li>
+                <li>Event handling mechanism</li>
+                <li>Signals and slots in Qt</li>
+                <li>Introduction to database connectivity</li>
+                <li>Database connectivity using Qt SQL</li>
+                <li>Connecting C++ applications with databases</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <div class="practical-badge">Practical</div>
+              <ul class="topic-list">
+                <li>Introduction to Qt Creator</li>
+                <li>Creating GUI applications using Qt</li>
+                <li>Working with windows and widgets</li>
+                <li>Creating buttons, labels, and text fields</li>
+                <li>Implementing layouts</li>
+                <li>Handling mouse and keyboard events</li>
+                <li>Implementing signals and slots</li>
+                <li>Developing event-driven applications</li>
+                <li>Connecting C++ applications with SQLite or MySQL</li>
+                <li>Performing CRUD operations</li>
+                <li>Developing database-driven GUI applications</li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <div class="cell-inner">
+              <a class="module-link" href="module9-oop.html" target="_blank" rel="noopener">
+                module9-oop.html
+              </a>
+              <span class="file-hint">opens in new tab</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ================= FOOTER ================= -->
+    <div class="footer">
+
+      <!-- Social media links -->
+      <div class="social-links">
+        <a class="social-link" href="https://github.com/Ali-Raza-Muhammad-Iqbal" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.13c-3.2.69-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.19a11.07 11.07 0 0 1 5.79 0c2.2-1.5 3.17-1.19 3.17-1.19.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          GitHub
+        </a>
+        <a class="social-link" href="https://linkedin.com/in/Ali-Raza-Muhammad-Iqbal" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          LinkedIn
+        </a>
+        <a class="social-link" href="https://twitter.com/ali_raza_iqbal" target="_blank" rel="noopener" aria-label="Twitter / X">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.4l-5.8-7.58-6.63 7.58H.48l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg>
+          Twitter
+        </a>
+        <a class="social-link" href="https://facebook.com/alirazamuahmmadiqbal1" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.68 0H1.32C.59 0 0 .59 0 1.32v21.36C0 23.41.59 24 1.32 24h11.5v-9.29H9.69V11.1h3.13V8.41c0-3.1 1.89-4.79 4.66-4.79 1.33 0 2.47.1 2.8.14v3.24h-1.92c-1.5 0-1.79.72-1.79 1.76v2.31h3.58l-.47 3.61h-3.11V24h6.1c.73 0 1.32-.59 1.32-1.32V1.32C24 .59 23.41 0 22.68 0z"/></svg>
+          Facebook
+        </a>
+        <a class="social-link" href="https://instagram.com/ali_raza_muhammad_iqbal" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.12 1.38C1.36 2.67.95 3.34.64 4.13.34 4.9.14 5.77.08 7.05.02 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.12.66.66 1.33 1.07 2.12 1.38.77.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.12-1.38.66-.66 1.07-1.33 1.38-2.12.3-.77.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.31-.79-.72-1.46-1.38-2.12C21.33 1.36 20.66.95 19.87.64 19.1.34 18.23.14 16.95.08 15.67.02 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.4a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg>
+          Instagram
+        </a>
+        <a class="social-link" href="https://youtube.com/@ali_raza_muhammad_iqbal" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3.02 3.02 0 0 0 2.12-2.14A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
+          YouTube
+        </a>
+        <a class="social-link" href="https://Ali-Raza-Muhammad-Iqbal.github.io/portfolio" target="_blank" rel="noopener" aria-label="Portfolio">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm7.09 7.64l-3.18 14.7h-2.4l1.63-7.55-4.6 7.55H8.5l4.5-8.18-1.5-6.52h2.4l.9 4.4 2.9-4.4h2.39zM6.4 7.64h2.4L6.83 22.34H4.4L6.4 7.64z"/></svg>
+          Portfolio
+        </a>
+      </div>
+
+      <!-- Copyright & Powered by -->
+      <div class="copyright">
+        &copy; 2025 <strong>ALI RAZA</strong> — All Rights Reserved.
+        <br>
+        <span class="powered">⚡ Powered by <strong>ALI RAZA</strong></span>
+      </div>
+
+      <div class="footer-stats">
+        <span>📁 9 modules · theory + practical · module[1-9]-oop.html</span>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

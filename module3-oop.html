@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS409 Module 3 - Advanced Class Concepts and Object Relationships</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    font-size: 15px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    border-bottom: 4px solid #1f4e79;
+    padding-bottom: 12px;
+    color: #1f4e79;
+  }
+  h2 {
+    font-size: 20px;
+    color: #ffffff;
+    background: #1f4e79;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+  h3 {
+    font-size: 17px;
+    color: #1f4e79;
+    border-left: 5px solid #1f4e79;
+    padding-left: 10px;
+    margin-top: 28px;
+  }
+  h4 {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 20px;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    color: #b00020;
+  }
+  pre {
+    background: #f5f7fa;
+    border: 1px solid #d0d7de;
+    border-left: 4px solid #1f4e79;
+    padding: 14px 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #24292e;
+  }
+  pre code {
+    background: none;
+    color: #24292e;
+    padding: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1f4e79;
+    color: #ffffff;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  td {
+    border: 1px solid #cfd8dc;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f8fb;
+  }
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid #f0ad4e;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .def {
+    background: #e8f1f8;
+    border-left: 4px solid #1f4e79;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .output {
+    background: #eef6ee;
+    border-left: 4px solid #2e7d32;
+    padding: 8px 14px;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    margin: 8px 0;
+    border-radius: 3px;
+  }
+  .diagram {
+    background: #f9f9f9;
+    border: 1px dashed #888888;
+    padding: 14px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 26px;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #d0d7de;
+    margin: 36px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>CS409 – Object Oriented Programming<br>Module 3: Advanced Class Concepts and Object Relationships</h1>
+
+<h2>Part A: Theory Topics</h2>
+
+<h3>1. Function Overloading</h3>
+
+<div class="def">
+<strong>Definition:</strong> Function overloading is the ability to define multiple functions with the same name but different parameter lists within the same scope. The compiler selects the correct function based on the number, types, or order of arguments passed.
+</div>
+
+<h4>Rules</h4>
+<ul>
+  <li>Functions must have the same name.</li>
+  <li>They must differ in the number or types of parameters.</li>
+  <li>Return type alone cannot distinguish overloaded functions.</li>
+</ul>
+
+<h4>Syntax</h4>
+<pre><code>returnType functionName(dataType param1);
+returnType functionName(dataType param1, dataType param2);
+returnType functionName(double param1);</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A coffee shop accepts orders in different ways: a plain coffee, a coffee with sugar, or a coffee with sugar and milk. The word "order" is the same, but the number of choices differs, just like overloaded functions.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Calculator {
+public:
+    int add(int a, int b) {
+        return a + b;
+    }
+    double add(double a, double b) {
+        return a + b;
+    }
+    int add(int a, int b, int c) {
+        return a + b + c;
+    }
+};
+
+int main() {
+    Calculator calc;
+    cout &lt;&lt; calc.add(3, 4) &lt;&lt; endl;
+    cout &lt;&lt; calc.add(2.5, 4.5) &lt;&lt; endl;
+    cout &lt;&lt; calc.add(1, 2, 3) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+7
+7
+6</div>
+
+<hr>
+
+<h3>2. Operator Overloading</h3>
+
+<div class="def">
+<strong>Definition:</strong> Operator overloading allows operators (such as +, -, *, ==, &lt;&lt;) to be redefined so they work with user-defined types (classes). It lets objects be used with operators in a way that feels natural, similar to built-in data types.
+</div>
+
+<h4>Rules</h4>
+<ul>
+  <li>Only existing C++ operators can be overloaded; new operators cannot be invented.</li>
+  <li>Overloading is done using a special function named <code>operator</code> followed by the operator symbol.</li>
+  <li>At least one operand must be a user-defined type.</li>
+  <li>Certain operators (:: , . , .* , ?:) cannot be overloaded.</li>
+</ul>
+
+<h4>Types of Operator Overloading</h4>
+<table>
+  <tr><th>Type</th><th>Description</th><th>Example Operators</th></tr>
+  <tr><td>Unary</td><td>Operators acting on a single operand</td><td>++, --, -, !</td></tr>
+  <tr><td>Binary</td><td>Operators acting on two operands</td><td>+, -, *, /, ==, &lt;</td></tr>
+</table>
+
+<h4>Two Implementation Methods</h4>
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td>Member function</td><td>Operator function is defined inside the class; the left operand is the calling object.</td></tr>
+  <tr><td>Friend function</td><td>Operator function is defined outside the class with friend access; both operands are passed as arguments.</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>The "+" symbol adds numbers in arithmetic, concatenates strings in text processing, and could be used to merge two shopping carts in a program. The same symbol performs different actions depending on the data types involved.</p>
+
+<h4>Syntax</h4>
+<pre><code>// Member function form
+returnType operator symbol (parameters) { }
+
+// Friend function form
+friend returnType operator symbol (parameters);</code></pre>
+
+<hr>
+
+<h3>3. Friend Functions</h3>
+
+<div class="def">
+<strong>Definition:</strong> A friend function is a non-member function that is granted access to the private and protected members of a class. It is declared inside the class using the keyword <code>friend</code> but is defined outside the class.
+</div>
+
+<h4>Key Points</h4>
+<ul>
+  <li>It is not a member of the class.</li>
+  <li>It does not have a <code>this</code> pointer.</li>
+  <li>It is called like a normal function, without an object.</li>
+  <li>Friendship is granted, not taken.</li>
+  <li>Friendship is not inherited and is not mutual unless declared on both sides.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A bank's vault can only be accessed by its own staff (members). However, an authorized external auditor (friend function) may be granted special permission to inspect the vault.</p>
+
+<h4>Syntax</h4>
+<pre><code>class ClassName {
+private:
+    int data;
+public:
+    friend returnType friendFunction(ClassName &amp;obj);
+};
+
+returnType friendFunction(ClassName &amp;obj) {
+    // can access obj.data
+}</code></pre>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Box {
+private:
+    int width;
+public:
+    Box(int w) { width = w; }
+    friend void printWidth(Box b);   // friend declaration
+};
+
+void printWidth(Box b) {
+    cout &lt;&lt; "Width: " &lt;&lt; b.width &lt;&lt; endl;  // accessing private member
+}
+
+int main() {
+    Box b(15);
+    printWidth(b);
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Width: 15</div>
+
+<hr>
+
+<h3>4. Friend Classes</h3>
+
+<div class="def">
+<strong>Definition:</strong> A friend class is a class whose member functions are granted access to the private and protected members of another class. Friendship between classes is declared using the <code>friend class</code> statement.
+</div>
+
+<h4>Key Points</h4>
+<ul>
+  <li>All member functions of the friend class can access private members of the granting class.</li>
+  <li>Friendship is one-way unless declared in both classes.</li>
+  <li>Friendship is not inherited.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A hospital's medical record system is private. However, the billing department (friend class) is authorized to access patient records for generating bills.</p>
+
+<h4>Syntax</h4>
+<pre><code>class ClassA {
+    friend class ClassB;    // ClassB can access ClassA's private members
+private:
+    int secret;
+};</code></pre>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Engine {
+private:
+    int horsepower = 500;
+    friend class Mechanic;    // friend class declaration
+};
+
+class Mechanic {
+public:
+    void inspect(Engine e) {
+        cout &lt;&lt; "Horsepower: " &lt;&lt; e.horsepower &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Engine e;
+    Mechanic m;
+    m.inspect(e);
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Horsepower: 500</div>
+
+<hr>
+
+<h3>5. Dynamic Memory Allocation</h3>
+
+<div class="def">
+<strong>Definition:</strong> Dynamic memory allocation is the process of allocating memory at runtime (while the program is running) rather than at compile time. In C++, this is done using the <code>new</code> operator, and the memory is released using the <code>delete</code> operator.
+</div>
+
+<h4>Why It Is Needed</h4>
+<ul>
+  <li>The required size of memory may not be known at compile time.</li>
+  <li>Large data structures may exceed the stack size.</li>
+  <li>Objects must outlive the scope in which they were created.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A hotel does not build rooms for every possible guest in advance. Instead, rooms are assigned (allocated) when a guest arrives and freed (deallocated) when the guest checks out. This is dynamic allocation.</p>
+
+<h4>Memory Regions Diagram</h4>
+<div class="diagram">+---------------------------+
+|         STACK             |   &lt;-- local variables, automatic
++---------------------------+
+|         HEAP              |   &lt;-- new / delete use this region
++---------------------------+
+|         GLOBAL / DATA     |   &lt;-- global and static variables
++---------------------------+
+|         CODE              |   &lt;-- program instructions
++---------------------------+</div>
+
+<hr>
+
+<h3>6. New and Delete Operators</h3>
+
+<div class="def">
+<strong>Definition:</strong> The <code>new</code> operator allocates memory dynamically on the heap and returns a pointer to it. The <code>delete</code> operator releases memory previously allocated by <code>new</code> to prevent memory leaks.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>// Allocating a single variable
+dataType *ptr = new dataType;
+dataType *ptr = new dataType(value);
+
+// Allocating an array
+dataType *arr = new dataType[size];
+
+// Releasing memory
+delete ptr;
+delete[] arr;</code></pre>
+
+<h4>Key Points</h4>
+<ul>
+  <li>Use <code>delete</code> for single objects and <code>delete[]</code> for arrays.</li>
+  <li>Forgetting to call <code>delete</code> causes memory leaks.</li>
+  <li>Deleting the same pointer twice causes undefined behavior.</li>
+  <li>Use <code>nullptr</code> after deletion to avoid dangling pointers.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>Booking a taxi is like using <code>new</code> (the car is assigned when needed). Ending the trip and releasing the car is like using <code>delete</code> (the resource becomes free).</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int *p = new int(42);          // allocate single integer
+    cout &lt;&lt; "Value: " &lt;&lt; *p &lt;&lt; endl;
+    delete p;                      // release memory
+
+    int *arr = new int[5];         // allocate array
+    for (int i = 0; i &lt; 5; i++) arr[i] = i * 10;
+    for (int i = 0; i &lt; 5; i++) cout &lt;&lt; arr[i] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+
+    delete[] arr;                  // release array
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Value: 42
+0 10 20 30 40</div>
+
+<hr>
+
+<h3>7. Identification of Classes and Objects</h3>
+
+<div class="def">
+<strong>Definition:</strong> Identifying classes and objects is the process of analyzing a problem domain to discover the entities that should be modeled as classes and the instances that will exist as objects in the running system.
+</div>
+
+<h4>Steps for Identification</h4>
+<ol>
+  <li>Read the problem statement and list all nouns; these are candidate classes or objects.</li>
+  <li>List all verbs; these often map to methods.</li>
+  <li>Identify attributes of each candidate class.</li>
+  <li>Identify relationships between candidate classes.</li>
+  <li>Remove duplicates and irrelevant entities.</li>
+</ol>
+
+<h4>Real-Life Example: University System</h4>
+<table>
+  <tr><th>Noun</th><th>Role</th><th>Attributes</th><th>Behaviors</th></tr>
+  <tr><td>Student</td><td>Class</td><td>name, ID, GPA</td><td>enroll(), attendClass()</td></tr>
+  <tr><td>Course</td><td>Class</td><td>code, title, credits</td><td>addStudent(), schedule()</td></tr>
+  <tr><td>Instructor</td><td>Class</td><td>name, department</td><td>teach(), grade()</td></tr>
+</table>
+
+<h4>Identification Diagram</h4>
+<div class="diagram">   Problem Statement
+          |
+          v
+   List Nouns and Verbs
+          |
+          v
+   Candidate Classes &amp; Methods
+          |
+          v
+   Filter and Refine
+          |
+          v
+   Final Class Diagram</div>
+
+<hr>
+
+<h3>8. Relationships Between Classes</h3>
+
+<div class="def">
+<strong>Definition:</strong> Relationships between classes describe how objects of one class are connected to objects of another class. They help model the structure of a system by defining how data and behavior flow between classes.
+</div>
+
+<h4>Types of Relationships</h4>
+<table>
+  <tr><th>Relationship</th><th>Strength</th><th>Description</th></tr>
+  <tr><td>Association</td><td>Weak</td><td>Objects are connected but independent</td></tr>
+  <tr><td>Aggregation</td><td>Medium</td><td>Whole-part relationship; parts can exist independently</td></tr>
+  <tr><td>Composition</td><td>Strong</td><td>Whole-part relationship; parts cannot exist independently</td></tr>
+</table>
+
+<h4>Relationship Strength Diagram</h4>
+<div class="diagram">Weak                                                   Strong
+ |                                                         |
+ v                                                         v
+Association  ------&gt;  Aggregation  ------&gt;  Composition
+(uses)                (has-a)                (owns-a)</div>
+
+<hr>
+
+<h3>9. Association</h3>
+
+<div class="def">
+<strong>Definition:</strong> Association is a relationship between two classes where objects of one class are connected to objects of another class, but neither owns the other. Both objects have independent lifecycles.
+</div>
+
+<h4>Types of Association</h4>
+<table>
+  <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+  <tr><td>One-to-One</td><td>One object related to one other object</td><td>Person and Passport</td></tr>
+  <tr><td>One-to-Many</td><td>One object related to many objects</td><td>Teacher and Students</td></tr>
+  <tr><td>Many-to-Many</td><td>Many objects related to many others</td><td>Students and Courses</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A Teacher teaches many Students, and a Student is taught by many Teachers. Neither owns the other, and either can exist without the other.</p>
+
+<h4>Association Diagram</h4>
+<div class="diagram"> +----------+         +----------+
+ | Teacher  |&lt;-------&gt;| Student  |
+ +----------+         +----------+
+       teaches many        is taught by many</div>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+public:
+    string name;
+    Student(string n) { name = n; }
+};
+
+class Teacher {
+public:
+    string name;
+    Teacher(string n) { name = n; }
+
+    void teach(Student s) {
+        cout &lt;&lt; name &lt;&lt; " teaches " &lt;&lt; s.name &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Student s("Ali");
+    Teacher t("Mr. Khan");
+    t.teach(s);
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Mr. Khan teaches Ali</div>
+
+<hr>
+
+<h3>10. Aggregation</h3>
+
+<div class="def">
+<strong>Definition:</strong> Aggregation is a special form of association that represents a whole-part relationship, where the part can exist independently of the whole. The whole does not control the lifecycle of the part.
+</div>
+
+<h4>Key Points</h4>
+<ul>
+  <li>Represents a "has-a" relationship.</li>
+  <li>The part can exist even if the whole is destroyed.</li>
+  <li>Implemented in C++ by holding a pointer or reference to the part.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A Department has Professors. If the Department is closed, the Professors still exist and can join another department.</p>
+
+<h4>Aggregation Diagram</h4>
+<div class="diagram"> +-------------+         +------------+
+ | Department  |&lt;&gt;------| Professor  |
+ +-------------+         +------------+
+   whole                  part
+   (independent lifecycle of part)</div>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Professor {
+public:
+    string name;
+    Professor(string n) { name = n; }
+};
+
+class Department {
+private:
+    Professor *prof;          // pointer, not owned
+public:
+    Department(Professor *p) { prof = p; }
+
+    void show() {
+        cout &lt;&lt; "Department head: " &lt;&lt; prof-&gt;name &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Professor p("Dr. Ahmed");
+    Department d(&amp;p);          // part exists independently
+    d.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Department head: Dr. Ahmed</div>
+
+<hr>
+
+<h3>11. Composition</h3>
+
+<div class="def">
+<strong>Definition:</strong> Composition is a strong form of aggregation where the part cannot exist independently of the whole. If the whole is destroyed, its parts are also destroyed.
+</div>
+
+<h4>Key Points</h4>
+<ul>
+  <li>Represents a strong "owns-a" relationship.</li>
+  <li>The part's lifecycle is controlled by the whole.</li>
+  <li>Implemented in C++ by holding the part as a value member or by allocating it inside the whole's constructor and deleting it in the destructor.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A Human has a Heart. If the Human dies, the Heart also ceases to function as part of that human.</p>
+
+<h4>Composition Diagram</h4>
+<div class="diagram"> +-----------+         +--------+
+ |  Human    |&lt;*&gt;------| Heart  |
+ +-----------+         +--------+
+   whole                  part
+   (part dies with whole)</div>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Heart {
+public:
+    Heart() { cout &lt;&lt; "Heart created" &lt;&lt; endl; }
+    ~Heart() { cout &lt;&lt; "Heart destroyed" &lt;&lt; endl; }
+};
+
+class Human {
+private:
+    Heart heart;              // value member, owned
+public:
+    Human() { cout &lt;&lt; "Human created" &lt;&lt; endl; }
+    ~Human() { cout &lt;&lt; "Human destroyed" &lt;&lt; endl; }
+};
+
+int main() {
+    Human h;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Heart created
+Human created
+Human destroyed
+Heart destroyed</div>
+
+<hr>
+
+<h3>Association vs Aggregation vs Composition</h3>
+
+<table>
+  <tr><th>Feature</th><th>Association</th><th>Aggregation</th><th>Composition</th></tr>
+  <tr><td>Relationship</td><td>uses</td><td>has-a (weak)</td><td>owns-a (strong)</td></tr>
+  <tr><td>Lifecycle dependency</td><td>None</td><td>Part survives whole</td><td>Part dies with whole</td></tr>
+  <tr><td>C++ implementation</td><td>Function parameter or reference</td><td>Pointer or reference member</td><td>Value member or owned pointer</td></tr>
+  <tr><td>Example</td><td>Teacher and Student</td><td>Department and Professor</td><td>Human and Heart</td></tr>
+</table>
+
+<hr>
+
+<h2>Part B: Practical Topics</h2>
+
+<h3>Practical 1: Implementing Function Overloading</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Shape {
+public:
+    double area(double side) {
+        return side * side;                    // square
+    }
+    double area(double length, double width) {
+        return length * width;                 // rectangle
+    }
+    double area(float radius) {
+        return 3.14159 * radius * radius;      // circle
+    }
+};
+
+int main() {
+    Shape s;
+    cout &lt;&lt; "Square area: " &lt;&lt; s.area(5.0) &lt;&lt; endl;
+    cout &lt;&lt; "Rectangle area: " &lt;&lt; s.area(4.0, 6.0) &lt;&lt; endl;
+    cout &lt;&lt; "Circle area: " &lt;&lt; s.area(3.0f) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Square area: 25
+Rectangle area: 24
+Circle area: 28.2743</div>
+
+<hr>
+
+<h3>Practical 2: Implementing Unary and Binary Operator Overloading</h3>
+
+<h4>Unary Operator Overloading (++)</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Counter {
+private:
+    int value;
+public:
+    Counter(int v) { value = v; }
+
+    Counter operator++() {          // prefix ++
+        ++value;
+        return *this;
+    }
+
+    Counter operator++(int) {       // postfix ++
+        Counter temp = *this;
+        value++;
+        return temp;
+    }
+
+    void show() { cout &lt;&lt; "Value: " &lt;&lt; value &lt;&lt; endl; }
+};
+
+int main() {
+    Counter c(5);
+    ++c;
+    c.show();        // Value: 6
+    c++;
+    c.show();        // Value: 7
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Value: 6
+Value: 7</div>
+
+<h4>Binary Operator Overloading (+)</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Complex {
+private:
+    int real, imag;
+public:
+    Complex(int r = 0, int i = 0) { real = r; imag = i; }
+
+    Complex operator+(const Complex &amp;other) {
+        return Complex(real + other.real, imag + other.imag);
+    }
+
+    void show() { cout &lt;&lt; real &lt;&lt; " + " &lt;&lt; imag &lt;&lt; "i" &lt;&lt; endl; }
+};
+
+int main() {
+    Complex c1(3, 4), c2(1, 2);
+    Complex c3 = c1 + c2;
+    c3.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+4 + 6i</div>
+
+<hr>
+
+<h3>Practical 3: Operator Overloading Using Member Functions</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Distance {
+private:
+    int meters;
+public:
+    Distance(int m = 0) { meters = m; }
+
+    Distance operator+(const Distance &amp;d) {   // member function
+        return Distance(meters + d.meters);
+    }
+
+    bool operator&lt;(const Distance &amp;d) {
+        return meters &lt; d.meters;
+    }
+
+    void show() { cout &lt;&lt; meters &lt;&lt; " m" &lt;&lt; endl; }
+};
+
+int main() {
+    Distance a(100), b(250);
+    Distance c = a + b;
+    c.show();
+    cout &lt;&lt; (a &lt; b ? "a is shorter" : "b is shorter") &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+350 m
+a is shorter</div>
+
+<hr>
+
+<h3>Practical 4: Operator Overloading Using Friend Functions</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Complex {
+private:
+    int real, imag;
+public:
+    Complex(int r = 0, int i = 0) { real = r; imag = i; }
+
+    friend Complex operator+(const Complex &amp;a, const Complex &amp;b);
+    friend ostream&amp; operator&lt;&lt;(ostream &amp;out, const Complex &amp;c);
+};
+
+Complex operator+(const Complex &amp;a, const Complex &amp;b) {
+    return Complex(a.real + b.real, a.imag + b.imag);
+}
+
+ostream&amp; operator&lt;&lt;(ostream &amp;out, const Complex &amp;c) {
+    out &lt;&lt; c.real &lt;&lt; " + " &lt;&lt; c.imag &lt;&lt; "i";
+    return out;
+}
+
+int main() {
+    Complex c1(2, 3), c2(4, 1);
+    Complex c3 = c1 + c2;
+    cout &lt;&lt; c3 &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+6 + 4i</div>
+
+<hr>
+
+<h3>Practical 5: Creating Friend Functions and Friend Classes</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Wallet;    // forward declaration
+
+class Bank {
+private:
+    int vaultCode = 1234;
+    friend class Auditor;                 // friend class
+    friend void showVault(Bank b);        // friend function
+};
+
+class Auditor {
+public:
+    void audit(Bank b) {
+        cout &lt;&lt; "Vault code: " &lt;&lt; b.vaultCode &lt;&lt; endl;
+    }
+};
+
+void showVault(Bank b) {
+    cout &lt;&lt; "Vault via friend function: " &lt;&lt; b.vaultCode &lt;&lt; endl;
+}
+
+int main() {
+    Bank b;
+    Auditor a;
+    a.audit(b);
+    showVault(b);
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Vault code: 1234
+Vault via friend function: 1234</div>
+
+<hr>
+
+<h3>Practical 6: Dynamic Memory Allocation Using New and Delete</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+private:
+    string name;
+public:
+    Student(string n = "Unknown") {
+        name = n;
+        cout &lt;&lt; name &lt;&lt; " created" &lt;&lt; endl;
+    }
+    ~Student() {
+        cout &lt;&lt; name &lt;&lt; " destroyed" &lt;&lt; endl;
+    }
+    void show() { cout &lt;&lt; "Name: " &lt;&lt; name &lt;&lt; endl; }
+};
+
+int main() {
+    Student *s1 = new Student("Ali");       // dynamic single object
+    s1-&gt;show();
+    delete s1;
+
+    Student *arr = new Student[3];          // dynamic array
+    delete[] arr;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Ali created
+Name: Ali
+Ali destroyed
+Unknown created
+Unknown created
+Unknown created
+Unknown destroyed
+Unknown destroyed
+Unknown destroyed</div>
+
+<hr>
+
+<h3>Practical 7: Implementing Association Between Classes</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Doctor;
+class Patient;
+
+class Doctor {
+public:
+    string name;
+    Doctor(string n) { name = n; }
+    void treat(Patient &amp;p);
+};
+
+class Patient {
+public:
+    string name;
+    Patient(string n) { name = n; }
+};
+
+void Doctor::treat(Patient &amp;p) {
+    cout &lt;&lt; "Dr. " &lt;&lt; name &lt;&lt; " treats " &lt;&lt; p.name &lt;&lt; endl;
+}
+
+int main() {
+    Doctor d("Ahmed");
+    Patient p("Sara");
+    d.treat(p);
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Dr. Ahmed treats Sara</div>
+
+<hr>
+
+<h3>Practical 8: Implementing Aggregation and Composition</h3>
+
+<h4>Aggregation Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Player {
+public:
+    string name;
+    Player(string n) { name = n; }
+};
+
+class Team {
+private:
+    Player *members[5];       // pointers, not owned
+    int count;
+public:
+    Team() { count = 0; }
+
+    void addPlayer(Player *p) {
+        if (count &lt; 5) members[count++] = p;
+    }
+
+    void show() {
+        cout &lt;&lt; "Team members:" &lt;&lt; endl;
+        for (int i = 0; i &lt; count; i++)
+            cout &lt;&lt; "- " &lt;&lt; members[i]-&gt;name &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Player p1("Ali"), p2("Sara"), p3("John");
+    Team team;
+    team.addPlayer(&amp;p1);
+    team.addPlayer(&amp;p2);
+    team.addPlayer(&amp;p3);
+    team.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Team members:
+- Ali
+- Sara
+- John</div>
+
+<h4>Composition Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Engine {
+public:
+    Engine() { cout &lt;&lt; "Engine built" &lt;&lt; endl; }
+    ~Engine() { cout &lt;&lt; "Engine destroyed" &lt;&lt; endl; }
+};
+
+class Car {
+private:
+    Engine engine;            // value member, owned
+public:
+    Car() { cout &lt;&lt; "Car built" &lt;&lt; endl; }
+    ~Car() { cout &lt;&lt; "Car destroyed" &lt;&lt; endl; }
+};
+
+int main() {
+    Car c;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Engine built
+Car built
+Car destroyed
+Engine destroyed</div>
+
+<hr>
+
+<h3>Practical 9: Designing Real-World Object Relationships</h3>
+
+<h4>Example: University System</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+// --- Part classes ---
+class Course {
+public:
+    string title;
+    Course(string t) { title = t; }
+};
+
+class Professor {
+public:
+    string name;
+    Professor(string n) { name = n; }
+};
+
+// --- Aggregation: Department has Professors (independent) ---
+// --- Composition: Department owns Courses ---
+class Department {
+private:
+    string name;
+    Professor *head;              // aggregation
+    vector&lt;Course&gt; courses;       // composition
+public:
+    Department(string n, Professor *h) {
+        name = n;
+        head = h;
+    }
+    void addCourse(string t) {
+        courses.push_back(Course(t));
+    }
+    void show() {
+        cout &lt;&lt; "Department: " &lt;&lt; name &lt;&lt; endl;
+        cout &lt;&lt; "Head: " &lt;&lt; head-&gt;name &lt;&lt; endl;
+        cout &lt;&lt; "Courses:" &lt;&lt; endl;
+        for (auto &amp;c : courses)
+            cout &lt;&lt; " - " &lt;&lt; c.title &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Professor p("Dr. Khan");
+    Department d("Computer Science", &amp;p);
+    d.addCourse("OOP");
+    d.addCourse("Data Structures");
+    d.addCourse("Databases");
+    d.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Department: Computer Science
+Head: Dr. Khan
+Courses:
+ - OOP
+ - Data Structures
+ - Databases</div>
+
+<h4>Relationship Design Diagram</h4>
+<div class="diagram">  +-------------+       &lt;&gt;------- +-------------+
+  | Department  |                 | Professor   |   Aggregation
+  +-------------+                 +-------------+
+        |
+        | * (composition)
+        v
+  +-------------+
+  |   Course    |
+  +-------------+</div>
+
+<hr>
+
+<h2>Module 3: Quick Revision Summary</h2>
+
+<table>
+  <tr><th>Topic</th><th>Key Takeaway</th></tr>
+  <tr><td>Function overloading</td><td>Same name, different parameter lists</td></tr>
+  <tr><td>Operator overloading</td><td>Redefine operators for user-defined types</td></tr>
+  <tr><td>Unary vs binary</td><td>Unary acts on one operand; binary on two</td></tr>
+  <tr><td>Member vs friend overloading</td><td>Member uses calling object; friend takes both operands</td></tr>
+  <tr><td>Friend function</td><td>Non-member function with private access</td></tr>
+  <tr><td>Friend class</td><td>All members of friend class gain private access</td></tr>
+  <tr><td>Dynamic memory</td><td>Allocate at runtime with new, release with delete</td></tr>
+  <tr><td>Class identification</td><td>Derive classes from nouns and methods from verbs in the problem</td></tr>
+  <tr><td>Association</td><td>Weak link; independent lifecycles</td></tr>
+  <tr><td>Aggregation</td><td>Weak whole-part; part survives whole</td></tr>
+  <tr><td>Composition</td><td>Strong whole-part; part dies with whole</td></tr>
+</table>
+
+</body>
+</html>

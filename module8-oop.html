@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS409 Module 8 - File Handling, Streams, and Object Data Storage</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    font-size: 15px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    border-bottom: 4px solid #1f4e79;
+    padding-bottom: 12px;
+    color: #1f4e79;
+  }
+  h2 {
+    font-size: 20px;
+    color: #ffffff;
+    background: #1f4e79;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+  h3 {
+    font-size: 17px;
+    color: #1f4e79;
+    border-left: 5px solid #1f4e79;
+    padding-left: 10px;
+    margin-top: 28px;
+  }
+  h4 {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 20px;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    color: #b00020;
+  }
+  pre {
+    background: #f5f7fa;
+    border: 1px solid #d0d7de;
+    border-left: 4px solid #1f4e79;
+    padding: 14px 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #24292e;
+  }
+  pre code {
+    background: none;
+    color: #24292e;
+    padding: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1f4e79;
+    color: #ffffff;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  td {
+    border: 1px solid #cfd8dc;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f8fb;
+  }
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid #f0ad4e;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .def {
+    background: #e8f1f8;
+    border-left: 4px solid #1f4e79;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .output {
+    background: #eef6ee;
+    border-left: 4px solid #2e7d32;
+    padding: 8px 14px;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    margin: 8px 0;
+    border-radius: 3px;
+  }
+  .diagram {
+    background: #f9f9f9;
+    border: 1px dashed #888888;
+    padding: 14px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 26px;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #d0d7de;
+    margin: 36px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>CS409 – Object Oriented Programming<br>Module 8: File Handling, Streams, and Object Data Storage</h1>
+
+<h2>Part A: Theory Topics</h2>
+
+<h3>1. Introduction to File Handling</h3>
+
+<div class="def">
+<strong>Definition:</strong> File handling is the process of reading from and writing to files on disk. It allows a program to store data permanently so it survives after the program ends and can be reused in later runs.
+</div>
+
+<h4>Why File Handling Matters</h4>
+<ul>
+  <li>Persists data beyond program execution.</li>
+  <li>Allows sharing of data between programs.</li>
+  <li>Supports large volumes of data that cannot fit in memory.</li>
+  <li>Enables logging, reporting, and configuration storage.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A student records application saves each student's data in a file so the registrar can retrieve it later, even after the computer is restarted.</p>
+
+<hr>
+
+<h3>2. Introduction to C++ Streams</h3>
+
+<div class="def">
+<strong>Definition:</strong> A stream in C++ is an abstraction that represents a sequence of bytes flowing between a program and a source or destination. Streams handle the input and output operations uniformly across different devices.
+</div>
+
+<h4>Types of Streams</h4>
+<table>
+  <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+  <tr><td>Input stream</td><td>Data flows from source to program</td><td>cin</td></tr>
+  <tr><td>Output stream</td><td>Data flows from program to destination</td><td>cout</td></tr>
+  <tr><td>Input-output stream</td><td>Data can flow both ways</td><td>fstream</td></tr>
+</table>
+
+<h4>Stream Class Hierarchy</h4>
+<div class="diagram">              ios_base
+                  |
+                 ios
+               /     \
+        istream       ostream
+        /    \         /    \
+    ifstream fstream ofstream
+    (input)  (both)   (output)</div>
+
+<h4>Real-Life Example</h4>
+<p>A pipe carrying water: the flow direction determines whether it is an input pipe (into the house), an output pipe (out of the house), or a two-way pipe.</p>
+
+<hr>
+
+<h3>3. Input and Output Streams</h3>
+
+<h4>Standard Streams</h4>
+<table>
+  <tr><th>Stream</th><th>Purpose</th><th>Header</th></tr>
+  <tr><td>cin</td><td>Standard input (keyboard)</td><td>&lt;iostream&gt;</td></tr>
+  <tr><td>cout</td><td>Standard output (console)</td><td>&lt;iostream&gt;</td></tr>
+  <tr><td>cerr</td><td>Unbuffered error output</td><td>&lt;iostream&gt;</td></tr>
+  <tr><td>clog</td><td>Buffered log output</td><td>&lt;iostream&gt;</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A customer service desk: input requests come in (cin), answers go out (cout), urgent warnings are announced immediately (cerr), and regular logs are recorded (clog).</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    string name;
+    cout &lt;&lt; "Enter your name: ";
+    cin &gt;&gt; name;
+    cout &lt;&lt; "Hello, " &lt;&lt; name &lt;&lt; endl;
+
+    cerr &lt;&lt; "This is an error message" &lt;&lt; endl;
+    clog &lt;&lt; "This is a log message" &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output (example interaction):
+Enter your name: Ali
+Hello, Ali
+This is an error message
+This is a log message</div>
+
+<hr>
+
+<h3>4. File Input and Output Streams</h3>
+
+<div class="def">
+<strong>Definition:</strong> File streams are specialized stream classes that connect a program to files on disk. C++ provides three classes in the <code>&lt;fstream&gt;</code> header: <code>ifstream</code> for input, <code>ofstream</code> for output, and <code>fstream</code> for both.
+</div>
+
+<h4>Classes</h4>
+<table>
+  <tr><th>Class</th><th>Purpose</th></tr>
+  <tr><td>ifstream</td><td>Input file stream; reads from a file</td></tr>
+  <tr><td>ofstream</td><td>Output file stream; writes to a file</td></tr>
+  <tr><td>fstream</td><td>File stream for both input and output</td></tr>
+</table>
+
+<h4>Syntax</h4>
+<pre><code>#include &lt;fstream&gt;
+
+ifstream inFile("input.txt");
+ofstream outFile("output.txt");
+fstream ioFile("data.txt", ios::in | ios::out);</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A photocopier that can only read (ifstream), a printer that can only write (ofstream), and a multifunction device that does both (fstream).</p>
+
+<hr>
+
+<h3>5. File Processing</h3>
+
+<div class="def">
+<strong>Definition:</strong> File processing is the sequence of operations performed on a file: opening it, reading or writing data, checking for errors, and closing it. Following this sequence correctly ensures data integrity.
+</div>
+
+<h4>Steps in File Processing</h4>
+<ol>
+  <li>Include the <code>&lt;fstream&gt;</code> header.</li>
+  <li>Create a stream object.</li>
+  <li>Open the file with the desired mode.</li>
+  <li>Check for successful opening.</li>
+  <li>Read or write data.</li>
+  <li>Close the file.</li>
+</ol>
+
+<h4>File Processing Flow Diagram</h4>
+<div class="diagram">  +-----------+
+  |  Include  |
+  +-----+-----+
+        v
+  +-----------+
+  | Create    |
+  | stream    |
+  +-----+-----+
+        v
+  +-----------+
+  | Open file |
+  +-----+-----+
+        v
+  +-----------+
+  | Opened?   | --- no ---&gt; Handle error
+  +-----+-----+
+        | yes
+        v
+  +-----------+
+  | Read/Write|
+  +-----+-----+
+        v
+  +-----------+
+  | Close file|
+  +-----------+</div>
+
+<hr>
+
+<h3>6. Text Files and Binary Files</h3>
+
+<h4>Text Files</h4>
+<div class="def">
+<strong>Definition:</strong> A text file stores data as human-readable characters. Each value is converted to a character sequence when written and parsed back when read.
+</div>
+
+<h4>Characteristics</h4>
+<ul>
+  <li>Readable by humans.</li>
+  <li>Portable across systems.</li>
+  <li>Slightly larger and slower due to conversion.</li>
+</ul>
+
+<h4>Binary Files</h4>
+<div class="def">
+<strong>Definition:</strong> A binary file stores data in its raw memory representation. Values are written directly as bytes, without conversion to text.
+</div>
+
+<h4>Characteristics</h4>
+<ul>
+  <li>Not human-readable.</li>
+  <li>Faster and more compact.</li>
+  <li>System-specific for some data types (endianness).</li>
+  <li>Ideal for storing objects and numeric records.</li>
+</ul>
+
+<h4>Comparison</h4>
+<table>
+  <tr><th>Feature</th><th>Text File</th><th>Binary File</th></tr>
+  <tr><td>Readability</td><td>Human-readable</td><td>Not readable directly</td></tr>
+  <tr><td>Size</td><td>Larger</td><td>Smaller</td></tr>
+  <tr><td>Speed</td><td>Slower</td><td>Faster</td></tr>
+  <tr><td>Portability</td><td>High</td><td>System dependent</td></tr>
+  <tr><td>Typical use</td><td>Configuration, logs, CSV</td><td>Objects, images, audio</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A recipe book (text file) is readable by anyone, while a photograph (binary file) requires an appropriate viewer to interpret.</p>
+
+<hr>
+
+<h3>7. Reading and Writing Files</h3>
+
+<h4>Writing to a File</h4>
+<pre><code>ofstream outFile("data.txt");
+outFile &lt;&lt; "Hello File" &lt;&lt; endl;
+outFile.close();</code></pre>
+
+<h4>Reading from a File</h4>
+<pre><code>ifstream inFile("data.txt");
+string line;
+while (getline(inFile, line)) {
+    cout &lt;&lt; line &lt;&lt; endl;
+}
+inFile.close();</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A cashier writes each sale to a receipt file and later the accountant reads the same file for daily totals.</p>
+
+<h4>Complete Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    // Writing
+    ofstream out("sample.txt");
+    out &lt;&lt; "Line one" &lt;&lt; endl;
+    out &lt;&lt; "Line two" &lt;&lt; endl;
+    out.close();
+
+    // Reading
+    ifstream in("sample.txt");
+    string line;
+    while (getline(in, line)) {
+        cout &lt;&lt; line &lt;&lt; endl;
+    }
+    in.close();
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Line one
+Line two</div>
+
+<hr>
+
+<h3>8. File Opening Modes</h3>
+
+<div class="def">
+<strong>Definition:</strong> File opening modes specify how a file should be opened, controlling operations such as reading, writing, appending, and truncating. Modes are defined in the <code>ios</code> class.
+</div>
+
+<h4>Common Modes</h4>
+<table>
+  <tr><th>Mode</th><th>Description</th></tr>
+  <tr><td>ios::in</td><td>Open for reading</td></tr>
+  <tr><td>ios::out</td><td>Open for writing (truncates by default)</td></tr>
+  <tr><td>ios::app</td><td>Append to the end of the file</td></tr>
+  <tr><td>ios::ate</td><td>Open and move to the end</td></tr>
+  <tr><td>ios::trunc</td><td>Truncate existing content</td></tr>
+  <tr><td>ios::binary</td><td>Open in binary mode</td></tr>
+</table>
+
+<h4>Combining Modes</h4>
+<pre><code>fstream file("data.txt", ios::in | ios::out | ios::binary);</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A notebook can be opened for reading (in), opened to a fresh page (out), or opened at the last written page (app). The mode chosen determines how you interact with it.</p>
+
+<hr>
+
+<h3>9. Object Data Storage</h3>
+
+<div class="def">
+<strong>Definition:</strong> Object data storage is the process of persisting the state of objects to files so that they can be restored later. It allows programs to save and load complex data structures such as lists of students, products, or transactions.
+</div>
+
+<h4>Approaches</h4>
+<table>
+  <tr><th>Approach</th><th>Description</th></tr>
+  <tr><td>Text-based</td><td>Write each attribute as text, separated by spaces or commas</td></tr>
+  <tr><td>Binary</td><td>Write raw memory bytes of the object using write()</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A game saves the player's progress (level, score, inventory) to a file so the player can resume later.</p>
+
+<h4>Text-based Example</h4>
+<pre><code>class Student {
+public:
+    string name;
+    int age;
+    double gpa;
+};
+
+// Writing
+ofstream out("students.txt");
+out &lt;&lt; s.name &lt;&lt; " " &lt;&lt; s.age &lt;&lt; " " &lt;&lt; s.gpa &lt;&lt; endl;
+
+// Reading
+ifstream in("students.txt");
+Student s;
+in &gt;&gt; s.name &gt;&gt; s.age &gt;&gt; s.gpa;</code></pre>
+
+<h4>Binary Example</h4>
+<pre><code>ofstream out("students.dat", ios::binary);
+out.write(reinterpret_cast&lt;char*&gt;(&amp;s), sizeof(s));
+
+ifstream in("students.dat", ios::binary);
+in.read(reinterpret_cast&lt;char*&gt;(&amp;s), sizeof(s));</code></pre>
+
+<hr>
+
+<h3>10. Object Serialization and Deserialization Concepts</h3>
+
+<div class="def">
+<strong>Serialization:</strong> The process of converting an object's state into a format that can be stored (in a file) or transmitted (over a network).<br><br>
+<strong>Deserialization:</strong> The reverse process, converting stored data back into an object.
+</div>
+
+<h4>Serialization Formats</h4>
+<table>
+  <tr><th>Format</th><th>Description</th></tr>
+  <tr><td>Plain text</td><td>Human-readable, simple to debug</td></tr>
+  <tr><td>CSV</td><td>Comma-separated values; common for tabular data</td></tr>
+  <tr><td>JSON / XML</td><td>Structured text formats, widely used in web apps</td></tr>
+  <tr><td>Binary</td><td>Raw byte representation; compact and fast</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>When a user closes a messaging app, the chat history is serialized to storage and later deserialized when reopened, restoring the conversation exactly as it was.</p>
+
+<h4>Serialization Flow Diagram</h4>
+<div class="diagram">  In-memory object               File/Network
+  +-------------+                +-------------+
+  |  Student    | --serialize--&gt; |  Data bytes |
+  |  name, age  |                |  or text    |
+  +-------------+ &lt;--deserialize-+-------------+</div>
+
+<hr>
+
+<h3>11. File Position Pointers</h3>
+
+<div class="def">
+<strong>Definition:</strong> File position pointers indicate the current location within a file where the next read or write will occur. Each file stream maintains two pointers: <code>get</code> pointer for reading and <code>put</code> pointer for writing.
+</div>
+
+<h4>Associated Functions</h4>
+<table>
+  <tr><th>Function</th><th>Purpose</th></tr>
+  <tr><td>tellg()</td><td>Returns the current position of the get pointer</td></tr>
+  <tr><td>tellp()</td><td>Returns the current position of the put pointer</td></tr>
+  <tr><td>seekg(pos)</td><td>Moves the get pointer to the specified position</td></tr>
+  <tr><td>seekp(pos)</td><td>Moves the put pointer to the specified position</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A bookmark in a book marks the exact page where reading resumes. The get pointer is the current page marker, and seekg() moves the bookmark.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    fstream file("seek.txt", ios::in | ios::out | ios::trunc);
+    file &lt;&lt; "HelloWorld";
+    file.seekg(5);
+    char ch;
+    file.get(ch);
+    cout &lt;&lt; "Character at position 5: " &lt;&lt; ch &lt;&lt; endl;
+    file.close();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Character at position 5: W</div>
+
+<hr>
+
+<h3>12. Debugging Strategies</h3>
+
+<h4>Common File-Handling Bugs</h4>
+<table>
+  <tr><th>Bug</th><th>Cause</th></tr>
+  <tr><td>File not opening</td><td>Wrong path, missing permissions, or missing file</td></tr>
+  <tr><td>Empty output</td><td>Stream not flushed or file not closed</td></tr>
+  <tr><td>Garbage data</td><td>Binary/text mode mismatch</td></tr>
+  <tr><td>Infinite loop</td><td>getline() not reaching EOF</td></tr>
+  <tr><td>Data corruption</td><td>Writing without a matching layout on read</td></tr>
+</table>
+
+<h4>Debugging Strategies</h4>
+<ol>
+  <li>Always check whether the file opened successfully.</li>
+  <li>Print stream state using <code>good()</code>, <code>fail()</code>, <code>eof()</code>.</li>
+  <li>Close all files after use to flush buffers.</li>
+  <li>Use text mode for human-readable output during development.</li>
+  <li>Log positions using <code>tellg()</code> and <code>tellp()</code> when diagnosing read/write issues.</li>
+  <li>Use small sample files for testing before scaling to real data.</li>
+</ol>
+
+<h4>Real-Life Example</h4>
+<p>A mechanic listens for unusual sounds, checks the dashboard lights, and reads the diagnostic log before touching the engine. A programmer follows the same principle: inspect the log, check the state, then fix.</p>
+
+<hr>
+
+<h2>Part B: Practical Topics</h2>
+
+<h3>Practical 1: Creating and Opening Files</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    ofstream out("created.txt");
+    if (!out) {
+        cout &lt;&lt; "Failed to create file" &lt;&lt; endl;
+        return 1;
+    }
+    out &lt;&lt; "File created successfully" &lt;&lt; endl;
+    out.close();
+    cout &lt;&lt; "File created" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+File created</div>
+
+<hr>
+
+<h3>Practical 2: Reading Data from Text Files</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    ifstream in("created.txt");
+    string line;
+    while (getline(in, line)) {
+        cout &lt;&lt; line &lt;&lt; endl;
+    }
+    in.close();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+File created successfully</div>
+
+<hr>
+
+<h3>Practical 3: Writing Data into Text Files</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    ofstream out("students.txt");
+    out &lt;&lt; "Ali 20 3.5" &lt;&lt; endl;
+    out &lt;&lt; "Sara 21 3.8" &lt;&lt; endl;
+    out &lt;&lt; "John 22 3.2" &lt;&lt; endl;
+    out.close();
+    cout &lt;&lt; "Data written" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Data written</div>
+
+<hr>
+
+<h3>Practical 4: Working with ifstream, ofstream, and fstream</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    // ofstream: writing
+    ofstream out("demo.txt");
+    out &lt;&lt; "Line one" &lt;&lt; endl;
+    out &lt;&lt; "Line two" &lt;&lt; endl;
+    out.close();
+
+    // ifstream: reading
+    ifstream in("demo.txt");
+    string line;
+    while (getline(in, line)) cout &lt;&lt; "Read: " &lt;&lt; line &lt;&lt; endl;
+    in.close();
+
+    // fstream: both
+    fstream both("demo.txt", ios::in | ios::out | ios::app);
+    both &lt;&lt; "Line three" &lt;&lt; endl;
+    both.close();
+
+    ifstream readAgain("demo.txt");
+    while (getline(readAgain, line)) cout &lt;&lt; "Final: " &lt;&lt; line &lt;&lt; endl;
+    readAgain.close();
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Read: Line one
+Read: Line two
+Final: Line one
+Final: Line two
+Final: Line three</div>
+
+<hr>
+
+<h3>Practical 5: Implementing File Opening Modes</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    ofstream truncFile("test.txt", ios::out | ios::trunc);
+    truncFile &lt;&lt; "First version" &lt;&lt; endl;
+    truncFile.close();
+
+    ofstream appendFile("test.txt", ios::out | ios::app);
+    appendFile &lt;&lt; "Second version" &lt;&lt; endl;
+    appendFile.close();
+
+    ifstream in("test.txt");
+    string line;
+    while (getline(in, line)) cout &lt;&lt; line &lt;&lt; endl;
+    in.close();
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+First version
+Second version</div>
+
+<hr>
+
+<h3>Practical 6: Working with Binary Files</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    int numbers[] = {10, 20, 30, 40, 50};
+
+    // Write binary
+    ofstream out("nums.bin", ios::binary);
+    out.write(reinterpret_cast&lt;char*&gt;(numbers), sizeof(numbers));
+    out.close();
+
+    // Read binary
+    int readBack[5];
+    ifstream in("nums.bin", ios::binary);
+    in.read(reinterpret_cast&lt;char*&gt;(readBack), sizeof(readBack));
+    in.close();
+
+    cout &lt;&lt; "Read: ";
+    for (int n : readBack) cout &lt;&lt; n &lt;&lt; " ";
+    cout &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Read: 10 20 30 40 50</div>
+
+<hr>
+
+<h3>Practical 7: Saving Object Information into Files</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int age;
+    double gpa;
+};
+
+int main() {
+    Student students[2] = {
+        {"Ali", 20, 3.5},
+        {"Sara", 21, 3.8}
+    };
+
+    ofstream out("students.dat", ios::binary);
+    for (int i = 0; i &lt; 2; i++) {
+        out.write(reinterpret_cast&lt;char*&gt;(&amp;students[i]), sizeof(Student));
+    }
+    out.close();
+    cout &lt;&lt; "Objects saved" &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Objects saved</div>
+
+<div class="note">
+<strong>Note:</strong> Binary serialization of objects containing strings (as shown) works only when reading back on the same program with the same memory layout. For portable serialization, write each field separately or use a text format such as CSV or JSON.
+</div>
+
+<hr>
+
+<h3>Practical 8: Retrieving Object Information from Files</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int age;
+    double gpa;
+};
+
+int main() {
+    Student s;
+    ifstream in("students.dat", ios::binary);
+    while (in.read(reinterpret_cast&lt;char*&gt;(&amp;s), sizeof(Student))) {
+        cout &lt;&lt; s.name &lt;&lt; " | " &lt;&lt; s.age &lt;&lt; " | " &lt;&lt; s.gpa &lt;&lt; endl;
+    }
+    in.close();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Ali | 20 | 3.5
+Sara | 21 | 3.8</div>
+
+<hr>
+
+<h3>Practical 9: Using File Position Pointers</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    fstream file("seektest.txt", ios::in | ios::out | ios::trunc);
+    file &lt;&lt; "ABCDEFGHIJ";
+    file.seekg(0);
+
+    cout &lt;&lt; "Read all: ";
+    char ch;
+    while (file.get(ch)) cout &lt;&lt; ch;
+    cout &lt;&lt; endl;
+
+    file.clear();                  // reset after EOF
+    file.seekg(4, ios::beg);
+    file.get(ch);
+    cout &lt;&lt; "Character at position 4: " &lt;&lt; ch &lt;&lt; endl;
+
+    file.seekp(2, ios::beg);
+    file.put('X');
+
+    file.clear();
+    file.seekg(0);
+    cout &lt;&lt; "After change: ";
+    while (file.get(ch)) cout &lt;&lt; ch;
+    cout &lt;&lt; endl;
+
+    file.close();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Read all: ABCDEFGHIJ
+Character at position 4: E
+After change: ABXDEFGHIJ</div>
+
+<hr>
+
+<h3>Practical 10: Debugging File-Handling Programs</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+int main() {
+    ifstream in("missing.txt");
+
+    if (!in) {
+        cerr &lt;&lt; "Error: unable to open missing.txt" &lt;&lt; endl;
+        return 1;
+    }
+
+    string line;
+    int lineCount = 0;
+    while (getline(in, line)) {
+        lineCount++;
+        cout &lt;&lt; "Line " &lt;&lt; lineCount &lt;&lt; ": " &lt;&lt; line &lt;&lt; endl;
+    }
+
+    if (in.eof())
+        cout &lt;&lt; "Reached end of file normally" &lt;&lt; endl;
+    else if (in.fail())
+        cout &lt;&lt; "Read failed due to format or I/O issue" &lt;&lt; endl;
+
+    in.close();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Error: unable to open missing.txt</div>
+
+<h4>Stream State Functions</h4>
+<table>
+  <tr><th>Function</th><th>Purpose</th></tr>
+  <tr><td>good()</td><td>True if no error has occurred</td></tr>
+  <tr><td>eof()</td><td>True if the end of file has been reached</td></tr>
+  <tr><td>fail()</td><td>True if a logical or read/write error occurred</td></tr>
+  <tr><td>bad()</td><td>True if a critical I/O error occurred</td></tr>
+  <tr><td>clear()</td><td>Resets the stream state flags</td></tr>
+</table>
+
+<hr>
+
+<h2>Module 8: Quick Revision Summary</h2>
+
+<table>
+  <tr><th>Topic</th><th>Key Takeaway</th></tr>
+  <tr><td>File handling</td><td>Persist data beyond program execution</td></tr>
+  <tr><td>Streams</td><td>Uniform abstraction for I/O operations</td></tr>
+  <tr><td>Standard streams</td><td>cin, cout, cerr, clog</td></tr>
+  <tr><td>File streams</td><td>ifstream (read), ofstream (write), fstream (both)</td></tr>
+  <tr><td>File processing</td><td>Open, check, read or write, close</td></tr>
+  <tr><td>Text vs binary</td><td>Readable vs compact/fast; choose per use case</td></tr>
+  <tr><td>Reading/writing</td><td>getline, &gt;&gt;, &lt;&lt;, read(), write()</td></tr>
+  <tr><td>Opening modes</td><td>in, out, app, ate, trunc, binary; combine with |</td></tr>
+  <tr><td>Object data storage</td><td>Save and restore object state; text or binary</td></tr>
+  <tr><td>Serialization</td><td>Object to storage format; deserialization reverses it</td></tr>
+  <tr><td>Position pointers</td><td>tellg, tellp, seekg, seekp for navigation</td></tr>
+  <tr><td>Debugging</td><td>Check open(), good(), fail(), eof(); close files</td></tr>
+</table>
+
+</body>
+</html>

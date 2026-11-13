@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS409 Module 6 - Abstraction, Abstract Classes, and Templates</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    font-size: 15px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    border-bottom: 4px solid #1f4e79;
+    padding-bottom: 12px;
+    color: #1f4e79;
+  }
+  h2 {
+    font-size: 20px;
+    color: #ffffff;
+    background: #1f4e79;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+  h3 {
+    font-size: 17px;
+    color: #1f4e79;
+    border-left: 5px solid #1f4e79;
+    padding-left: 10px;
+    margin-top: 28px;
+  }
+  h4 {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 20px;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    color: #b00020;
+  }
+  pre {
+    background: #f5f7fa;
+    border: 1px solid #d0d7de;
+    border-left: 4px solid #1f4e79;
+    padding: 14px 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #24292e;
+  }
+  pre code {
+    background: none;
+    color: #24292e;
+    padding: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1f4e79;
+    color: #ffffff;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  td {
+    border: 1px solid #cfd8dc;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f8fb;
+  }
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid #f0ad4e;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .def {
+    background: #e8f1f8;
+    border-left: 4px solid #1f4e79;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .output {
+    background: #eef6ee;
+    border-left: 4px solid #2e7d32;
+    padding: 8px 14px;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    margin: 8px 0;
+    border-radius: 3px;
+  }
+  .diagram {
+    background: #f9f9f9;
+    border: 1px dashed #888888;
+    padding: 14px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 26px;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #d0d7de;
+    margin: 36px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>CS409 – Object Oriented Programming<br>Module 6: Abstraction, Abstract Classes, and Templates</h1>
+
+<h2>Part A: Theory Topics</h2>
+
+<h3>1. Introduction to Abstraction</h3>
+
+<div class="def">
+<strong>Definition:</strong> Abstraction is the process of hiding the internal implementation details of a system and exposing only the essential features to the user. It focuses on <em>what</em> an object does rather than <em>how</em> it does it.
+</div>
+
+<h4>Purpose of Abstraction</h4>
+<ul>
+  <li>Reduces complexity by hiding unnecessary detail.</li>
+  <li>Allows users to interact with an object through a simple interface.</li>
+  <li>Protects internal data and logic from outside interference.</li>
+  <li>Enables the implementation to change without affecting users.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>When driving a car, the driver uses the steering wheel, accelerator, and brakes. The internal combustion process, fuel injection, and transmission mechanics are hidden. The driver only interacts with the essential controls.</p>
+
+<h4>Abstraction vs Encapsulation</h4>
+<table>
+  <tr><th>Aspect</th><th>Abstraction</th><th>Encapsulation</th></tr>
+  <tr><td>Purpose</td><td>Hide complexity</td><td>Hide data</td></tr>
+  <tr><td>Focus</td><td>What the object does</td><td>How data is protected</td></tr>
+  <tr><td>Implementation</td><td>Abstract classes, interfaces</td><td>Access specifiers, getters and setters</td></tr>
+  <tr><td>Level</td><td>Design level</td><td>Implementation level</td></tr>
+</table>
+
+<h4>Diagram</h4>
+<div class="diagram">      User (sees only the interface)
+                |
+                v
+     +-----------------------+
+     |   Public Interface    |    &lt;-- abstraction layer
+     +-----------------------+
+                |
+                v
+     +-----------------------+
+     |  Hidden Implementation|    &lt;-- encapsulated details
+     +-----------------------+</div>
+
+<hr>
+
+<h3>2. Data Abstraction in C++</h3>
+
+<div class="def">
+<strong>Definition:</strong> Data abstraction in C++ is achieved by exposing only the required operations on data through public member functions while keeping the data itself private or protected.
+</div>
+
+<h4>How C++ Supports Data Abstraction</h4>
+<ul>
+  <li>Using classes with private or protected data members.</li>
+  <li>Providing public member functions for controlled access.</li>
+  <li>Using abstract classes with pure virtual functions.</li>
+  <li>Using header files to hide implementation details from the user.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>When you withdraw money from an ATM, you interact with a simple screen and buttons. The banking database, transaction processing, and security checks remain hidden behind the interface.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class BankAccount {
+private:
+    double balance;                          // hidden data
+
+public:
+    BankAccount(double initial) { balance = initial; }
+
+    void deposit(double amount) {
+        if (amount &gt; 0) balance += amount;
+    }
+
+    void withdraw(double amount) {
+        if (amount &gt; 0 &amp;&amp; amount &lt;= balance) balance -= amount;
+    }
+
+    double getBalance() const { return balance; }
+};
+
+int main() {
+    BankAccount acc(1000);
+    acc.deposit(500);
+    acc.withdraw(300);
+    cout &lt;&lt; "Balance: $" &lt;&lt; acc.getBalance() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Balance: $1200</div>
+
+<hr>
+
+<h3>3. Abstract Classes</h3>
+
+<div class="def">
+<strong>Definition:</strong> An abstract class is a class that contains at least one pure virtual function. It cannot be instantiated directly and serves as a base class that defines a common interface for derived classes.
+</div>
+
+<h4>Key Points</h4>
+<ul>
+  <li>Declared with at least one pure virtual function (<code>= 0</code>).</li>
+  <li>Cannot create objects of an abstract class.</li>
+  <li>Can contain normal member functions, constructors, and data members.</li>
+  <li>Derived classes must implement all pure virtual functions to become concrete.</li>
+  <li>Pointers and references to abstract classes are allowed.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>The concept of a "Vehicle" is abstract. There is no generic vehicle on the road; only specific vehicles such as cars, buses, and bikes exist. Yet all share the common concept "Vehicle".</p>
+
+<h4>Syntax</h4>
+<pre><code>class AbstractClass {
+public:
+    virtual returnType functionName(parameters) = 0;   // pure virtual
+    // normal members may also exist
+};</code></pre>
+
+<h4>Abstract Class Hierarchy</h4>
+<div class="diagram">     +----------------------+
+     |       Shape          |   abstract
+     |  draw() = 0          |
+     +----------+-----------+
+          /          \
+         v            v
+   +---------+    +---------+
+   | Circle  |    | Square  |
+   | draw()  |    | draw()  |
+   +---------+    +---------+</div>
+
+<hr>
+
+<h3>4. Pure Virtual Functions</h3>
+
+<div class="def">
+<strong>Definition:</strong> A pure virtual function is a virtual function declared in a base class with the syntax <code>= 0</code> instead of a function body. It defines an interface that derived classes must implement.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>virtual returnType functionName(parameters) = 0;</code></pre>
+
+<h4>Rules</h4>
+<ul>
+  <li>A class containing a pure virtual function becomes abstract.</li>
+  <li>The pure virtual function may still be defined outside the class if needed.</li>
+  <li>Derived classes must override all pure virtual functions to be instantiable.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>Every "Appliance" has an "operate" action, but no one can operate a generic appliance. Washing machines, microwaves, and refrigerators each implement operate() in their own way.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Appliance {
+public:
+    virtual void operate() = 0;              // pure virtual
+};
+
+class WashingMachine : public Appliance {
+public:
+    void operate() override { cout &lt;&lt; "Washing clothes" &lt;&lt; endl; }
+};
+
+class Microwave : public Appliance {
+public:
+    void operate() override { cout &lt;&lt; "Heating food" &lt;&lt; endl; }
+};
+
+int main() {
+    Appliance *a1 = new WashingMachine();
+    Appliance *a2 = new Microwave();
+    a1-&gt;operate();
+    a2-&gt;operate();
+    delete a1;
+    delete a2;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Washing clothes
+Heating food</div>
+
+<hr>
+
+<h3>5. Interfaces Using Abstract Classes</h3>
+
+<div class="def">
+<strong>Definition:</strong> An interface in C++ is an abstract class that contains only pure virtual functions and no data members. It defines a contract that any derived class must fulfill.
+</div>
+
+<h4>Characteristics of an Interface</h4>
+<ul>
+  <li>All member functions are pure virtual.</li>
+  <li>No data members (or only static constant members).</li>
+  <li>A class may implement multiple interfaces through multiple inheritance.</li>
+  <li>Provides a standard way for unrelated classes to share a common contract.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>USB is an interface standard. Keyboards, mice, printers, and storage drives all implement the USB contract so they can plug into any USB port.</p>
+
+<h4>Syntax</h4>
+<pre><code>class InterfaceName {
+public:
+    virtual returnType function1() = 0;
+    virtual returnType function2() = 0;
+};</code></pre>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Printable {
+public:
+    virtual void print() = 0;
+};
+
+class Scannable {
+public:
+    virtual void scan() = 0;
+};
+
+class AllInOnePrinter : public Printable, public Scannable {
+public:
+    void print() override { cout &lt;&lt; "Printing document" &lt;&lt; endl; }
+    void scan() override { cout &lt;&lt; "Scanning document" &lt;&lt; endl; }
+};
+
+int main() {
+    AllInOnePrinter p;
+    p.print();
+    p.scan();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Printing document
+Scanning document</div>
+
+<hr>
+
+<h3>6. Introduction to Templates</h3>
+
+<div class="def">
+<strong>Definition:</strong> A template in C++ is a blueprint for creating generic functions or classes that work with any data type. The compiler generates the specific code for the data type actually used.
+</div>
+
+<h4>Advantages of Templates</h4>
+<ul>
+  <li>Code reusability across multiple data types.</li>
+  <li>Type safety maintained by the compiler.</li>
+  <li>No runtime overhead (unlike polymorphism via virtual functions).</li>
+  <li>Enables generic programming.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A photocopier can copy any document: letters, photographs, or diagrams. The process of copying is identical, and only the input changes. A template works the same way.</p>
+
+<h4>Types of Templates</h4>
+<table>
+  <tr><th>Type</th><th>Description</th></tr>
+  <tr><td>Function template</td><td>A single function that works with multiple data types</td></tr>
+  <tr><td>Class template</td><td>A single class definition that works with multiple data types</td></tr>
+</table>
+
+<h4>Templates Concept Diagram</h4>
+<div class="diagram">     template &lt;typename T&gt;
+              |
+              v
+     +------------------+
+     | Generic Blueprint|
+     +--------+---------+
+              |
+     +--------+--------+
+     v        v        v
+   int     double   string
+   version version  version</div>
+
+<hr>
+
+<h3>7. Function Templates</h3>
+
+<div class="def">
+<strong>Definition:</strong> A function template is a generic function definition that is instantiated for different data types. The type is supplied when the function is called or deduced by the compiler.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>template &lt;typename T&gt;
+returnType functionName(T param1, T param2) {
+    // uses T as data type
+}</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A "maximum" function that works for integers, decimals, or characters without writing three separate functions.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;typename T&gt;
+T maximum(T a, T b) {
+    return (a &gt; b) ? a : b;
+}
+
+int main() {
+    cout &lt;&lt; maximum(10, 20) &lt;&lt; endl;
+    cout &lt;&lt; maximum(3.14, 2.71) &lt;&lt; endl;
+    cout &lt;&lt; maximum('a', 'z') &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+20
+3.14
+z</div>
+
+<hr>
+
+<h3>8. Class Templates</h3>
+
+<div class="def">
+<strong>Definition:</strong> A class template is a generic class definition in which one or more data types are parameterized. It allows creation of type-safe containers and reusable components that work with any data type.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>template &lt;typename T&gt;
+class ClassName {
+    T member;
+public:
+    void set(T value) { member = value; }
+    T get() { return member; }
+};</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A storage box can hold any kind of item: books, shoes, or tools. The box design is the same; only its contents change. A class template is like a box that can hold any type.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;typename T&gt;
+class Box {
+private:
+    T item;
+public:
+    Box(T value) : item(value) { }
+    T getItem() { return item; }
+};
+
+int main() {
+    Box&lt;int&gt; intBox(100);
+    Box&lt;double&gt; dblBox(3.14);
+    Box&lt;string&gt; strBox("Hello");
+
+    cout &lt;&lt; intBox.getItem() &lt;&lt; endl;
+    cout &lt;&lt; dblBox.getItem() &lt;&lt; endl;
+    cout &lt;&lt; strBox.getItem() &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+100
+3.14
+Hello</div>
+
+<h4>Class Template Diagram</h4>
+<div class="diagram">     template &lt;typename T&gt; class Box
+                |
+       +--------+--------+
+       v        v        v
+  Box&lt;int&gt;  Box&lt;double&gt; Box&lt;string&gt;</div>
+
+<hr>
+
+<h3>9. Template Overloading and Specialization</h3>
+
+<h4>Template Overloading</h4>
+<div class="def">
+<strong>Definition:</strong> Template overloading means defining multiple function templates with the same name but different parameter lists, or combining a template function with a regular function of the same name.
+</div>
+
+<h4>Example</h4>
+<pre><code>template &lt;typename T&gt;
+T add(T a, T b) { return a + b; }
+
+template &lt;typename T&gt;
+T add(T a, T b, T c) { return a + b + c; }
+
+int add(int a, int b) { return a + b; }      // non-template overload</code></pre>
+
+<h4>Template Specialization</h4>
+<div class="def">
+<strong>Definition:</strong> Template specialization provides a specific implementation of a template for a particular data type. When that data type is used, the specialized version replaces the generic one.
+</div>
+
+<h4>Types of Specialization</h4>
+<table>
+  <tr><th>Type</th><th>Description</th></tr>
+  <tr><td>Full specialization</td><td>A specific implementation for one exact data type</td></tr>
+  <tr><td>Partial specialization</td><td>A specific implementation when one or more (but not all) template parameters are fixed</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A delivery service has one standard procedure for packages, but a special procedure for fragile items such as glassware. The default behavior works for most packages; a special case exists for glass.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;typename T&gt;
+T maximum(T a, T b) {
+    return (a &gt; b) ? a : b;
+}
+
+// Full specialization for const char*
+template &lt;&gt;
+const char* maximum(const char* a, const char* b) {
+    return (string(a).length() &gt; string(b).length()) ? a : b;
+}
+
+int main() {
+    cout &lt;&lt; maximum(10, 20) &lt;&lt; endl;
+    cout &lt;&lt; maximum("Cat", "Elephant") &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+20
+Elephant</div>
+
+<hr>
+
+<h3>10. Generic Programming</h3>
+
+<div class="def">
+<strong>Definition:</strong> Generic programming is a programming paradigm in which algorithms and data structures are written in terms of types to be specified later. The goal is to write code that works correctly and efficiently for any appropriate data type.
+</div>
+
+<h4>Principles of Generic Programming</h4>
+<ul>
+  <li>Algorithms are written independently of specific data types.</li>
+  <li>Templates are the primary tool in C++.</li>
+  <li>Code is reused across many types with no runtime overhead.</li>
+  <li>Type safety is maintained at compile time.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A sorting algorithm works on any data type that supports comparison: integers, names, prices, or dates. The algorithm does not need to be rewritten for each type.</p>
+
+<h4>Generic vs Non-Generic Code</h4>
+<table>
+  <tr><th>Aspect</th><th>Non-Generic</th><th>Generic</th></tr>
+  <tr><td>Code size</td><td>Duplicated for each type</td><td>Written once</td></tr>
+  <tr><td>Maintenance</td><td>Update every duplicate</td><td>Update in one place</td></tr>
+  <tr><td>Type safety</td><td>Manual</td><td>Enforced by compiler</td></tr>
+  <tr><td>Performance</td><td>No overhead</td><td>No overhead (compile-time instantiation)</td></tr>
+</table>
+
+<hr>
+
+<h3>11. Standard Template Library (STL)</h3>
+
+<div class="def">
+<strong>Definition:</strong> The Standard Template Library (STL) is a collection of generic classes and functions in C++ that implement commonly used data structures and algorithms. It provides ready-to-use components such as containers, iterators, and algorithms.
+</div>
+
+<h4>Main Components of the STL</h4>
+<table>
+  <tr><th>Component</th><th>Purpose</th></tr>
+  <tr><td>Containers</td><td>Data structures to store collections (vector, list, map, etc.)</td></tr>
+  <tr><td>Iterators</td><td>Objects that allow traversal of containers</td></tr>
+  <tr><td>Algorithms</td><td>Generic functions for operations like sort, find, count</td></tr>
+  <tr><td>Function objects</td><td>Objects that can be called like functions (functors)</td></tr>
+  <tr><td>Allocators</td><td>Memory management for containers</td></tr>
+</table>
+
+<h4>STL Architecture Diagram</h4>
+<div class="diagram">    +--------------------------------+
+    |           Containers           |
+    |  vector  list  map  set  deque |
+    +---------------+----------------+
+                    |
+                    v
+    +--------------------------------+
+    |           Iterators            |
+    +---------------+----------------+
+                    |
+                    v
+    +--------------------------------+
+    |           Algorithms           |
+    |   sort  find  count  reverse   |
+    +--------------------------------+</div>
+
+<hr>
+
+<h3>12. STL Containers, Iterators, and Algorithms</h3>
+
+<h4>Containers</h4>
+<div class="def">
+<strong>Definition:</strong> A container is a class template that stores a collection of objects. Containers manage memory automatically and provide member functions to add, remove, and access elements.
+</div>
+
+<table>
+  <tr><th>Container</th><th>Description</th></tr>
+  <tr><td>vector</td><td>Dynamic array that can grow or shrink</td></tr>
+  <tr><td>list</td><td>Doubly-linked list</td></tr>
+  <tr><td>stack</td><td>Last In, First Out (LIFO) container</td></tr>
+  <tr><td>queue</td><td>First In, First Out (FIFO) container</td></tr>
+  <tr><td>map</td><td>Sorted collection of key-value pairs</td></tr>
+  <tr><td>set</td><td>Sorted collection of unique elements</td></tr>
+</table>
+
+<h4>Iterators</h4>
+<div class="def">
+<strong>Definition:</strong> An iterator is an object that points to an element inside a container and allows movement between elements. Iterators provide a uniform way to traverse any container.
+</div>
+
+<table>
+  <tr><th>Iterator</th><th>Description</th></tr>
+  <tr><td>begin()</td><td>Iterator to the first element</td></tr>
+  <tr><td>end()</td><td>Iterator past the last element</td></tr>
+  <tr><td>advance()</td><td>Move the iterator forward by n positions</td></tr>
+</table>
+
+<h4>Algorithms</h4>
+<div class="def">
+<strong>Definition:</strong> Algorithms are generic functions that perform operations on ranges defined by iterators. They are independent of the container used.
+</div>
+
+<table>
+  <tr><th>Algorithm</th><th>Purpose</th></tr>
+  <tr><td>sort()</td><td>Sorts elements in ascending order</td></tr>
+  <tr><td>reverse()</td><td>Reverses the order of elements</td></tr>
+  <tr><td>find()</td><td>Searches for a value in a range</td></tr>
+  <tr><td>count()</td><td>Counts occurrences of a value</td></tr>
+  <tr><td>max_element()</td><td>Returns the largest element</td></tr>
+</table>
+
+<hr>
+
+<h2>Part B: Practical Topics</h2>
+
+<h3>Practical 1: Implementing Data Abstraction</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class BankAccount {
+private:
+    double balance;
+
+public:
+    BankAccount(double initial) : balance(initial) { }
+
+    void deposit(double amount) {
+        if (amount &gt; 0) balance += amount;
+    }
+
+    void withdraw(double amount) {
+        if (amount &gt; 0 &amp;&amp; amount &lt;= balance) balance -= amount;
+    }
+
+    double getBalance() const { return balance; }
+};
+
+int main() {
+    BankAccount acc(500);
+    acc.deposit(250);
+    acc.withdraw(100);
+    cout &lt;&lt; "Balance: $" &lt;&lt; acc.getBalance() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Balance: $650</div>
+
+<hr>
+
+<h3>Practical 2: Creating Abstract Classes and Pure Virtual Functions</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Shape {
+public:
+    virtual double area() = 0;      // pure virtual
+    virtual void display() = 0;
+
+    virtual ~Shape() { }
+};
+
+class Circle : public Shape {
+private:
+    double radius;
+public:
+    Circle(double r) : radius(r) { }
+
+    double area() override { return 3.14159 * radius * radius; }
+    void display() override {
+        cout &lt;&lt; "Circle area: " &lt;&lt; area() &lt;&lt; endl;
+    }
+};
+
+class Rectangle : public Shape {
+private:
+    double length, width;
+public:
+    Rectangle(double l, double w) : length(l), width(w) { }
+
+    double area() override { return length * width; }
+    void display() override {
+        cout &lt;&lt; "Rectangle area: " &lt;&lt; area() &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Shape *s1 = new Circle(5);
+    Shape *s2 = new Rectangle(4, 6);
+
+    s1-&gt;display();
+    s2-&gt;display();
+
+    delete s1;
+    delete s2;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Circle area: 78.5398
+Rectangle area: 24</div>
+
+<hr>
+
+<h3>Practical 3: Designing Interface-Like Structures Using Abstract Classes</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Printable {
+public:
+    virtual void print() = 0;
+    virtual ~Printable() { }
+};
+
+class Serializable {
+public:
+    virtual void serialize() = 0;
+    virtual ~Serializable() { }
+};
+
+class Document : public Printable, public Serializable {
+private:
+    string content;
+public:
+    Document(string c) : content(c) { }
+
+    void print() override {
+        cout &lt;&lt; "Printing: " &lt;&lt; content &lt;&lt; endl;
+    }
+    void serialize() override {
+        cout &lt;&lt; "Serializing: " &lt;&lt; content &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Document d("Report");
+    d.print();
+    d.serialize();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Printing: Report
+Serializing: Report</div>
+
+<hr>
+
+<h3>Practical 4: Creating Function and Class Templates</h3>
+
+<h4>Function Template</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;typename T&gt;
+T maximum(T a, T b) {
+    return (a &gt; b) ? a : b;
+}
+
+int main() {
+    cout &lt;&lt; maximum(15, 25) &lt;&lt; endl;
+    cout &lt;&lt; maximum(3.5, 1.2) &lt;&lt; endl;
+    cout &lt;&lt; maximum(string("apple"), string("banana")) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+25
+3.5
+banana</div>
+
+<h4>Class Template</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;typename T&gt;
+class Stack {
+private:
+    T items[100];
+    int top;
+public:
+    Stack() { top = -1; }
+
+    void push(T value) {
+        if (top &lt; 99) items[++top] = value;
+    }
+
+    T pop() {
+        if (top &gt;= 0) return items[top--];
+        return T();
+    }
+
+    bool empty() { return top == -1; }
+};
+
+int main() {
+    Stack&lt;int&gt; intStack;
+    intStack.push(10);
+    intStack.push(20);
+    cout &lt;&lt; intStack.pop() &lt;&lt; endl;
+
+    Stack&lt;string&gt; strStack;
+    strStack.push("Hello");
+    strStack.push("World");
+    cout &lt;&lt; strStack.pop() &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+20
+World</div>
+
+<hr>
+
+<h3>Practical 5: Implementing Template Specialization</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;typename T&gt;
+class Printer {
+public:
+    void show(T value) {
+        cout &lt;&lt; "Value: " &lt;&lt; value &lt;&lt; endl;
+    }
+};
+
+// Full specialization for bool
+template &lt;&gt;
+class Printer&lt;bool&gt; {
+public:
+    void show(bool value) {
+        cout &lt;&lt; "Boolean: " &lt;&lt; (value ? "true" : "false") &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Printer&lt;int&gt; p1;
+    Printer&lt;bool&gt; p2;
+
+    p1.show(42);
+    p2.show(true);
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Value: 42
+Boolean: true</div>
+
+<hr>
+
+<h3>Practical 6: Working with STL Containers</h3>
+
+<h4>Vector</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; nums;
+    nums.push_back(10);
+    nums.push_back(20);
+    nums.push_back(30);
+
+    for (int n : nums) cout &lt;&lt; n &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+10 20 30</div>
+
+<h4>List</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;list&gt;
+using namespace std;
+
+int main() {
+    list&lt;string&gt; names;
+    names.push_back("Ali");
+    names.push_front("Sara");
+    names.push_back("John");
+
+    for (const string &amp;n : names) cout &lt;&lt; n &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Sara Ali John</div>
+
+<h4>Stack</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;stack&gt;
+using namespace std;
+
+int main() {
+    stack&lt;int&gt; s;
+    s.push(10);
+    s.push(20);
+    s.push(30);
+
+    while (!s.empty()) {
+        cout &lt;&lt; s.top() &lt;&lt; " ";
+        s.pop();
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+30 20 10</div>
+
+<h4>Queue</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+int main() {
+    queue&lt;int&gt; q;
+    q.push(10);
+    q.push(20);
+    q.push(30);
+
+    while (!q.empty()) {
+        cout &lt;&lt; q.front() &lt;&lt; " ";
+        q.pop();
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+10 20 30</div>
+
+<h4>Map</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;map&gt;
+using namespace std;
+
+int main() {
+    map&lt;string, int&gt; ages;
+    ages["Ali"] = 25;
+    ages["Sara"] = 22;
+    ages["John"] = 30;
+
+    for (auto &amp;entry : ages) {
+        cout &lt;&lt; entry.first &lt;&lt; ": " &lt;&lt; entry.second &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Ali: 25
+John: 30
+Sara: 22</div>
+
+<hr>
+
+<h3>Practical 7: Working with STL Iterators and Algorithms</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; nums = {4, 2, 9, 1, 7, 3};
+
+    sort(nums.begin(), nums.end());
+    cout &lt;&lt; "Sorted: ";
+    for (int n : nums) cout &lt;&lt; n &lt;&lt; " ";
+    cout &lt;&lt; endl;
+
+    reverse(nums.begin(), nums.end());
+    cout &lt;&lt; "Reversed: ";
+    for (int n : nums) cout &lt;&lt; n &lt;&lt; " ";
+    cout &lt;&lt; endl;
+
+    auto it = find(nums.begin(), nums.end(), 7);
+    if (it != nums.end())
+        cout &lt;&lt; "Found 7 at index: " &lt;&lt; (it - nums.begin()) &lt;&lt; endl;
+
+    int countNines = count(nums.begin(), nums.end(), 9);
+    cout &lt;&lt; "Count of 9: " &lt;&lt; countNines &lt;&lt; endl;
+
+    cout &lt;&lt; "Max element: " &lt;&lt; *max_element(nums.begin(), nums.end()) &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Sorted: 1 2 3 4 7 9
+Reversed: 9 7 4 3 2 1
+Found 7 at index: 1
+Count of 9: 1
+Max element: 9</div>
+
+<h4>Iterators and Algorithms Diagram</h4>
+<div class="diagram">     Container: [ 4 | 2 | 9 | 1 | 7 | 3 ]
+                  ^                   ^
+               begin()             end()
+
+     sort(begin(), end())   -&gt; reorders the elements
+     find(begin(), end(), x) -&gt; returns iterator to x</div>
+
+<hr>
+
+<h2>Module 6: Quick Revision Summary</h2>
+
+<table>
+  <tr><th>Topic</th><th>Key Takeaway</th></tr>
+  <tr><td>Abstraction</td><td>Expose essential features, hide implementation</td></tr>
+  <tr><td>Data abstraction</td><td>Private data accessed only through public functions</td></tr>
+  <tr><td>Abstract class</td><td>Contains at least one pure virtual function; cannot be instantiated</td></tr>
+  <tr><td>Pure virtual function</td><td>Declared with = 0; forces derived implementation</td></tr>
+  <tr><td>Interface</td><td>Abstract class with only pure virtual functions</td></tr>
+  <tr><td>Templates</td><td>Generic blueprints for functions or classes</td></tr>
+  <tr><td>Function template</td><td>Generic function that works with any data type</td></tr>
+  <tr><td>Class template</td><td>Generic class parameterized by data type</td></tr>
+  <tr><td>Template overloading</td><td>Multiple templates with same name and different parameters</td></tr>
+  <tr><td>Template specialization</td><td>Specific implementation for a particular type</td></tr>
+  <tr><td>Generic programming</td><td>Write algorithms independent of data types</td></tr>
+  <tr><td>STL</td><td>Library of containers, iterators, and algorithms</td></tr>
+  <tr><td>Containers</td><td>vector, list, stack, queue, map, set</td></tr>
+  <tr><td>Iterators</td><td>Objects for traversing container elements</td></tr>
+  <tr><td>Algorithms</td><td>sort, find, count, reverse, max_element</td></tr>
+</table>
+
+</body>
+</html>

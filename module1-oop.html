@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS409 Module 1 - Introduction to Object-Oriented Programming</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    font-size: 15px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    border-bottom: 4px solid #1f4e79;
+    padding-bottom: 12px;
+    color: #1f4e79;
+  }
+  h2 {
+    font-size: 20px;
+    color: #ffffff;
+    background: #1f4e79;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+  h3 {
+    font-size: 17px;
+    color: #1f4e79;
+    border-left: 5px solid #1f4e79;
+    padding-left: 10px;
+    margin-top: 28px;
+  }
+  h4 {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 20px;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    color: #b00020;
+  }
+  pre {
+    background: #f5f7fa;
+    border: 1px solid #d0d7de;
+    border-left: 4px solid #1f4e79;
+    padding: 14px 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #24292e;
+  }
+  pre code {
+    background: none;
+    color: #24292e;
+    padding: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1f4e79;
+    color: #ffffff;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  td {
+    border: 1px solid #cfd8dc;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f8fb;
+  }
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid #f0ad4e;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .def {
+    background: #e8f1f8;
+    border-left: 4px solid #1f4e79;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .output {
+    background: #eef6ee;
+    border-left: 4px solid #2e7d32;
+    padding: 8px 14px;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    margin: 8px 0;
+    border-radius: 3px;
+  }
+  .diagram {
+    background: #f9f9f9;
+    border: 1px dashed #888888;
+    padding: 14px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 26px;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #d0d7de;
+    margin: 36px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>CS409 – Object Oriented Programming<br>Module 1: Introduction to Object-Oriented Programming</h1>
+
+<h2>Part A: Theory Topics</h2>
+
+<h3>1. Introduction to Object-Oriented Programming</h3>
+
+<div class="def">
+<strong>Definition:</strong> Object-Oriented Programming (OOP) is a programming paradigm that organizes software design around objects rather than functions. It models real-world entities as objects that contain both data (attributes) and behavior (methods).
+</div>
+
+<p>In simple words, OOP is a way of writing programs where we create objects that represent real-world things, such as a Car, a Student, or a Bank Account, each having its own data and actions.</p>
+
+<h4>Syntax (Basic Structure)</h4>
+<pre><code>class ClassName {
+    // data members (attributes)
+    // member functions (behaviors)
+};</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>Consider a Car:</p>
+<ul>
+  <li><strong>Data (attributes):</strong> color, brand, speed, fuel level</li>
+  <li><strong>Behavior (methods):</strong> start(), accelerate(), brake()</li>
+</ul>
+<p>In OOP, we define a Car class and then create objects such as myCar and yourCar from it.</p>
+
+<hr>
+
+<h3>2. History and Evolution of OOP</h3>
+
+<h4>Timeline</h4>
+<table>
+  <tr><th>Year</th><th>Milestone</th></tr>
+  <tr><td>1960s</td><td>Simula 67, the first language with classes and objects, developed by Ole-Johan Dahl and Kristen Nygaard</td></tr>
+  <tr><td>1970s</td><td>Smalltalk, a pure OOP language, developed by Alan Kay at Xerox PARC</td></tr>
+  <tr><td>1980s</td><td>C++ developed by Bjarne Stroustrup by adding classes to C</td></tr>
+  <tr><td>1990s</td><td>Java introduced by Sun Microsystems in 1995</td></tr>
+  <tr><td>2000s and beyond</td><td>C#, Python, Ruby, Swift, and Kotlin become popular OOP languages</td></tr>
+</table>
+
+<h4>Evolution Diagram</h4>
+<div class="diagram">Simula 67  --&gt;  Smalltalk  --&gt;  C++  --&gt;  Java  --&gt;  C#  --&gt;  Modern OOP
+  (1967)        (1972)        (1985)    (1995)    (2000)     (Today)</div>
+
+<div class="note">
+<strong>Key Point:</strong> C++ was originally created as "C with Classes" because it added OOP features to the fast and powerful C language.
+</div>
+
+<hr>
+
+<h3>3. Object-Oriented Design (OOD)</h3>
+
+<div class="def">
+<strong>Definition:</strong> Object-Oriented Design is the process of planning a software system by identifying objects, their attributes, behaviors, and relationships before writing code.
+</div>
+
+<h4>Steps in Object-Oriented Design</h4>
+<ol>
+  <li>Identify objects from the problem statement.</li>
+  <li>Define the attributes (data) of each object.</li>
+  <li>Define the behaviors (methods) of each object.</li>
+  <li>Define relationships between objects.</li>
+  <li>Design classes and interfaces.</li>
+</ol>
+
+<h4>Real-Life Example: Library Management System</h4>
+<table>
+  <tr><th>Object</th><th>Attributes</th><th>Behaviors</th></tr>
+  <tr><td>Book</td><td>title, author, ISBN</td><td>issue(), return()</td></tr>
+  <tr><td>Member</td><td>name, ID, borrowed books</td><td>borrowBook(), returnBook()</td></tr>
+  <tr><td>Librarian</td><td>name, staffID</td><td>addBook(), removeBook()</td></tr>
+</table>
+
+<h4>Design Diagram</h4>
+<div class="diagram">        +-------------+
+        |   LIBRARY   |
+        +------+------+
+     +---------+---------+
+     |         |         |
+     v         v         v
+ +-------+ +--------+ +-----------+
+ | Book  | | Member | | Librarian |
+ +-------+ +--------+ +-----------+</div>
+
+<hr>
+
+<h3>4. Advantages of Object-Oriented Programming</h3>
+
+<table>
+  <tr><th>No.</th><th>Advantage</th><th>Explanation</th></tr>
+  <tr><td>1</td><td>Reusability</td><td>Classes can be reused in other programs through inheritance.</td></tr>
+  <tr><td>2</td><td>Modularity</td><td>Code is divided into self-contained objects.</td></tr>
+  <tr><td>3</td><td>Maintainability</td><td>Individual objects can be updated without breaking the entire system.</td></tr>
+  <tr><td>4</td><td>Data Security</td><td>Encapsulation hides internal data from unauthorized access.</td></tr>
+  <tr><td>5</td><td>Flexibility</td><td>Polymorphism allows one interface with many implementations.</td></tr>
+  <tr><td>6</td><td>Scalability</td><td>Large programs are easier to expand and manage.</td></tr>
+  <tr><td>7</td><td>Real-World Modeling</td><td>Directly maps to real-world concepts and entities.</td></tr>
+  <tr><td>8</td><td>Team Collaboration</td><td>Different teams can work on different classes independently.</td></tr>
+</table>
+
+<hr>
+
+<h3>5. Procedural Programming vs Object-Oriented Programming</h3>
+
+<table>
+  <tr><th>Feature</th><th>Procedural Programming</th><th>Object-Oriented Programming</th></tr>
+  <tr><td>Focus</td><td>Functions and procedures</td><td>Objects combining data and functions</td></tr>
+  <tr><td>Data Security</td><td>Low; data is often global</td><td>High; data is encapsulated</td></tr>
+  <tr><td>Approach</td><td>Top-down</td><td>Bottom-up</td></tr>
+  <tr><td>Reusability</td><td>Limited</td><td>High through inheritance</td></tr>
+  <tr><td>Modularity</td><td>Based on functions</td><td>Based on classes and objects</td></tr>
+  <tr><td>Examples</td><td>C, Pascal, FORTRAN</td><td>C++, Java, C#, Python</td></tr>
+  <tr><td>Data Movement</td><td>Data moves freely between functions</td><td>Data is bound to its methods</td></tr>
+  <tr><td>Problem Solving</td><td>Break into steps</td><td>Break into objects</td></tr>
+</table>
+
+<h4>Comparison Diagram</h4>
+<div class="diagram">PROCEDURAL                        OOP
++--------------+           +------------------+
+|   main()     |           |    Class A       |
+|    |-- func1 |           |  data + methods  |
+|    |-- func2 |           |    Class B       |
+|    |-- func3 |           |  data + methods  |
++--------------+           +------------------+
+ Data separate               Data and behavior
+ from functions                 together</div>
+
+<hr>
+
+<h3>6. Basic Principles of OOP (The Four Pillars)</h3>
+
+<div class="diagram">        +----------------------------+
+        |    4 PILLARS OF OOP        |
+        +-------------+--------------+
+      +----------+----+----+----------+
+      v          v         v          v
+ +---------+ +--------+ +--------+ +-----------+
+ |Encapsu- | |Abstrac-| | Inheri-| |  Poly-    |
+ |  lation | |  tion  | | tance  | | morphism  |
+ +---------+ +--------+ +--------+ +-----------+</div>
+
+<h4>Pillar 1: Encapsulation</h4>
+<div class="def">
+<strong>Definition:</strong> Encapsulation is the binding of data and methods together in a single unit (a class) while hiding the data from direct access.
+</div>
+<pre><code>class BankAccount {
+private:
+    double balance;                              // hidden data
+public:
+    void deposit(double amt) { balance += amt; } // controlled access
+    double getBalance() { return balance; }
+};</code></pre>
+
+<h4>Pillar 2: Abstraction</h4>
+<div class="def">
+<strong>Definition:</strong> Abstraction is the process of hiding complex implementation details and showing only the essential features of an object.
+</div>
+<pre><code>class Car {
+public:
+    void start() { /* complex engine logic hidden */ }
+    void brake() { /* complex braking logic hidden */ }
+};</code></pre>
+
+<h4>Pillar 3: Inheritance</h4>
+<div class="def">
+<strong>Definition:</strong> Inheritance is the mechanism by which one class acquires the properties and methods of another class.
+</div>
+<pre><code>class Animal {                     // base class
+public:
+    void eat() { cout &lt;&lt; "Eating..." &lt;&lt; endl; }
+};
+
+class Dog : public Animal {        // derived class
+public:
+    void bark() { cout &lt;&lt; "Barking..." &lt;&lt; endl; }
+};</code></pre>
+
+<h4>Pillar 4: Polymorphism</h4>
+<div class="def">
+<strong>Definition:</strong> Polymorphism means "one name, many forms." The same function behaves differently depending on the object that invokes it.
+</div>
+<pre><code>class Shape {
+public:
+    virtual void draw() { cout &lt;&lt; "Drawing shape" &lt;&lt; endl; }
+};
+
+class Circle : public Shape {
+public:
+    void draw() override { cout &lt;&lt; "Drawing circle" &lt;&lt; endl; }
+};</code></pre>
+
+<hr>
+
+<h3>7. Classes and Objects</h3>
+
+<div class="def">
+<strong>Class:</strong> A blueprint or template that defines the data members and member functions of a type.<br><br>
+<strong>Object:</strong> An instance of a class. It is a real entity created from the class.
+</div>
+
+<div class="note">
+<strong>Analogy:</strong> A class is like a cookie cutter, and objects are the cookies made from it.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>// Class definition
+class ClassName {
+    access_specifier:
+        data_type member1;
+        return_type function1() { }
+};
+
+// Object creation
+ClassName objectName;</code></pre>
+
+<h4>Real-Life Example</h4>
+<ul>
+  <li><strong>Class:</strong> Student</li>
+  <li><strong>Objects:</strong> ali, sara, john</li>
+</ul>
+
+<h4>Simple Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+public:
+    string name;
+    int age;
+
+    void display() {
+        cout &lt;&lt; "Name: " &lt;&lt; name &lt;&lt; ", Age: " &lt;&lt; age &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Student s1;              // object creation
+    s1.name = "Ali";
+    s1.age = 20;
+    s1.display();            // Name: Ali, Age: 20
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Name: Ali, Age: 20</div>
+
+<h4>Class and Object Diagram</h4>
+<div class="diagram">        +------------------+
+        |  CLASS: Student  |
+        |  --------------- |
+        |  + name          |
+        |  + age           |
+        |  + display()     |
+        +--------+---------+
+                 | creates
+     +-----------+-----------+
+     v           v           v
+ +--------+ +--------+ +--------+
+ |  s1    | |  s2    | |  s3    |
+ | Ali,20 | | Sara,19| | John,21|
+ +--------+ +--------+ +--------+</div>
+
+<hr>
+
+<h3>8. Data Members and Member Functions</h3>
+
+<div class="def">
+<strong>Data Members:</strong> Variables declared inside a class that store an object's attributes.<br><br>
+<strong>Member Functions:</strong> Functions declared inside a class that define an object's behaviors.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>class ClassName {
+    data_type dataMember;             // data member
+    return_type memberFunction() {    // member function
+        // code
+    }
+};</code></pre>
+
+<h4>Types of Data Members</h4>
+<table>
+  <tr><th>Type</th><th>Description</th></tr>
+  <tr><td>Instance variables</td><td>Unique to each object (non-static)</td></tr>
+  <tr><td>Static variables</td><td>Shared by all objects of the class (static)</td></tr>
+  <tr><td>Constant members</td><td>Values that cannot be changed (const)</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>For a Mobile class:</p>
+<ul>
+  <li><strong>Data members:</strong> brand, price, battery</li>
+  <li><strong>Member functions:</strong> call(), charge(), message()</li>
+</ul>
+
+<h4>Code Example 1: Basic Data Members and Member Functions</h4>
+<pre><code>class Mobile {
+private:
+    string brand;
+    int price;
+public:
+    void setData(string b, int p) { brand = b; price = p; }
+    void display() { cout &lt;&lt; brand &lt;&lt; " costs " &lt;&lt; price &lt;&lt; endl; }
+};</code></pre>
+
+<h4>Code Example 2: Static Data Member</h4>
+<pre><code>class Counter {
+public:
+    static int count;        // shared by all objects
+    Counter() { count++; }
+};
+int Counter::count = 0;      // definition outside class</code></pre>
+
+<h4>Code Example 3: Constructor (Special Member Function)</h4>
+<pre><code>class Box {
+public:
+    int length;
+    Box() { length = 10; }   // constructor
+    void show() { cout &lt;&lt; length; }
+};</code></pre>
+
+<h4>Types of Member Functions</h4>
+<table>
+  <tr><th>Type</th><th>Description</th></tr>
+  <tr><td>Simple functions</td><td>Normal functions defined inside the class</td></tr>
+  <tr><td>Constructors</td><td>Automatically called when an object is created</td></tr>
+  <tr><td>Destructors</td><td>Automatically called when an object is destroyed</td></tr>
+  <tr><td>Static functions</td><td>Called without creating an object</td></tr>
+  <tr><td>Friend functions</td><td>Non-member functions granted special access</td></tr>
+</table>
+
+<hr>
+
+<h3>9. Real-World Applications of OOP</h3>
+
+<table>
+  <tr><th>Application</th><th>Use of OOP</th></tr>
+  <tr><td>Banking Systems</td><td>Account, Customer, and Transaction classes</td></tr>
+  <tr><td>E-Commerce</td><td>Product, Cart, Order, and Payment classes</td></tr>
+  <tr><td>Game Development</td><td>Player, Enemy, Weapon, and Level classes</td></tr>
+  <tr><td>GUI Applications</td><td>Button, Window, and Menu classes</td></tr>
+  <tr><td>AI and Robotics</td><td>Robot, Sensor, and Task classes</td></tr>
+  <tr><td>Hospital Management</td><td>Patient, Doctor, and Appointment classes</td></tr>
+  <tr><td>Vehicle Tracking</td><td>Vehicle, GPS, and Driver classes</td></tr>
+  <tr><td>Social Media</td><td>User, Post, Comment, and Like classes</td></tr>
+  <tr><td>Simulation Software</td><td>Simulation object models</td></tr>
+</table>
+
+<hr>
+
+<h2>Part B: Practical Topics</h2>
+
+<h3>Practical 1: Introduction to the C++ OOP Programming Environment</h3>
+
+<h4>Required Tools</h4>
+<table>
+  <tr><th>Tool</th><th>Purpose</th></tr>
+  <tr><td>Compiler</td><td>g++, clang++, MSVC</td></tr>
+  <tr><td>IDE</td><td>Code::Blocks, Visual Studio, Dev-C++, VS Code</td></tr>
+  <tr><td>Online Compilers</td><td>Replit, OnlineGDB</td></tr>
+</table>
+
+<h4>Setup Steps</h4>
+<ol>
+  <li>Install Code::Blocks or Dev-C++ (both are free).</li>
+  <li>Create a new .cpp file.</li>
+  <li>Write the code, then compile (F9) and run (F10).</li>
+</ol>
+
+<h4>First Program</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Hello {
+public:
+    void greet() { cout &lt;&lt; "Hello, OOP World!" &lt;&lt; endl; }
+};
+
+int main() {
+    Hello obj;
+    obj.greet();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Hello, OOP World!</div>
+
+<hr>
+
+<h3>Practical 2: Creating Classes and Objects</h3>
+
+<h4>Syntax</h4>
+<pre><code>// Class declaration
+class ClassName {
+    // members
+};
+
+// Object creation method 1: at declaration
+ClassName obj1;
+
+// Object creation method 2: using new (dynamic)
+ClassName* obj2 = new ClassName();
+
+// Object creation method 3: using pointer and address
+ClassName obj3;
+ClassName* ptr = &amp;obj3;</code></pre>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Rectangle {
+public:
+    int length, width;
+};
+
+int main() {
+    Rectangle r1;          // object 1
+    r1.length = 5;
+    r1.width = 3;
+    cout &lt;&lt; "Area = " &lt;&lt; r1.length * r1.width &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Area = 15</div>
+
+<hr>
+
+<h3>Practical 3: Defining Data Members and Member Functions</h3>
+
+<h4>Code Example (Definition Outside the Class)</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Circle {
+private:
+    double radius;               // data member
+
+public:
+    void setRadius(double r);    // declared
+    double area();               // declared
+};
+
+void Circle::setRadius(double r) { radius = r; }   // defined outside
+double Circle::area() { return 3.14 * radius * radius; }
+
+int main() {
+    Circle c;
+    c.setRadius(5);
+    cout &lt;&lt; "Area = " &lt;&lt; c.area() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Area = 78.5</div>
+
+<h4>Inline vs Outside Definition</h4>
+<table>
+  <tr><th>Style</th><th>Where</th><th>Example</th></tr>
+  <tr><td>Inline</td><td>Inside the class</td><td><code>void show() { cout &lt;&lt; x; }</code></td></tr>
+  <tr><td>Outside</td><td>Using ClassName::</td><td><code>void A::show() { cout &lt;&lt; x; }</code></td></tr>
+</table>
+
+<hr>
+
+<h3>Practical 4: Accessing Class Members</h3>
+
+<h4>Two Ways to Access Members</h4>
+<ol>
+  <li>Dot operator (<code>.</code>) used with objects.</li>
+  <li>Arrow operator (<code>-&gt;</code>) used with pointers to objects.</li>
+</ol>
+
+<h4>Syntax</h4>
+<pre><code>object.member;        // dot operator
+pointer-&gt;member;      // arrow operator</code></pre>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Book {
+public:
+    string title;
+    void show() { cout &lt;&lt; "Title: " &lt;&lt; title &lt;&lt; endl; }
+};
+
+int main() {
+    Book b;
+    b.title = "C++ Basics";       // dot operator
+    b.show();
+
+    Book* ptr = &amp;b;
+    cout &lt;&lt; "Pointer: " &lt;&lt; ptr-&gt;title &lt;&lt; endl;   // arrow operator
+    ptr-&gt;show();
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Title: C++ Basics
+Pointer: C++ Basics
+Title: C++ Basics</div>
+
+<hr>
+
+<h3>Practical 5: Creating Multiple Objects of a Class</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Car {
+public:
+    string brand;
+    int speed;
+
+    void display() {
+        cout &lt;&lt; brand &lt;&lt; " runs at " &lt;&lt; speed &lt;&lt; " km/h" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Car c1, c2, c3;    // multiple objects
+
+    c1.brand = "Toyota"; c1.speed = 120;
+    c2.brand = "Honda";  c2.speed = 100;
+    c3.brand = "BMW";    c3.speed = 200;
+
+    c1.display();
+    c2.display();
+    c3.display();
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Toyota runs at 120 km/h
+Honda runs at 100 km/h
+BMW runs at 200 km/h</div>
+
+<h4>Multiple Objects Diagram</h4>
+<div class="diagram">           +---------------+
+           |  Class: Car   |
+           +-------+-------+
+      +------------+------------+
+      v            v            v
+ +----------+ +----------+ +----------+
+ | c1       | | c2       | | c3       |
+ |Toyota,120| |Honda,100 | | BMW,200  |
+ +----------+ +----------+ +----------+</div>
+
+<hr>
+
+<h3>Practical 6: Implementing Real-World Examples Using Classes and Objects</h3>
+
+<h4>Example 1: Bank Account</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class BankAccount {
+private:
+    string owner;
+    double balance;
+
+public:
+    void create(string name, double amt) {
+        owner = name;
+        balance = amt;
+    }
+    void deposit(double amt) { balance += amt; }
+    void withdraw(double amt) {
+        if (amt &lt;= balance) balance -= amt;
+        else cout &lt;&lt; "Insufficient balance!" &lt;&lt; endl;
+    }
+    void show() {
+        cout &lt;&lt; owner &lt;&lt; "'s Balance: $" &lt;&lt; balance &lt;&lt; endl;
+    }
+};
+
+int main() {
+    BankAccount acc;
+    acc.create("Ali", 1000);
+    acc.deposit(500);
+    acc.withdraw(300);
+    acc.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Ali's Balance: $1200</div>
+
+<h4>Example 2: Student Record</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Student {
+private:
+    string name;
+    int roll;
+    float marks;
+
+public:
+    void input(string n, int r, float m) {
+        name = n; roll = r; marks = m;
+    }
+    void result() {
+        cout &lt;&lt; "Name: " &lt;&lt; name &lt;&lt; ", Roll: " &lt;&lt; roll
+             &lt;&lt; ", Marks: " &lt;&lt; marks &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Student s1, s2;
+    s1.input("Sara", 1, 85.5);
+    s2.input("John", 2, 72.0);
+    s1.result();
+    s2.result();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Name: Sara, Roll: 1, Marks: 85.5
+Name: John, Roll: 2, Marks: 72</div>
+
+<h4>Example 3: Shopping Cart</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Item {
+public:
+    string name;
+    int price;
+    int qty;
+
+    int total() { return price * qty; }
+};
+
+int main() {
+    Item i1 = {"Pen", 10, 5};
+    Item i2 = {"Book", 100, 2};
+
+    cout &lt;&lt; i1.name &lt;&lt; " Total: " &lt;&lt; i1.total() &lt;&lt; endl;
+    cout &lt;&lt; i2.name &lt;&lt; " Total: " &lt;&lt; i2.total() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Pen Total: 50
+Book Total: 200</div>
+
+<hr>
+
+<h3>Practical 7: Compilation and Debugging of OOP Programs</h3>
+
+<h4>Compilation Steps</h4>
+<table>
+  <tr><th>Step</th><th>Description</th><th>Command</th></tr>
+  <tr><td>Preprocessing</td><td>Handles #include and #define directives</td><td>-</td></tr>
+  <tr><td>Compilation</td><td>Converts source code to assembly</td><td><code>g++ -S file.cpp</code></td></tr>
+  <tr><td>Assembly</td><td>Converts to machine code (.o)</td><td><code>g++ -c file.cpp</code></td></tr>
+  <tr><td>Linking</td><td>Links libraries to produce the executable</td><td><code>g++ file.cpp -o app</code></td></tr>
+</table>
+
+<h4>Common Compile Command</h4>
+<pre><code>g++ program.cpp -o program
+./program</code></pre>
+
+<h4>Common Errors and Fixes</h4>
+<table>
+  <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+  <tr><td>expected ';'</td><td>Missing semicolon after class definition</td><td>Add ; after the closing brace of the class</td></tr>
+  <tr><td>'x' was not declared</td><td>Variable not defined</td><td>Declare the variable properly</td></tr>
+  <tr><td>no matching function</td><td>Wrong function parameters</td><td>Match the function signature</td></tr>
+  <tr><td>Undefined reference</td><td>Function declared but not defined</td><td>Define the function</td></tr>
+  <tr><td>Access error</td><td>Accessing private data</td><td>Use public methods</td></tr>
+</table>
+
+<h4>Debugging Tips</h4>
+<ol>
+  <li>Compile frequently after each small change.</li>
+  <li>Read error messages from top to bottom.</li>
+  <li>Add cout statements to trace values.</li>
+  <li>Use the IDE debugger with breakpoints and step-through.</li>
+  <li>Check scope: private members cannot be accessed outside the class.</li>
+</ol>
+
+<h4>Debugging Flow Diagram</h4>
+<div class="diagram">Write Code --&gt; Compile --&gt; Errors?
+                              |
+                    +---------+---------+
+                    v                   v
+                 YES: Fix            NO: Run
+                    |                   |
+                    +-------&gt; Test &lt;-----+
+                              |
+                         Bug found? --&gt; Debug and Repeat</div>
+
+<hr>
+
+<h2>Module 1: Quick Revision Summary</h2>
+
+<table>
+  <tr><th>Topic</th><th>Key Takeaway</th></tr>
+  <tr><td>OOP</td><td>Programs built around objects that combine data and behavior</td></tr>
+  <tr><td>History</td><td>Simula 67 to Smalltalk to C++ to Java to modern languages</td></tr>
+  <tr><td>OOD</td><td>Identify objects, attributes, behaviors, and relationships</td></tr>
+  <tr><td>Advantages</td><td>Reusability, modularity, security, and scalability</td></tr>
+  <tr><td>Procedural vs OOP</td><td>Functions vs objects; top-down vs bottom-up</td></tr>
+  <tr><td>Four Pillars</td><td>Encapsulation, Abstraction, Inheritance, Polymorphism</td></tr>
+  <tr><td>Class and Object</td><td>Blueprint vs instance</td></tr>
+  <tr><td>Members</td><td>Data members (attributes) and member functions (behaviors)</td></tr>
+  <tr><td>Access</td><td>Dot operator for objects, arrow operator for pointers</td></tr>
+  <tr><td>Debugging</td><td>Compile often, read errors carefully, use trace statements</td></tr>
+</table>
+
+</body>
+</html>

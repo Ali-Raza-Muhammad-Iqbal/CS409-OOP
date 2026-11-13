@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS409 Module 7 - String Manipulation and Exception Handling</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    font-size: 15px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    border-bottom: 4px solid #1f4e79;
+    padding-bottom: 12px;
+    color: #1f4e79;
+  }
+  h2 {
+    font-size: 20px;
+    color: #ffffff;
+    background: #1f4e79;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+  h3 {
+    font-size: 17px;
+    color: #1f4e79;
+    border-left: 5px solid #1f4e79;
+    padding-left: 10px;
+    margin-top: 28px;
+  }
+  h4 {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 20px;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    color: #b00020;
+  }
+  pre {
+    background: #f5f7fa;
+    border: 1px solid #d0d7de;
+    border-left: 4px solid #1f4e79;
+    padding: 14px 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #24292e;
+  }
+  pre code {
+    background: none;
+    color: #24292e;
+    padding: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1f4e79;
+    color: #ffffff;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  td {
+    border: 1px solid #cfd8dc;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f8fb;
+  }
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid #f0ad4e;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .def {
+    background: #e8f1f8;
+    border-left: 4px solid #1f4e79;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .output {
+    background: #eef6ee;
+    border-left: 4px solid #2e7d32;
+    padding: 8px 14px;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    margin: 8px 0;
+    border-radius: 3px;
+  }
+  .diagram {
+    background: #f9f9f9;
+    border: 1px dashed #888888;
+    padding: 14px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 26px;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #d0d7de;
+    margin: 36px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>CS409 – Object Oriented Programming<br>Module 7: String Manipulation and Exception Handling</h1>
+
+<h2>Part A: Theory Topics</h2>
+
+<h3>1. Introduction to Strings in C++</h3>
+
+<div class="def">
+<strong>Definition:</strong> A string is a sequence of characters used to store text. In C++, strings can be represented in two ways: using C-style character arrays (<code>char[]</code>) or using the <code>std::string</code> class from the Standard Library.
+</div>
+
+<h4>Ways to Represent Strings in C++</h4>
+<table>
+  <tr><th>Method</th><th>Description</th><th>Header</th></tr>
+  <tr><td>Character array (C-string)</td><td>Null-terminated array of char</td><td>built-in</td></tr>
+  <tr><td>std::string class</td><td>Object-oriented string with rich functions</td><td>&lt;string&gt;</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A user's name, a product description, and a chat message are all strings. They can be stored, compared, searched, and modified in a program.</p>
+
+<hr>
+
+<h3>2. Character Arrays and the string Class</h3>
+
+<h4>Character Arrays (C-strings)</h4>
+<div class="def">
+<strong>Definition:</strong> A character array is a fixed-size sequence of characters terminated by the null character <code>'\0'</code>. It is the traditional way of representing text in C and C++.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>char name[20] = "Hello";
+char greeting[] = "World";</code></pre>
+
+<h4>Characteristics</h4>
+<ul>
+  <li>Fixed size, decided at declaration.</li>
+  <li>Must end with a null character.</li>
+  <li>Requires C-string functions from <code>&lt;cstring&gt;</code> for manipulation.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A fixed-capacity label on a jar (for example, 20 characters) that holds a short product name.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    char name[20] = "Ali";
+    cout &lt;&lt; "Name: " &lt;&lt; name &lt;&lt; endl;
+    cout &lt;&lt; "First letter: " &lt;&lt; name[0] &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Name: Ali
+First letter: A</div>
+
+<h4>The std::string Class</h4>
+<div class="def">
+<strong>Definition:</strong> The <code>std::string</code> class is a dynamic, object-oriented string type provided by the C++ Standard Library. It handles memory automatically and offers many member functions for manipulation.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>#include &lt;string&gt;
+string name = "Hello";
+string greeting("World");</code></pre>
+
+<h4>Characteristics</h4>
+<ul>
+  <li>Dynamic size; grows and shrinks automatically.</li>
+  <li>No need to worry about the null terminator.</li>
+  <li>Supports operators such as +, ==, &lt;, and [] out of the box.</li>
+  <li>Provides member functions such as length(), substr(), find(), append().</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A text field in a chat application that accepts any length of message without the user worrying about buffer sizes.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string first = "Hello";
+    string second = "World";
+    string combined = first + " " + second;
+
+    cout &lt;&lt; combined &lt;&lt; endl;
+    cout &lt;&lt; "Length: " &lt;&lt; combined.length() &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Hello World
+Length: 11</div>
+
+<h4>Comparison: char Array vs std::string</h4>
+<table>
+  <tr><th>Feature</th><th>char array</th><th>std::string</th></tr>
+  <tr><td>Size</td><td>Fixed</td><td>Dynamic</td></tr>
+  <tr><td>Memory management</td><td>Manual</td><td>Automatic</td></tr>
+  <tr><td>Null terminator</td><td>Required</td><td>Handled internally</td></tr>
+  <tr><td>Concatenation</td><td>strcat()</td><td>+ operator</td></tr>
+  <tr><td>Comparison</td><td>strcmp()</td><td>== and &lt; operators</td></tr>
+  <tr><td>Substrings</td><td>Manual copying</td><td>substr() method</td></tr>
+</table>
+
+<hr>
+
+<h3>3. String Manipulation Functions</h3>
+
+<h4>C-string Functions (&lt;cstring&gt;)</h4>
+<table>
+  <tr><th>Function</th><th>Purpose</th></tr>
+  <tr><td>strlen(s)</td><td>Returns the length of s</td></tr>
+  <tr><td>strcpy(dest, src)</td><td>Copies src into dest</td></tr>
+  <tr><td>strcat(dest, src)</td><td>Appends src to dest</td></tr>
+  <tr><td>strcmp(a, b)</td><td>Compares two strings; returns 0 if equal</td></tr>
+  <tr><td>strncpy(dest, src, n)</td><td>Copies up to n characters</td></tr>
+  <tr><td>strstr(haystack, needle)</td><td>Finds first occurrence of needle</td></tr>
+</table>
+
+<h4>std::string Member Functions</h4>
+<table>
+  <tr><th>Function</th><th>Purpose</th></tr>
+  <tr><td>length() or size()</td><td>Returns the number of characters</td></tr>
+  <tr><td>substr(pos, len)</td><td>Returns a substring starting at pos</td></tr>
+  <tr><td>find(sub)</td><td>Returns index of first occurrence or npos</td></tr>
+  <tr><td>append(s)</td><td>Appends string s to the end</td></tr>
+  <tr><td>replace(pos, len, s)</td><td>Replaces a range with string s</td></tr>
+  <tr><td>insert(pos, s)</td><td>Inserts string s at position pos</td></tr>
+  <tr><td>erase(pos, len)</td><td>Removes len characters from pos</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>A form validator uses string functions to check if the user's email contains "@" and a domain name, or to trim whitespace from a name field.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string text = "Hello World";
+    cout &lt;&lt; "Length: " &lt;&lt; text.length() &lt;&lt; endl;
+    cout &lt;&lt; "Substring: " &lt;&lt; text.substr(6, 5) &lt;&lt; endl;
+    cout &lt;&lt; "Find World at: " &lt;&lt; text.find("World") &lt;&lt; endl;
+
+    text.replace(0, 5, "Hi");
+    cout &lt;&lt; "After replace: " &lt;&lt; text &lt;&lt; endl;
+
+    text.append("!");
+    cout &lt;&lt; "After append: " &lt;&lt; text &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Length: 11
+Substring: World
+Find World at: 6
+After replace: Hi World
+After append: Hi World!</div>
+
+<hr>
+
+<h3>4. Introduction to Exception Handling</h3>
+
+<div class="def">
+<strong>Definition:</strong> Exception handling is a mechanism that allows a program to detect and respond to unusual or erroneous situations at runtime without crashing. In C++, it is implemented using the keywords <code>try</code>, <code>catch</code>, and <code>throw</code>.
+</div>
+
+<h4>Purpose</h4>
+<ul>
+  <li>Separates error-handling code from normal logic.</li>
+  <li>Allows errors to propagate up the call stack.</li>
+  <li>Ensures resources are released properly.</li>
+  <li>Prevents abrupt program termination.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>When withdrawing money from an ATM, if the requested amount exceeds the balance, the machine displays an appropriate message and returns the card. It does not crash or dispense incorrect amounts.</p>
+
+<h4>Exception Handling Flow Diagram</h4>
+<div class="diagram">   +------------------+
+   |      try         |
+   |   risky code     |
+   +--------+---------+
+            |
+     exception thrown?
+       /           \
+     yes            no
+      |              |
+      v              v
+   +------+      continue
+   |catch |      execution
+   |handle|
+   +------+</div>
+
+<hr>
+
+<h3>5. Types of Errors and Exceptions</h3>
+
+<h4>Errors in Programs</h4>
+<table>
+  <tr><th>Type</th><th>Description</th><th>Detected</th></tr>
+  <tr><td>Syntax error</td><td>Incorrect grammar of the language</td><td>Compile time</td></tr>
+  <tr><td>Logical error</td><td>Code compiles but produces wrong results</td><td>Testing</td></tr>
+  <tr><td>Runtime error</td><td>Problem during execution (e.g., divide by zero)</td><td>Run time</td></tr>
+</table>
+
+<h4>Common Exceptions</h4>
+<table>
+  <tr><th>Exception</th><th>Cause</th></tr>
+  <tr><td>std::runtime_error</td><td>General runtime problem</td></tr>
+  <tr><td>std::out_of_range</td><td>Index or value outside valid range</td></tr>
+  <tr><td>std::invalid_argument</td><td>Invalid argument passed to a function</td></tr>
+  <tr><td>std::bad_alloc</td><td>Memory allocation failure</td></tr>
+  <tr><td>std::overflow_error</td><td>Arithmetic overflow</td></tr>
+  <tr><td>User-defined exception</td><td>Custom error defined by the programmer</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>An online payment system distinguishes between "card expired," "insufficient funds," and "network failure" so the correct message is shown to the user.</p>
+
+<hr>
+
+<h3>6. try, catch, and throw</h3>
+
+<div class="def">
+<strong>try:</strong> A block of code that may raise an exception.<br><br>
+<strong>catch:</strong> A block that handles a specific type of exception.<br><br>
+<strong>throw:</strong> A statement that raises an exception when an error is detected.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>try {
+    // code that might throw
+    if (problem) throw exceptionValue;
+}
+catch (ExceptionType name) {
+    // handle
+}
+catch (...) {
+    // catch-all
+}</code></pre>
+
+<h4>Rules</h4>
+<ul>
+  <li>A try block must be followed by at least one catch block.</li>
+  <li>The thrown value's type determines which catch block runs.</li>
+  <li>If no catch matches, the program terminates.</li>
+  <li><code>catch (...)</code> catches any type of exception.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A form submits user data. The try block validates and submits. If the network fails, an exception is thrown, and the catch block displays a friendly error and keeps the data intact.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    try {
+        int a = 10;
+        int b = 0;
+        if (b == 0) throw "Division by zero";
+        cout &lt;&lt; a / b &lt;&lt; endl;
+    }
+    catch (const char* msg) {
+        cout &lt;&lt; "Caught: " &lt;&lt; msg &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Caught: Division by zero</div>
+
+<hr>
+
+<h3>7. Multiple Catch Blocks</h3>
+
+<div class="def">
+<strong>Definition:</strong> Multiple catch blocks allow a single try block to handle different types of exceptions separately. The first matching catch block is executed.
+</div>
+
+<h4>Real-Life Example</h4>
+<p>An order processing system handles various failures: missing product (logic error), out-of-stock (runtime error), and unknown error (catch-all). Each is handled with a different message.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    try {
+        int choice = 2;
+        if (choice == 1) throw 404;
+        else if (choice == 2) throw string("Out of stock");
+        else throw 3.14;
+    }
+    catch (int code) {
+        cout &lt;&lt; "Error code: " &lt;&lt; code &lt;&lt; endl;
+    }
+    catch (string msg) {
+        cout &lt;&lt; "Message: " &lt;&lt; msg &lt;&lt; endl;
+    }
+    catch (...) {
+        cout &lt;&lt; "Unknown exception" &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Message: Out of stock</div>
+
+<hr>
+
+<h3>8. Nested Exception Handling</h3>
+
+<div class="def">
+<strong>Definition:</strong> Nested exception handling means placing a try-catch block inside another try or catch block. This allows an inner operation to handle its own errors or to rethrow them to the outer block.
+</div>
+
+<h4>Real-Life Example</h4>
+<p>A banking system processes a loan application. The inner step validates the credit score, the outer step handles the final approval. If the credit score fails, the inner exception is handled or rethrown, and the outer block decides whether to proceed with an alternative.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    try {
+        try {
+            throw runtime_error("Inner failure");
+        }
+        catch (runtime_error &amp;e) {
+            cout &lt;&lt; "Inner caught: " &lt;&lt; e.what() &lt;&lt; endl;
+            throw;                       // rethrow to outer
+        }
+    }
+    catch (runtime_error &amp;e) {
+        cout &lt;&lt; "Outer caught: " &lt;&lt; e.what() &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Inner caught: Inner failure
+Outer caught: Inner failure</div>
+
+<hr>
+
+<h3>9. User-Defined Exceptions</h3>
+
+<div class="def">
+<strong>Definition:</strong> A user-defined exception is a custom class that inherits from <code>std::exception</code> (or another standard exception). It allows a program to define and throw domain-specific errors with meaningful names and messages.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>#include &lt;exception&gt;
+
+class MyException : public exception {
+public:
+    const char* what() const noexcept override {
+        return "My custom error";
+    }
+};</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A banking application defines <code>InsufficientFundsException</code> so that the exception is clearly named and self-documenting when reading the code.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;exception&gt;
+using namespace std;
+
+class InsufficientFundsException : public exception {
+private:
+    double shortfall;
+public:
+    InsufficientFundsException(double s) : shortfall(s) { }
+
+    const char* what() const noexcept override {
+        return "Insufficient funds";
+    }
+    double getShortfall() const { return shortfall; }
+};
+
+class BankAccount {
+private:
+    double balance;
+public:
+    BankAccount(double b) : balance(b) { }
+
+    void withdraw(double amount) {
+        if (amount &gt; balance)
+            throw InsufficientFundsException(amount - balance);
+        balance -= amount;
+    }
+};
+
+int main() {
+    BankAccount acc(500);
+    try {
+        acc.withdraw(800);
+    }
+    catch (InsufficientFundsException &amp;e) {
+        cout &lt;&lt; e.what() &lt;&lt; ": short by $" &lt;&lt; e.getShortfall() &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Insufficient funds: short by $300</div>
+
+<hr>
+
+<h3>10. Stack Unwinding</h3>
+
+<div class="def">
+<strong>Definition:</strong> Stack unwinding is the process that occurs when an exception is thrown and the program exits multiple function calls to reach a matching catch block. As each stack frame is destroyed, the destructors of local objects in those frames are called automatically.
+</div>
+
+<h4>Key Points</h4>
+<ul>
+  <li>Local objects are destroyed in reverse order of creation.</li>
+  <li>Ensures resources are released properly even when an error occurs.</li>
+  <li>RAII (Resource Acquisition Is Initialization) is built on this guarantee.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>If an emergency evacuation occurs during a meeting, every department leaves the building in reverse order, ensuring all rooms are cleared and lights are turned off.</p>
+
+<h4>Stack Unwinding Diagram</h4>
+<div class="diagram"> Call stack before throw:
+   +-------------------+
+   |     main()        |
+   +-------------------+
+   |    funcA()        |
+   +-------------------+
+   |    funcB()        |  &lt;-- exception thrown here
+   +-------------------+
+
+ Unwinding:
+   funcB  destroyed
+   funcA  destroyed
+   main   catches exception</div>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Resource {
+public:
+    Resource() { cout &lt;&lt; "Resource acquired" &lt;&lt; endl; }
+    ~Resource() { cout &lt;&lt; "Resource released" &lt;&lt; endl; }
+};
+
+void inner() {
+    Resource r;
+    throw runtime_error("Error in inner");
+}
+
+void outer() {
+    Resource r;
+    inner();
+}
+
+int main() {
+    try {
+        outer();
+    }
+    catch (runtime_error &amp;e) {
+        cout &lt;&lt; "Caught: " &lt;&lt; e.what() &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Resource acquired
+Resource acquired
+Resource released
+Resource released
+Caught: Error in inner</div>
+
+<hr>
+
+<h3>11. Dynamic Memory Management</h3>
+
+<div class="def">
+<strong>Definition:</strong> Dynamic memory management is the process of allocating and freeing memory at runtime. In C++, this is done with the <code>new</code> and <code>delete</code> operators (and the array forms <code>new[]</code> and <code>delete[]</code>).
+</div>
+
+<h4>Real-Life Example</h4>
+<p>A reservation system allocates seats (memory) as customers book them and releases them when they cancel. Seats are assigned dynamically, not pre-built for every possible customer.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int *p = new int(100);
+    cout &lt;&lt; "Value: " &lt;&lt; *p &lt;&lt; endl;
+    delete p;
+
+    int *arr = new int[5];
+    for (int i = 0; i &lt; 5; i++) arr[i] = i + 1;
+    for (int i = 0; i &lt; 5; i++) cout &lt;&lt; arr[i] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    delete[] arr;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Value: 100
+1 2 3 4 5</div>
+
+<hr>
+
+<h3>12. Memory Leaks and Dangling Pointers</h3>
+
+<h4>Memory Leak</h4>
+<div class="def">
+<strong>Definition:</strong> A memory leak occurs when dynamically allocated memory is never released, so the program gradually loses available memory.
+</div>
+
+<h4>Causes</h4>
+<ul>
+  <li>Calling <code>new</code> without a matching <code>delete</code>.</li>
+  <li>Losing the only pointer to allocated memory.</li>
+  <li>Exceptions skipping past the cleanup code.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A hotel rents out a room but forgets to record the checkout. The room remains marked as occupied forever, reducing capacity over time.</p>
+
+<h4>Code Example (Leak)</h4>
+<pre><code>void leakExample() {
+    int *p = new int[100];      // allocated
+    // forgot delete[] p;       // leak
+}</code></pre>
+
+<h4>Dangling Pointer</h4>
+<div class="def">
+<strong>Definition:</strong> A dangling pointer is a pointer that still references memory that has already been freed. Using it leads to undefined behavior.
+</div>
+
+<h4>Causes</h4>
+<ul>
+  <li>Deleting memory but keeping the pointer.</li>
+  <li>Returning a pointer to a local variable that no longer exists.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A phone number still stored in a contact after the person has changed their number. The contact points to a phone that no longer answers.</p>
+
+<h4>Code Example (Dangling Pointer)</h4>
+<pre><code>void danglingExample() {
+    int *p = new int(10);
+    delete p;
+    // *p = 20;                  // ERROR: p is now dangling
+    p = nullptr;                 // safe practice
+}</code></pre>
+
+<h4>Prevention</h4>
+<table>
+  <tr><th>Issue</th><th>Prevention</th></tr>
+  <tr><td>Memory leak</td><td>Match every new with delete (or delete[] with new[])</td></tr>
+  <tr><td>Dangling pointer</td><td>Set pointer to nullptr after delete; avoid returning addresses of locals</td></tr>
+  <tr><td>Double delete</td><td>Delete only once; use smart pointers in modern C++</td></tr>
+</table>
+
+<hr>
+
+<h2>Part B: Practical Topics</h2>
+
+<h3>Practical 1: Working with Character Arrays</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main() {
+    char name[30] = "Ali";
+    char city[30] = "Lahore";
+    char combined[60];
+
+    cout &lt;&lt; "Length of name: " &lt;&lt; strlen(name) &lt;&lt; endl;
+
+    strcpy(combined, name);
+    strcat(combined, " from ");
+    strcat(combined, city);
+    cout &lt;&lt; combined &lt;&lt; endl;
+
+    if (strcmp(name, "Ali") == 0)
+        cout &lt;&lt; "Name matches" &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Length of name: 3
+Ali from Lahore
+Name matches</div>
+
+<hr>
+
+<h3>Practical 2: Creating and Manipulating Strings</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string first = "Object";
+    string second = "Oriented";
+
+    string combined = first + " " + second;
+    cout &lt;&lt; combined &lt;&lt; endl;
+
+    combined += " Programming";
+    cout &lt;&lt; combined &lt;&lt; endl;
+
+    cout &lt;&lt; "Length: " &lt;&lt; combined.length() &lt;&lt; endl;
+    cout &lt;&lt; "First 6 chars: " &lt;&lt; combined.substr(0, 6) &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Object Oriented
+Object Oriented Programming
+Length: 27
+First 6 chars: Object</div>
+
+<hr>
+
+<h3>Practical 3: Using C++ string Class Functions</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string email = "student@example.com";
+
+    size_t at = email.find('@');
+    size_t dot = email.find('.', at);
+
+    cout &lt;&lt; "User: " &lt;&lt; email.substr(0, at) &lt;&lt; endl;
+    cout &lt;&lt; "Domain: " &lt;&lt; email.substr(at + 1, dot - at - 1) &lt;&lt; endl;
+
+    email.replace(0, 7, "user");
+    cout &lt;&lt; "Replaced: " &lt;&lt; email &lt;&lt; endl;
+
+    email.insert(4, "X");
+    cout &lt;&lt; "Inserted: " &lt;&lt; email &lt;&lt; endl;
+
+    email.erase(4, 1);
+    cout &lt;&lt; "Erased: " &lt;&lt; email &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+User: student
+Domain: example
+Replaced: user@example.com
+Inserted: userX@example.com
+Erased: user@example.com</div>
+
+<hr>
+
+<h3>Practical 4: Implementing try-catch Blocks</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int divide(int a, int b) {
+    if (b == 0) throw runtime_error("Division by zero");
+    return a / b;
+}
+
+int main() {
+    try {
+        cout &lt;&lt; divide(10, 2) &lt;&lt; endl;
+        cout &lt;&lt; divide(5, 0) &lt;&lt; endl;
+    }
+    catch (runtime_error &amp;e) {
+        cout &lt;&lt; "Error: " &lt;&lt; e.what() &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+5
+Error: Division by zero</div>
+
+<hr>
+
+<h3>Practical 5: Handling Multiple Exceptions</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;
+using namespace std;
+
+void process(int code) {
+    if (code == 1) throw invalid_argument("Invalid input");
+    if (code == 2) throw out_of_range("Value too large");
+    if (code == 3) throw runtime_error("Generic failure");
+}
+
+int main() {
+    for (int c = 1; c &lt;= 4; c++) {
+        try {
+            process(c);
+            cout &lt;&lt; "Code " &lt;&lt; c &lt;&lt; ": OK" &lt;&lt; endl;
+        }
+        catch (invalid_argument &amp;e) {
+            cout &lt;&lt; "Code " &lt;&lt; c &lt;&lt; ": " &lt;&lt; e.what() &lt;&lt; endl;
+        }
+        catch (out_of_range &amp;e) {
+            cout &lt;&lt; "Code " &lt;&lt; c &lt;&lt; ": " &lt;&lt; e.what() &lt;&lt; endl;
+        }
+        catch (exception &amp;e) {
+            cout &lt;&lt; "Code " &lt;&lt; c &lt;&lt; ": " &lt;&lt; e.what() &lt;&lt; endl;
+        }
+    }
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Code 1: Invalid input
+Code 2: Value too large
+Code 3: Generic failure
+Code 4: OK</div>
+
+<hr>
+
+<h3>Practical 6: Creating User-Defined Exceptions</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;exception&gt;
+using namespace std;
+
+class NegativeAgeException : public exception {
+public:
+    const char* what() const noexcept override {
+        return "Age cannot be negative";
+    }
+};
+
+void setAge(int age) {
+    if (age &lt; 0) throw NegativeAgeException();
+    cout &lt;&lt; "Age set to " &lt;&lt; age &lt;&lt; endl;
+}
+
+int main() {
+    try {
+        setAge(25);
+        setAge(-5);
+    }
+    catch (NegativeAgeException &amp;e) {
+        cout &lt;&lt; e.what() &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Age set to 25
+Age cannot be negative</div>
+
+<hr>
+
+<h3>Practical 7: Implementing Nested Exception Handling</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;
+using namespace std;
+
+void innerTask() {
+    try {
+        throw runtime_error("Inner task failed");
+    }
+    catch (runtime_error &amp;e) {
+        cout &lt;&lt; "Inner handler: " &lt;&lt; e.what() &lt;&lt; endl;
+        throw logic_error("Rethrown as logic error");
+    }
+}
+
+int main() {
+    try {
+        innerTask();
+    }
+    catch (logic_error &amp;e) {
+        cout &lt;&lt; "Outer handler: " &lt;&lt; e.what() &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Inner handler: Inner task failed
+Outer handler: Rethrown as logic error</div>
+
+<hr>
+
+<h3>Practical 8: Dynamic Memory Allocation and Deallocation</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int *single = new int(42);
+    cout &lt;&lt; "Single value: " &lt;&lt; *single &lt;&lt; endl;
+    delete single;
+    single = nullptr;
+
+    int n = 5;
+    int *arr = new int[n];
+    for (int i = 0; i &lt; n; i++) arr[i] = i * 10;
+
+    cout &lt;&lt; "Array elements: ";
+    for (int i = 0; i &lt; n; i++) cout &lt;&lt; arr[i] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+
+    delete[] arr;
+    arr = nullptr;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Single value: 42
+Array elements: 0 10 20 30 40</div>
+
+<hr>
+
+<h3>Practical 9: Identifying Memory Leaks</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void createsLeak() {
+    int *data = new int[1000];
+    data[0] = 1;
+    // missing delete[] data;  &lt;-- memory leak
+}
+
+void noLeak() {
+    int *data = new int[1000];
+    data[0] = 1;
+    delete[] data;             // proper cleanup
+}
+
+int main() {
+    for (int i = 0; i &lt; 100; i++) createsLeak();
+    for (int i = 0; i &lt; 100; i++) noLeak();
+    cout &lt;&lt; "Done. Monitor memory to observe leaks." &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Done. Monitor memory to observe leaks.</div>
+
+<div class="note">
+<strong>Tip:</strong> Tools such as Valgrind (Linux) and Visual Studio's memory profiler help detect leaks automatically during testing.
+</div>
+
+<hr>
+
+<h3>Practical 10: Understanding Dangling Pointers</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int *p = new int(50);
+    cout &lt;&lt; "Value: " &lt;&lt; *p &lt;&lt; endl;
+
+    delete p;                      // memory freed
+    p = nullptr;                   // safe
+
+    if (p == nullptr)
+        cout &lt;&lt; "Pointer set to nullptr, safe to use." &lt;&lt; endl;
+
+    // *p = 100;                   // would be undefined behavior
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Value: 50
+Pointer set to nullptr, safe to use.</div>
+
+<h4>Pointer Lifecycle Diagram</h4>
+<div class="diagram"> Valid pointer             Dangling pointer          nullptr
+    int *p = new int(5);     delete p;                 p = nullptr;
+    *p  usable               *p  UNDEFINED              safe to compare
+</div>
+
+<hr>
+
+<h2>Module 7: Quick Revision Summary</h2>
+
+<table>
+  <tr><th>Topic</th><th>Key Takeaway</th></tr>
+  <tr><td>Strings in C++</td><td>Two forms: char arrays and std::string</td></tr>
+  <tr><td>char array</td><td>Fixed size, null-terminated</td></tr>
+  <tr><td>std::string</td><td>Dynamic size, rich member functions</td></tr>
+  <tr><td>C-string functions</td><td>strlen, strcpy, strcat, strcmp</td></tr>
+  <tr><td>std::string functions</td><td>length, substr, find, append, replace, insert, erase</td></tr>
+  <tr><td>Exception handling</td><td>try, catch, throw for runtime error management</td></tr>
+  <tr><td>Errors</td><td>Syntax, logical, runtime</td></tr>
+  <tr><td>Multiple catch</td><td>Different exception types handled separately</td></tr>
+  <tr><td>Nested try-catch</td><td>Inner handler can rethrow to outer handler</td></tr>
+  <tr><td>User-defined exceptions</td><td>Custom classes inheriting from std::exception</td></tr>
+  <tr><td>Stack unwinding</td><td>Destructors called for local objects as frames unwind</td></tr>
+  <tr><td>Dynamic memory</td><td>new and delete for runtime allocation</td></tr>
+  <tr><td>Memory leak</td><td>new without matching delete</td></tr>
+  <tr><td>Dangling pointer</td><td>Pointer to freed memory; set to nullptr after delete</td></tr>
+</table>
+
+</body>
+</html>

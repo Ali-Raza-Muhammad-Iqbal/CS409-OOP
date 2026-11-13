@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS409 Module 5 - Polymorphism and Dynamic Binding</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 30px;
+    font-size: 15px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    border-bottom: 4px solid #1f4e79;
+    padding-bottom: 12px;
+    color: #1f4e79;
+  }
+  h2 {
+    font-size: 20px;
+    color: #ffffff;
+    background: #1f4e79;
+    padding: 8px 14px;
+    border-radius: 4px;
+    margin-top: 40px;
+  }
+  h3 {
+    font-size: 17px;
+    color: #1f4e79;
+    border-left: 5px solid #1f4e79;
+    padding-left: 10px;
+    margin-top: 28px;
+  }
+  h4 {
+    font-size: 15px;
+    color: #333333;
+    margin-top: 20px;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    color: #b00020;
+  }
+  pre {
+    background: #f5f7fa;
+    border: 1px solid #d0d7de;
+    border-left: 4px solid #1f4e79;
+    padding: 14px 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #24292e;
+  }
+  pre code {
+    background: none;
+    color: #24292e;
+    padding: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1f4e79;
+    color: #ffffff;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  td {
+    border: 1px solid #cfd8dc;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td {
+    background: #f4f8fb;
+  }
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid #f0ad4e;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .def {
+    background: #e8f1f8;
+    border-left: 4px solid #1f4e79;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 3px;
+  }
+  .output {
+    background: #eef6ee;
+    border-left: 4px solid #2e7d32;
+    padding: 8px 14px;
+    font-family: Consolas, monospace;
+    font-size: 13.5px;
+    margin: 8px 0;
+    border-radius: 3px;
+  }
+  .diagram {
+    background: #f9f9f9;
+    border: 1px dashed #888888;
+    padding: 14px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    border-radius: 4px;
+    margin: 12px 0;
+  }
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 26px;
+  }
+  li {
+    margin: 4px 0;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid #d0d7de;
+    margin: 36px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>CS409 – Object Oriented Programming<br>Module 5: Polymorphism and Dynamic Binding</h1>
+
+<h2>Part A: Theory Topics</h2>
+
+<h3>1. Introduction to Polymorphism and Its Advantages</h3>
+
+<div class="def">
+<strong>Definition:</strong> Polymorphism is the ability of a single interface, function name, or operator to behave differently depending on the object or data types involved. In C++, polymorphism allows the same function call to execute different code at compile time or at runtime.
+</div>
+
+<h4>Meaning of the Word</h4>
+<p>The term comes from Greek: <em>poly</em> (many) and <em>morph</em> (forms). Thus, polymorphism means "many forms."</p>
+
+<h4>Advantages of Polymorphism</h4>
+<table>
+  <tr><th>No.</th><th>Advantage</th><th>Explanation</th></tr>
+  <tr><td>1</td><td>Flexibility</td><td>The same interface can work with different data types.</td></tr>
+  <tr><td>2</td><td>Extensibility</td><td>New derived types can be added without changing existing code.</td></tr>
+  <tr><td>3</td><td>Code reuse</td><td>Common interfaces avoid duplication.</td></tr>
+  <tr><td>4</td><td>Decoupling</td><td>Clients depend only on the base interface.</td></tr>
+  <tr><td>5</td><td>Readability</td><td>One familiar name for related operations.</td></tr>
+  <tr><td>6</td><td>Dynamic behavior</td><td>Decisions can be deferred until runtime.</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>The word "draw" has a single interface, but a Circle, a Square, and a Triangle each draw differently. The person calling draw() does not need to know which shape is drawing.</p>
+
+<h4>Types of Polymorphism</h4>
+<div class="diagram">                  Polymorphism
+                       |
+           +-----------+-----------+
+           |                       |
+    Compile-time              Runtime
+    (static binding)      (dynamic binding)
+           |                       |
+     +-----+-----+                 |
+     |           |                 |
+ Function    Operator        Virtual functions
+ overloading overloading    and Function overriding</div>
+
+<hr>
+
+<h3>2. Compile-Time Polymorphism</h3>
+
+<div class="def">
+<strong>Definition:</strong> Compile-time polymorphism, also called static polymorphism or early binding, is resolved by the compiler at compile time. It is achieved through function overloading, operator overloading, and templates.
+</div>
+
+<h4>Features</h4>
+<ul>
+  <li>The function call is resolved before the program runs.</li>
+  <li>Faster execution because no runtime lookup is involved.</li>
+  <li>Achieved via overloading or templates.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A restaurant offers multiple versions of the "order" action: order a drink, order a meal, or order a meal with dessert. The server knows which action to take based on how the request is phrased at the counter.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Calculator {
+public:
+    int add(int a, int b) { return a + b; }
+    double add(double a, double b) { return a + b; }
+    int add(int a, int b, int c) { return a + b + c; }
+};
+
+int main() {
+    Calculator c;
+    cout &lt;&lt; c.add(2, 3) &lt;&lt; endl;
+    cout &lt;&lt; c.add(2.5, 3.5) &lt;&lt; endl;
+    cout &lt;&lt; c.add(1, 2, 3) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+5
+6
+6</div>
+
+<hr>
+
+<h3>3. Runtime Polymorphism</h3>
+
+<div class="def">
+<strong>Definition:</strong> Runtime polymorphism, also called dynamic polymorphism or late binding, is resolved at the time the program is executed. In C++, it is achieved through virtual functions and inheritance.
+</div>
+
+<h4>Features</h4>
+<ul>
+  <li>Function call is resolved during program execution.</li>
+  <li>Uses the virtual function table (vtable) mechanism.</li>
+  <li>Enables true "one interface, many behaviors" design.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A universal remote control has a "play" button. When it points at a TV, it plays the TV. When it points at a DVD player, it plays the DVD. The button behaves differently depending on the target, and the target is determined at the time of use.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Shape {
+public:
+    virtual void draw() { cout &lt;&lt; "Drawing a generic shape" &lt;&lt; endl; }
+};
+
+class Circle : public Shape {
+public:
+    void draw() override { cout &lt;&lt; "Drawing a circle" &lt;&lt; endl; }
+};
+
+class Square : public Shape {
+public:
+    void draw() override { cout &lt;&lt; "Drawing a square" &lt;&lt; endl; }
+};
+
+int main() {
+    Shape *s1 = new Circle();
+    Shape *s2 = new Square();
+    s1-&gt;draw();
+    s2-&gt;draw();
+    delete s1;
+    delete s2;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Drawing a circle
+Drawing a square</div>
+
+<hr>
+
+<h3>4. Function Overloading (Recap)</h3>
+
+<div class="def">
+<strong>Definition:</strong> Function overloading is the definition of multiple functions with the same name but different parameter lists in the same scope. It is a form of compile-time polymorphism.
+</div>
+
+<h4>Syntax</h4>
+<pre><code>returnType functionName(dataType param1);
+returnType functionName(dataType param1, dataType param2);
+returnType functionName(double param1);</code></pre>
+
+<h4>Real-Life Example</h4>
+<p>A printing service accepts documents, photos, or posters. The action is the same ("print") but the input type differs.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Printer {
+public:
+    void print(int value) { cout &lt;&lt; "Integer: " &lt;&lt; value &lt;&lt; endl; }
+    void print(double value) { cout &lt;&lt; "Double: " &lt;&lt; value &lt;&lt; endl; }
+    void print(string value) { cout &lt;&lt; "String: " &lt;&lt; value &lt;&lt; endl; }
+};
+
+int main() {
+    Printer p;
+    p.print(42);
+    p.print(3.14);
+    p.print("Hello");
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Integer: 42
+Double: 3.14
+String: Hello</div>
+
+<hr>
+
+<h3>5. Operator Overloading (Recap)</h3>
+
+<div class="def">
+<strong>Definition:</strong> Operator overloading allows existing operators to be redefined for user-defined types. It is another form of compile-time polymorphism.
+</div>
+
+<h4>Real-Life Example</h4>
+<p>The plus sign "+" adds numbers, concatenates strings, and merges containers depending on the types involved.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Complex {
+private:
+    int real, imag;
+public:
+    Complex(int r = 0, int i = 0) { real = r; imag = i; }
+
+    Complex operator+(const Complex &amp;other) {
+        return Complex(real + other.real, imag + other.imag);
+    }
+
+    void show() { cout &lt;&lt; real &lt;&lt; " + " &lt;&lt; imag &lt;&lt; "i" &lt;&lt; endl; }
+};
+
+int main() {
+    Complex a(2, 3), b(4, 1);
+    Complex c = a + b;
+    c.show();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+6 + 4i</div>
+
+<hr>
+
+<h3>6. Function Overriding (Recap)</h3>
+
+<div class="def">
+<strong>Definition:</strong> Function overriding occurs when a derived class defines a function with the same signature as a function in its base class. With virtual functions, the derived version is selected at runtime based on the actual object type.
+</div>
+
+<h4>Overloading vs Overriding</h4>
+<table>
+  <tr><th>Feature</th><th>Overloading</th><th>Overriding</th></tr>
+  <tr><td>Scope</td><td>Same class</td><td>Base and derived class</td></tr>
+  <tr><td>Signature</td><td>Must differ</td><td>Must be identical</td></tr>
+  <tr><td>Binding</td><td>Compile time</td><td>Runtime (if virtual)</td></tr>
+  <tr><td>Keyword required</td><td>No</td><td>virtual and override recommended</td></tr>
+</table>
+
+<h4>Real-Life Example</h4>
+<p>All animals "speak", but a Dog barks and a Cat meows. The base behavior is replaced in each derived version.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Animal {
+public:
+    virtual void sound() { cout &lt;&lt; "Some sound" &lt;&lt; endl; }
+};
+
+class Dog : public Animal {
+public:
+    void sound() override { cout &lt;&lt; "Bark" &lt;&lt; endl; }
+};
+
+class Cat : public Animal {
+public:
+    void sound() override { cout &lt;&lt; "Meow" &lt;&lt; endl; }
+};
+
+int main() {
+    Dog d;
+    Cat c;
+    d.sound();
+    c.sound();
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Bark
+Meow</div>
+
+<hr>
+
+<h3>7. Virtual Functions</h3>
+
+<div class="def">
+<strong>Definition:</strong> A virtual function is a member function declared in a base class using the <code>virtual</code> keyword and overridden in derived classes. When called through a base class pointer or reference, the function selected is the one in the actual object type, not the pointer type.
+</div>
+
+<h4>Key Points</h4>
+<ul>
+  <li>Declared with the keyword <code>virtual</code> in the base class.</li>
+  <li>Once virtual, the function remains virtual in all derived classes.</li>
+  <li>Called through a pointer or reference to the base class.</li>
+  <li>Enables runtime polymorphism.</li>
+  <li>Implemented using the virtual table (vtable) mechanism.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A vehicle control system sends the "start" command. On a car, this starts the petrol engine; on an electric scooter, it powers the motor. The command is the same; the behavior depends on the concrete vehicle.</p>
+
+<h4>Syntax</h4>
+<pre><code>class Base {
+public:
+    virtual returnType functionName(parameters);
+};
+
+class Derived : public Base {
+public:
+    returnType functionName(parameters) override;
+};</code></pre>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Vehicle {
+public:
+    virtual void start() { cout &lt;&lt; "Vehicle starting" &lt;&lt; endl; }
+};
+
+class Car : public Vehicle {
+public:
+    void start() override { cout &lt;&lt; "Car engine started" &lt;&lt; endl; }
+};
+
+class Scooter : public Vehicle {
+public:
+    void start() override { cout &lt;&lt; "Scooter motor powered" &lt;&lt; endl; }
+};
+
+int main() {
+    Vehicle *v1 = new Car();
+    Vehicle *v2 = new Scooter();
+    v1-&gt;start();
+    v2-&gt;start();
+    delete v1;
+    delete v2;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Car engine started
+Scooter motor powered</div>
+
+<h4>Virtual Function Internal Model (Diagram)</h4>
+<div class="diagram"> Object of Circle            vtable (per class)
+ +----------------+         +----------------------+
+ | vptr  ---------+--------&gt;| &amp;Circle::draw        |
+ | radius         |         +----------------------+
+ +----------------+
+
+ Object of Square            vtable
+ +----------------+         +----------------------+
+ | vptr  ---------+--------&gt;| &amp;Square::draw        |
+ | side           |         +----------------------+
+ +----------------+</div>
+
+<hr>
+
+<h3>8. Pure Virtual Functions</h3>
+
+<div class="def">
+<strong>Definition:</strong> A pure virtual function is a virtual function declared in a base class but not defined there. It is written with <code>= 0</code>. A class containing at least one pure virtual function becomes an abstract class and cannot be instantiated directly.
+</div>
+
+<h4>Key Points</h4>
+<ul>
+  <li>Declared with <code>= 0</code>.</li>
+  <li>The base class becomes an abstract class.</li>
+  <li>Derived classes must implement the pure virtual function to be concrete.</li>
+  <li>Used to define a common interface for derived classes.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>An "Appliance" class has a pure virtual "operate" function. No one can create a generic "appliance"; one must create a WashingMachine or Refrigerator that implements operate().</p>
+
+<h4>Syntax</h4>
+<pre><code>class AbstractClass {
+public:
+    virtual returnType functionName(parameters) = 0;    // pure virtual
+};</code></pre>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Shape {
+public:
+    virtual void draw() = 0;               // pure virtual
+};
+
+class Circle : public Shape {
+public:
+    void draw() override { cout &lt;&lt; "Drawing circle" &lt;&lt; endl; }
+};
+
+class Square : public Shape {
+public:
+    void draw() override { cout &lt;&lt; "Drawing square" &lt;&lt; endl; }
+};
+
+int main() {
+    // Shape s;        // ERROR: abstract class
+    Shape *a = new Circle();
+    Shape *b = new Square();
+    a-&gt;draw();
+    b-&gt;draw();
+    delete a;
+    delete b;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Drawing circle
+Drawing square</div>
+
+<h4>Abstract Class Hierarchy</h4>
+<div class="diagram">    +-------------------+
+    |     Shape         |   abstract (contains = 0)
+    |  draw() = 0       |
+    +---------+---------+
+         /         \
+        v           v
+  +---------+   +---------+
+  | Circle  |   | Square  |
+  | draw()  |   | draw()  |
+  +---------+   +---------+</div>
+
+<hr>
+
+<h3>9. Dynamic Binding</h3>
+
+<div class="def">
+<strong>Definition:</strong> Dynamic binding, also known as late binding, is the process of linking a function call to its implementation at runtime. It occurs when a virtual function is invoked through a base class pointer or reference.
+</div>
+
+<h4>Conditions for Dynamic Binding</h4>
+<ul>
+  <li>The function must be declared virtual in the base class.</li>
+  <li>The call must be made through a pointer or reference to the base class.</li>
+  <li>The actual object must be of a derived class.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>A phone's "call" button reaches the dialer. Depending on whether the user is on a mobile phone, a landline, or a VoIP app, the actual call mechanism is determined at the time of the press.</p>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Payment {
+public:
+    virtual void pay() { cout &lt;&lt; "Generic payment" &lt;&lt; endl; }
+};
+
+class CreditCard : public Payment {
+public:
+    void pay() override { cout &lt;&lt; "Paid by credit card" &lt;&lt; endl; }
+};
+
+class Cash : public Payment {
+public:
+    void pay() override { cout &lt;&lt; "Paid by cash" &lt;&lt; endl; }
+};
+
+void checkout(Payment *p) {
+    p-&gt;pay();      // resolved at runtime
+}
+
+int main() {
+    CreditCard c;
+    Cash k;
+    checkout(&amp;c);
+    checkout(&amp;k);
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Paid by credit card
+Paid by cash</div>
+
+<hr>
+
+<h3>10. Static and Dynamic Binding</h3>
+
+<div class="def">
+<strong>Static Binding:</strong> Also called early binding, it links a function call to its definition at compile time.<br><br>
+<strong>Dynamic Binding:</strong> Also called late binding, it links a function call to its definition at runtime.
+</div>
+
+<h4>Comparison</h4>
+<table>
+  <tr><th>Feature</th><th>Static Binding</th><th>Dynamic Binding</th></tr>
+  <tr><td>When resolved</td><td>Compile time</td><td>Runtime</td></tr>
+  <tr><td>Also called</td><td>Early binding</td><td>Late binding</td></tr>
+  <tr><td>Mechanism</td><td>Function name and signature match</td><td>Virtual table lookup</td></tr>
+  <tr><td>Speed</td><td>Faster</td><td>Slightly slower</td></tr>
+  <tr><td>Used with</td><td>Overloading, normal functions, non-virtual members</td><td>Virtual functions and overriding</td></tr>
+  <tr><td>Flexibility</td><td>Less</td><td>More</td></tr>
+</table>
+
+<h4>Binding Diagram</h4>
+<div class="diagram">Compile time                          Runtime
++---------------------+          +---------------------+
+| Function call       |          | Function call       |
+| resolved to a       |          | resolved through    |
+| specific function   |          | the object's vtable |
++---------------------+          +---------------------+
+     Static Binding                   Dynamic Binding</div>
+
+<hr>
+
+<h3>11. Virtual Destructors</h3>
+
+<div class="def">
+<strong>Definition:</strong> A virtual destructor is a destructor declared with the <code>virtual</code> keyword in the base class. It ensures that when a derived object is deleted through a base class pointer, the destructor of the derived class is also called, preventing resource leaks.
+</div>
+
+<h4>Why It Matters</h4>
+<ul>
+  <li>Without a virtual destructor, deleting a derived object via a base pointer only invokes the base destructor.</li>
+  <li>This causes resource leaks in the derived class (memory, files, sockets).</li>
+  <li>Any class intended to be used polymorphically should have a virtual destructor.</li>
+</ul>
+
+<h4>Real-Life Example</h4>
+<p>When a building is demolished via the city's "demolish building" interface, the subcontractors hired by that building must also be released. A virtual destructor ensures all related resources are freed correctly.</p>
+
+<h4>Syntax</h4>
+<pre><code>class Base {
+public:
+    virtual ~Base() { }
+};</code></pre>
+
+<h4>Code Example</h4>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Base {
+public:
+    Base() { cout &lt;&lt; "Base created" &lt;&lt; endl; }
+    virtual ~Base() { cout &lt;&lt; "Base destroyed" &lt;&lt; endl; }
+};
+
+class Derived : public Base {
+private:
+    int *data;
+public:
+    Derived() {
+        data = new int[100];
+        cout &lt;&lt; "Derived created" &lt;&lt; endl;
+    }
+    ~Derived() {
+        delete[] data;
+        cout &lt;&lt; "Derived destroyed" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Base *p = new Derived();
+    delete p;                     // both destructors run
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Base created
+Derived created
+Derived destroyed
+Base destroyed</div>
+
+<div class="note">
+<strong>Important:</strong> If the base destructor were not virtual, only <em>Base destroyed</em> would be printed, and the array allocated in Derived would leak.
+</div>
+
+<hr>
+
+<h3>12. Early and Late Binding</h3>
+
+<p>Early binding and static binding refer to the same concept; late binding and dynamic binding refer to the same concept. Both pairs describe when the function call is matched to the actual function definition.</p>
+
+<h4>Summary Table</h4>
+<table>
+  <tr><th>Aspect</th><th>Early Binding (Static)</th><th>Late Binding (Dynamic)</th></tr>
+  <tr><td>Resolution</td><td>Compile time</td><td>Runtime</td></tr>
+  <tr><td>Example</td><td>Normal function call, overload resolution</td><td>Virtual function call through base pointer</td></tr>
+  <tr><td>Performance</td><td>Fast</td><td>Slower due to lookup</td></tr>
+  <tr><td>Flexibility</td><td>Limited</td><td>High</td></tr>
+</table>
+
+<hr>
+
+<h2>Part B: Practical Topics</h2>
+
+<h3>Practical 1: Implementing Compile-Time and Runtime Polymorphism</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+// Compile-time: function overloading
+class Calculator {
+public:
+    int multiply(int a, int b) { return a * b; }
+    double multiply(double a, double b) { return a * b; }
+};
+
+// Runtime: virtual functions
+class Animal {
+public:
+    virtual void speak() { cout &lt;&lt; "Animal sound" &lt;&lt; endl; }
+};
+
+class Dog : public Animal {
+public:
+    void speak() override { cout &lt;&lt; "Woof" &lt;&lt; endl; }
+};
+
+class Cat : public Animal {
+public:
+    void speak() override { cout &lt;&lt; "Meow" &lt;&lt; endl; }
+};
+
+int main() {
+    Calculator c;
+    cout &lt;&lt; "Int multiply: " &lt;&lt; c.multiply(4, 5) &lt;&lt; endl;
+    cout &lt;&lt; "Double multiply: " &lt;&lt; c.multiply(2.5, 4.0) &lt;&lt; endl;
+
+    Animal *a1 = new Dog();
+    Animal *a2 = new Cat();
+    a1-&gt;speak();
+    a2-&gt;speak();
+    delete a1;
+    delete a2;
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Int multiply: 20
+Double multiply: 10
+Woof
+Meow</div>
+
+<hr>
+
+<h3>Practical 2: Implementing Function and Operator Overloading</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Vector2D {
+private:
+    int x, y;
+public:
+    Vector2D(int a = 0, int b = 0) { x = a; y = b; }
+
+    // Operator overloading
+    Vector2D operator+(const Vector2D &amp;other) {
+        return Vector2D(x + other.x, y + other.y);
+    }
+
+    // Function overloading
+    void scale(int factor) { x *= factor; y *= factor; }
+    void scale(double factor) {
+        x = (int)(x * factor);
+        y = (int)(y * factor);
+    }
+
+    void show() { cout &lt;&lt; "(" &lt;&lt; x &lt;&lt; ", " &lt;&lt; y &lt;&lt; ")" &lt;&lt; endl; }
+};
+
+int main() {
+    Vector2D v1(2, 3), v2(4, 1);
+    Vector2D v3 = v1 + v2;            // operator overloading
+    v3.show();
+
+    v3.scale(2);                      // int overload
+    v3.show();
+
+    v3.scale(1.5);                    // double overload
+    v3.show();
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+(6, 4)
+(12, 8)
+(18, 12)</div>
+
+<hr>
+
+<h3>Practical 3: Implementing Function Overriding</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Shape {
+public:
+    virtual void describe() { cout &lt;&lt; "A generic shape" &lt;&lt; endl; }
+};
+
+class Circle : public Shape {
+public:
+    void describe() override { cout &lt;&lt; "A round circle" &lt;&lt; endl; }
+};
+
+class Square : public Shape {
+public:
+    void describe() override { cout &lt;&lt; "A four-sided square" &lt;&lt; endl; }
+};
+
+int main() {
+    Shape *s1 = new Circle();
+    Shape *s2 = new Square();
+
+    s1-&gt;describe();
+    s2-&gt;describe();
+
+    delete s1;
+    delete s2;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+A round circle
+A four-sided square</div>
+
+<hr>
+
+<h3>Practical 4: Creating Virtual Functions</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Employee {
+protected:
+    string name;
+public:
+    Employee(string n) : name(n) { }
+    virtual double salary() { return 0; }
+    virtual void display() {
+        cout &lt;&lt; name &lt;&lt; " salary: " &lt;&lt; salary() &lt;&lt; endl;
+    }
+};
+
+class Manager : public Employee {
+public:
+    Manager(string n) : Employee(n) { }
+    double salary() override { return 80000; }
+};
+
+class Engineer : public Employee {
+public:
+    Engineer(string n) : Employee(n) { }
+    double salary() override { return 60000; }
+};
+
+int main() {
+    Employee *e1 = new Manager("Ali");
+    Employee *e2 = new Engineer("Sara");
+
+    e1-&gt;display();
+    e2-&gt;display();
+
+    delete e1;
+    delete e2;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Ali salary: 80000
+Sara salary: 60000</div>
+
+<hr>
+
+<h3>Practical 5: Implementing Pure Virtual Functions</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Payment {
+public:
+    virtual void pay(double amount) = 0;      // pure virtual
+};
+
+class CreditCard : public Payment {
+public:
+    void pay(double amount) override {
+        cout &lt;&lt; "Paid $" &lt;&lt; amount &lt;&lt; " by credit card" &lt;&lt; endl;
+    }
+};
+
+class Cash : public Payment {
+public:
+    void pay(double amount) override {
+        cout &lt;&lt; "Paid $" &lt;&lt; amount &lt;&lt; " by cash" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Payment *p1 = new CreditCard();
+    Payment *p2 = new Cash();
+
+    p1-&gt;pay(500);
+    p2-&gt;pay(250);
+
+    delete p1;
+    delete p2;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Paid $500 by credit card
+Paid $250 by cash</div>
+
+<hr>
+
+<h3>Practical 6: Working with Base-Class Pointers</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Shape {
+public:
+    virtual double area() { return 0; }
+};
+
+class Rectangle : public Shape {
+private:
+    double l, w;
+public:
+    Rectangle(double length, double width) { l = length; w = width; }
+    double area() override { return l * w; }
+};
+
+class Triangle : public Shape {
+private:
+    double base, height;
+public:
+    Triangle(double b, double h) { base = b; height = h; }
+    double area() override { return 0.5 * base * height; }
+};
+
+int main() {
+    Shape *shapes[2];
+
+    shapes[0] = new Rectangle(4, 5);
+    shapes[1] = new Triangle(6, 3);
+
+    for (int i = 0; i &lt; 2; i++) {
+        cout &lt;&lt; "Area: " &lt;&lt; shapes[i]-&gt;area() &lt;&lt; endl;
+    }
+
+    for (int i = 0; i &lt; 2; i++) delete shapes[i];
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Area: 20
+Area: 9</div>
+
+<hr>
+
+<h3>Practical 7: Demonstrating Dynamic Binding</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Notification {
+public:
+    virtual void send() { cout &lt;&lt; "Sending generic notification" &lt;&lt; endl; }
+};
+
+class Email : public Notification {
+public:
+    void send() override { cout &lt;&lt; "Sending email" &lt;&lt; endl; }
+};
+
+class SMS : public Notification {
+public:
+    void send() override { cout &lt;&lt; "Sending SMS" &lt;&lt; endl; }
+};
+
+void notifyUser(Notification *n) {
+    n-&gt;send();          // resolved at runtime
+}
+
+int main() {
+    Email e;
+    SMS s;
+
+    notifyUser(&amp;e);
+    notifyUser(&amp;s);
+
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Sending email
+Sending SMS</div>
+
+<hr>
+
+<h3>Practical 8: Implementing Virtual Destructors</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Base {
+public:
+    Base() { cout &lt;&lt; "Base constructor" &lt;&lt; endl; }
+    virtual ~Base() { cout &lt;&lt; "Base destructor" &lt;&lt; endl; }
+};
+
+class Derived : public Base {
+private:
+    int *buffer;
+public:
+    Derived() {
+        buffer = new int[100];
+        cout &lt;&lt; "Derived constructor" &lt;&lt; endl;
+    }
+    ~Derived() {
+        delete[] buffer;
+        cout &lt;&lt; "Derived destructor" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Base *b = new Derived();
+    delete b;
+    return 0;
+}</code></pre>
+
+<div class="output">Output:
+Base constructor
+Derived constructor
+Derived destructor
+Base destructor</div>
+
+<h4>What Would Happen Without virtual</h4>
+<div class="output">Output (without virtual destructor):
+Base constructor
+Derived constructor
+Base destructor</div>
+
+<div class="note">
+<strong>Result:</strong> The Derived destructor would never run, and the buffer would leak.
+</div>
+
+<hr>
+
+<h2>Module 5: Quick Revision Summary</h2>
+
+<table>
+  <tr><th>Topic</th><th>Key Takeaway</th></tr>
+  <tr><td>Polymorphism</td><td>One interface, many behaviors</td></tr>
+  <tr><td>Compile-time polymorphism</td><td>Resolved by the compiler through overloading or templates</td></tr>
+  <tr><td>Runtime polymorphism</td><td>Resolved at runtime through virtual functions</td></tr>
+  <tr><td>Function overloading</td><td>Same name, different parameters in the same class</td></tr>
+  <tr><td>Operator overloading</td><td>Redefine an operator for user-defined types</td></tr>
+  <tr><td>Function overriding</td><td>Same signature in derived class; use override</td></tr>
+  <tr><td>Virtual functions</td><td>Declared virtual in base; selected via vtable at runtime</td></tr>
+  <tr><td>Pure virtual functions</td><td>= 0; make the class abstract; must be implemented in derived</td></tr>
+  <tr><td>Dynamic binding</td><td>Function call resolved at runtime through base pointer</td></tr>
+  <tr><td>Static binding</td><td>Function call resolved at compile time</td></tr>
+  <tr><td>Virtual destructor</td><td>Ensures derived destructor runs when deleting via base pointer</td></tr>
+  <tr><td>Early and late binding</td><td>Synonyms for static and dynamic binding respectively</td></tr>
+</table>
+
+</body>
+</html>

@@ -1,4 +1,3 @@
-Here is the updated `README.md` with your actual media links, professional description, and email placeholder included.
 ```markdown
 # 📚 Object-Oriented Programming (OOP) — Complete Course Series
 
